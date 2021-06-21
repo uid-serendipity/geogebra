@@ -42,7 +42,6 @@ public class CommandDispatcherCAS implements CommandDispatcherInterface {
 		case Expand:
 		case Factor:
 		case IFactor:
-		case IsFactored:
 			return new CmdCASCommand1Arg(kernel, c);
 		case Simplify:
 			return new CmdSimplify(kernel);

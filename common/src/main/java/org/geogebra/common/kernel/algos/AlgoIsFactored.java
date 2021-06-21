@@ -1,9 +1,11 @@
 package org.geogebra.common.kernel.algos;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import org.geogebra.common.kernel.Construction;
 import org.geogebra.common.kernel.EquationSolverInterface;
+import org.geogebra.common.kernel.Kernel;
 import org.geogebra.common.kernel.arithmetic.ExpressionNode;
 import org.geogebra.common.kernel.arithmetic.Function;
 import org.geogebra.common.kernel.arithmetic.FunctionVariable;
@@ -27,6 +29,7 @@ public class AlgoIsFactored extends AlgoElement {
 	private final Solution solution = new Solution();
 
 	private int numberValues = 0;
+	private ArrayList<MySpecialDouble> multiplyCoeffs = new ArrayList<>();
 
 	/**
 	 * @param cons construction
@@ -96,8 +99,10 @@ public class AlgoIsFactored extends AlgoElement {
 		if (node.isOperation(Operation.MULTIPLY)) {
 			if (node.getLeft() instanceof MySpecialDouble) {
 				numberValues += 1;
+				multiplyCoeffs.add((MySpecialDouble) node.getLeft());
 				if (node.getRight() instanceof MySpecialDouble) {
 					numberValues += 1;
+					multiplyCoeffs.add((MySpecialDouble) node.getRight());
 				}
 			}
 			if (node.getLeft() instanceof ExpressionNode) {
@@ -106,6 +111,7 @@ public class AlgoIsFactored extends AlgoElement {
 							(ExpressionNode) node.getRight());
 				} else if (node.getRight() instanceof MySpecialDouble) {
 					numberValues += 1;
+					multiplyCoeffs.add((MySpecialDouble) node.getRight());
 				}
 				return isFactored((ExpressionNode) node.getLeft());
 			} else if (node.getRight() instanceof ExpressionNode) {
@@ -136,24 +142,34 @@ public class AlgoIsFactored extends AlgoElement {
 				LinkedList<PolyFunction> factorList = fun.getPolynomialFactors(true, true);
 				double[] coeffs;
 				double value = 1.0;
-				boolean isSame = true;
+				boolean isSameSign = true;
 				if (factorList != null) {
 					// check coefficients of polynomial
 					for (PolyFunction pf : factorList) {
 						pf.updateCoeffValues();
 						coeffs = pf.getCoeffsCopy();
-						value = coeffs[coeffs.length - 1];
-						for (double c : coeffs) {
-							if ((int) c != c) {
+						// return false for e.g. 2x-2
+						if (Kernel.gcd(coeffs) != 1) {
+							return false;
+						}
+						// return false for e.g. x^2+x
+						if (coeffs.length > 2) {
+							if (coeffs[0] == 0) {
 								return false;
 							}
-							// return false for e.g. 2x-2
-							if (Math.abs(c) != Math.abs(value)) {
-								isSame = false;
+						}
+						if (canBeSimplified(node, coeffs)) {
+							return false;
+						}
+						value = coeffs[coeffs.length - 1];
+						for (double c : coeffs) {
+							if (!(((int) value ^ (int) c) >= 0)) {
+								isSameSign = false;
+								break;
 							}
 						}
 					}
-					if (isSame && value != 1.0) {
+					if (value < 0 && isSameSign) {
 						return false;
 					}
 				}
@@ -178,5 +194,30 @@ public class AlgoIsFactored extends AlgoElement {
 			}
 		}
 		return false;
+	}
+
+	private boolean canBeSimplified(ExpressionNode node, double[] coeffs) {
+		ArrayList<Double> coeffsNotInt = new ArrayList<>();
+		for (double c : coeffs) {
+			if ((int) c != c) {
+				coeffsNotInt.add(c);
+			}
+		}
+		if (coeffsNotInt.isEmpty()) {
+			return false;
+		}
+		double product = 1;
+		for (MySpecialDouble d : multiplyCoeffs) {
+			product *= d.getDouble();
+		}
+		boolean allInteger = true;
+		for (double c : coeffs) {
+			double cMultiplied = c * product;
+			if ((int) cMultiplied != cMultiplied) {
+				allInteger = false;
+				break;
+			}
+		}
+		return allInteger;
 	}
 }

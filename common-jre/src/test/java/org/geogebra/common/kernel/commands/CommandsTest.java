@@ -4223,7 +4223,7 @@ public class CommandsTest {
 		t("IsFactored(x)", "true");
 		t("IsFactored(0.5)", "true");
 		t("IsFactored(5)", "true");
-		t("IsFactored((x^2)-1)", "false");
+		t("IsFactored(x^2-1)", "false");
 		t("IsFactored(x(x+1))", "true");
 		t("IsFactored(x(2x+2))", "false");
 		t("IsFactored(x^3-1)", "false");
@@ -4239,5 +4239,9 @@ public class CommandsTest {
 		t("IsFactored(2*(x+0.5))", "false");
 		t("IsFactored(2x+2)", "false");
 		t("IsFactored(5(6/5x+2/5))", "false");
+		t("IsFactored((1-x)(1+x))", "true");
+//		t("IsFactored(3x-2x)", "false");
+		t("IsFactored(x^2-x)", "false");
+//		t("IsFactored((x-1)^2+2)", "false");
 	}
 }
