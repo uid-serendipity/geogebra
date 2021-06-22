@@ -139,6 +139,10 @@ public class AlgoIsFactored extends AlgoElement {
 			PolyFunction polyFun = fun.expandToPolyFunction(fun.getExpression(),
 					false, false);
 			if (polyFun != null) {
+				// return false for e.g. (x-1)^2+2
+				if (!hasValidStructure(node)) {
+					return false;
+				}
 				LinkedList<PolyFunction> factorList = fun.getPolynomialFactors(true, true);
 				double[] coeffs;
 				double value = 1.0;
@@ -158,12 +162,12 @@ public class AlgoIsFactored extends AlgoElement {
 								return false;
 							}
 						}
-						if (canBeSimplified(node, coeffs)) {
+						if (canBeSimplified(coeffs, node)) {
 							return false;
 						}
 						value = coeffs[coeffs.length - 1];
 						for (double c : coeffs) {
-							if (!(((int) value ^ (int) c) >= 0)) {
+							if (((int) value ^ (int) c) < 0) {
 								isSameSign = false;
 								break;
 							}
@@ -181,11 +185,12 @@ public class AlgoIsFactored extends AlgoElement {
 					int numRoots = solution.curRealRoots;
 					if (numRoots > 1) {
 						for (int i = 0; i < numRoots; i++) {
-							// take only integer roots
-							if ((int) solution.curRoots[i] != i) {
-								return false;
+							// take only rational roots
+							if (!isRationalNumber(solution.curRoots[i])) {
+								return true;
 							}
 						}
+						return false;
 					}
 					return !(numRoots == 1
 							&& (int) solution.curRoots[0] == solution.curRoots[0]);
@@ -196,12 +201,21 @@ public class AlgoIsFactored extends AlgoElement {
 		return false;
 	}
 
-	private boolean canBeSimplified(ExpressionNode node, double[] coeffs) {
+	private boolean canBeSimplified(double[] coeffs, ExpressionNode node) {
+		int counter = numberOfTerms(node, 0);
+		int coeffNotZero = 0;
 		ArrayList<Double> coeffsNotInt = new ArrayList<>();
 		for (double c : coeffs) {
 			if ((int) c != c) {
 				coeffsNotInt.add(c);
 			}
+			if (c != 0) {
+				coeffNotZero++;
+			}
+		}
+		// return false for e.g. 3x-2x
+		if (counter > coeffNotZero) {
+			return true;
 		}
 		if (coeffsNotInt.isEmpty()) {
 			return false;
@@ -219,5 +233,65 @@ public class AlgoIsFactored extends AlgoElement {
 			}
 		}
 		return allInteger;
+	}
+
+	private int numberOfTerms(ExpressionNode node, int counter) {
+		int c = counter;
+		if (node.getOperation().isPlusorMinus()) {
+			if (node.getLeft().isExpressionNode()) {
+				c = numberOfTerms((ExpressionNode) node.getLeft(), c);
+			} else {
+				c++;
+			}
+			if (node.getRight().isExpressionNode()) {
+				c = numberOfTerms((ExpressionNode) node.getRight(), c);
+			} else {
+				c++;
+			}
+		} else {
+			c++;
+		}
+		return c;
+	}
+
+	private boolean hasValidStructure(ExpressionNode node) {
+		if (node.getOperation().isPlusorMinus()) {
+			if (node.getLeft() instanceof ExpressionNode) {
+				if (node.getRight() instanceof ExpressionNode) {
+					return hasValidStructure((ExpressionNode) node.getLeft()) || hasValidStructure(
+							(ExpressionNode) node.getRight());
+				}
+				return hasValidStructure((ExpressionNode) node.getLeft());
+			}
+			if (node.getRight() instanceof ExpressionNode) {
+				return hasValidStructure((ExpressionNode) node.getRight());
+			}
+		}
+		if (node.isOperation(Operation.POWER) && node.getLeft().isExpressionNode()) {
+			if (((ExpressionNode) node.getLeft()).getOperation().isPlusorMinus()) {
+				return false;
+			}
+		}
+		if (node.isOperation(Operation.MULTIPLY)) {
+			if (node.getLeft().isExpressionNode() && ((ExpressionNode) node.getLeft())
+					.getOperation().isPlusorMinus()) {
+				return false;
+			}
+			return !node.getRight().isExpressionNode() || !((ExpressionNode) node.getRight())
+					.getOperation().isPlusorMinus();
+		}
+		return true;
+	}
+
+	private boolean isRationalNumber(double number) {
+		double n = Math.abs(number);
+		for (int i = 0; i < 20; i++) {
+			double a = Math.floor(n);
+			if ((n - a) < 1e-8) {
+				return true;
+			}
+			n = 1 / (n - a);
+		}
+		return false;
 	}
 }

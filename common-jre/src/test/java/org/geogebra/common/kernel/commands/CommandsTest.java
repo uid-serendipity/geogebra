@@ -4240,8 +4240,9 @@ public class CommandsTest {
 		t("IsFactored(2x+2)", "false");
 		t("IsFactored(5(6/5x+2/5))", "false");
 		t("IsFactored((1-x)(1+x))", "true");
-//		t("IsFactored(3x-2x)", "false");
+		t("IsFactored(3x-2x)", "false");
 		t("IsFactored(x^2-x)", "false");
-//		t("IsFactored((x-1)^2+2)", "false");
+		t("IsFactored((x-1)^2+2)", "false");
+		t("IsFactored(x^2-2)", "true");
 	}
 }
