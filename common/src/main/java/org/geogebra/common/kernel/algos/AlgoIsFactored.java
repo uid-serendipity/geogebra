@@ -105,25 +105,25 @@ public class AlgoIsFactored extends AlgoElement {
 					multiplyCoeffs.add((MySpecialDouble) node.getRight());
 				}
 			}
-			if (node.getLeft() instanceof ExpressionNode) {
-				if (node.getRight() instanceof ExpressionNode) {
-					return isFactored((ExpressionNode) node.getLeft()) && isFactored(
-							(ExpressionNode) node.getRight());
+			if (node.getLeft().isExpressionNode()) {
+				if (node.getRight().isExpressionNode()) {
+					return isFactored(node.getLeft().wrap()) && isFactored(
+							node.getRight().wrap());
 				} else if (node.getRight() instanceof MySpecialDouble) {
 					numberValues += 1;
 					multiplyCoeffs.add((MySpecialDouble) node.getRight());
 				}
-				return isFactored((ExpressionNode) node.getLeft());
-			} else if (node.getRight() instanceof ExpressionNode) {
-				return isFactored((ExpressionNode) node.getRight());
+				return isFactored(node.getLeft().wrap());
+			} else if (node.getRight().isExpressionNode()) {
+				return isFactored(node.getRight().wrap());
 			}
 			return true;
 		}
 
 		if (node.isOperation(Operation.POWER)) {
 			if (node.getRight() instanceof MySpecialDouble) {
-				if (node.getLeft() instanceof ExpressionNode) {
-					return isFactored((ExpressionNode) node.getLeft());
+				if (node.getLeft().isExpressionNode()) {
+					return isFactored(node.getLeft().wrap());
 				}
 				return true;
 			}
@@ -143,62 +143,72 @@ public class AlgoIsFactored extends AlgoElement {
 				if (!hasValidStructure(node)) {
 					return false;
 				}
-				LinkedList<PolyFunction> factorList = fun.getPolynomialFactors(true, true);
-				double[] coeffs;
-				double value = 1.0;
-				boolean isSameSign = true;
-				if (factorList != null) {
-					// check coefficients of polynomial
-					for (PolyFunction pf : factorList) {
-						pf.updateCoeffValues();
-						coeffs = pf.getCoeffsCopy();
-						// return false for e.g. 2x-2
-						if (Kernel.gcd(coeffs) != 1) {
-							return false;
-						}
-						// return false for e.g. x^2+x
-						if (coeffs.length > 2) {
-							if (coeffs[0] == 0) {
-								return false;
-							}
-						}
-						if (canBeSimplified(coeffs, node)) {
-							return false;
-						}
-						value = coeffs[coeffs.length - 1];
-						for (double c : coeffs) {
-							if (((int) value ^ (int) c) < 0) {
-								isSameSign = false;
-								break;
-							}
-						}
-					}
-					if (value < 0 && isSameSign) {
-						return false;
-					}
+				// check coefficients of polynomial
+				if (!hasValidCoefficients(node, fun)) {
+					return false;
 				}
-				int degree = polyFun.getDegree();
-				if (degree > 1) {
-					// check roots
-					AlgoRootsPolynomial
-							.calcRootsMultiple(fun, 0, solution, eqnSolver);
-					int numRoots = solution.curRealRoots;
-					if (numRoots > 1) {
-						for (int i = 0; i < numRoots; i++) {
-							// take only rational roots
-							if (!isRationalNumber(solution.curRoots[i])) {
-								return true;
-							}
-						}
-						return false;
-					}
-					return !(numRoots == 1
-							&& (int) solution.curRoots[0] == solution.curRoots[0]);
-				}
-				return true;
+				// check roots
+				return hasValidRoots(polyFun, fun);
 			}
 		}
 		return false;
+	}
+
+	private boolean hasValidCoefficients(ExpressionNode node, Function fun) {
+		LinkedList<PolyFunction> factorList = fun.getPolynomialFactors(true, true);
+		if (factorList != null) {
+			double[] coeffs;
+			double value = 1.0;
+			boolean isSameSign = true;
+			for (PolyFunction pf : factorList) {
+				pf.updateCoeffValues();
+				coeffs = pf.getCoeffsCopy();
+				// return false for e.g. 2x-2
+				if (Kernel.gcd(coeffs) != 1) {
+					return false;
+				}
+				// return false for e.g. x^2+x
+				if (coeffs.length > 2) {
+					if (coeffs[0] == 0) {
+						return false;
+					}
+				}
+				if (canBeSimplified(coeffs, node)) {
+					return false;
+				}
+				value = coeffs[coeffs.length - 1];
+				for (double c : coeffs) {
+					if (((int) value ^ (int) c) < 0) {
+						isSameSign = false;
+						break;
+					}
+				}
+			}
+			return !(value < 0) || !isSameSign;
+		}
+		return true;
+	}
+
+	private boolean hasValidRoots(PolyFunction polyFun, Function fun) {
+		int degree = polyFun.getDegree();
+		if (degree > 1) {
+			// check roots
+			AlgoRootsPolynomial
+					.calcRootsMultiple(fun, 0, solution, eqnSolver);
+			int numRoots = solution.curRealRoots;
+			if (numRoots > 1) {
+				for (int i = 0; i < numRoots; i++) {
+					// take only rational roots
+					if (!isRationalNumber(solution.curRoots[i])) {
+						return true;
+					}
+				}
+				return false;
+			}
+			return !(numRoots == 1
+					&& (int) solution.curRoots[0] == solution.curRoots[0]);
+		}
+		return true;
 	}
 
 	private boolean canBeSimplified(double[] coeffs, ExpressionNode node) {
@@ -239,12 +249,12 @@ public class AlgoIsFactored extends AlgoElement {
 		int c = counter;
 		if (node.getOperation().isPlusorMinus()) {
 			if (node.getLeft().isExpressionNode()) {
-				c = numberOfTerms((ExpressionNode) node.getLeft(), c);
+				c = numberOfTerms(node.getLeft().wrap(), c);
 			} else {
 				c++;
 			}
 			if (node.getRight().isExpressionNode()) {
-				c = numberOfTerms((ExpressionNode) node.getRight(), c);
+				c = numberOfTerms(node.getRight().wrap(), c);
 			} else {
 				c++;
 			}
@@ -256,28 +266,28 @@ public class AlgoIsFactored extends AlgoElement {
 
 	private boolean hasValidStructure(ExpressionNode node) {
 		if (node.getOperation().isPlusorMinus()) {
-			if (node.getLeft() instanceof ExpressionNode) {
-				if (node.getRight() instanceof ExpressionNode) {
-					return hasValidStructure((ExpressionNode) node.getLeft()) || hasValidStructure(
-							(ExpressionNode) node.getRight());
+			if (node.getLeft().isExpressionNode()) {
+				if (node.getRight().isExpressionNode()) {
+					return hasValidStructure(node.getLeft().wrap()) || hasValidStructure(
+							node.getRight().wrap());
 				}
-				return hasValidStructure((ExpressionNode) node.getLeft());
+				return hasValidStructure(node.getLeft().wrap());
 			}
-			if (node.getRight() instanceof ExpressionNode) {
-				return hasValidStructure((ExpressionNode) node.getRight());
+			if (node.getRight().isExpressionNode()) {
+				return hasValidStructure(node.getRight().wrap());
 			}
 		}
 		if (node.isOperation(Operation.POWER) && node.getLeft().isExpressionNode()) {
-			if (((ExpressionNode) node.getLeft()).getOperation().isPlusorMinus()) {
+			if (node.getLeft().wrap().getOperation().isPlusorMinus()) {
 				return false;
 			}
 		}
 		if (node.isOperation(Operation.MULTIPLY)) {
-			if (node.getLeft().isExpressionNode() && ((ExpressionNode) node.getLeft())
+			if (node.getLeft().isExpressionNode() && node.getLeft().wrap()
 					.getOperation().isPlusorMinus()) {
 				return false;
 			}
-			return !node.getRight().isExpressionNode() || !((ExpressionNode) node.getRight())
+			return !node.getRight().isExpressionNode() || !node.getRight().wrap()
 					.getOperation().isPlusorMinus();
 		}
 		return true;
