@@ -15,13 +15,14 @@ import org.geogebra.common.kernel.commands.Commands;
 import org.geogebra.common.kernel.geos.GeoBoolean;
 import org.geogebra.common.kernel.geos.GeoElement;
 import org.geogebra.common.kernel.geos.GeoFunction;
+import org.geogebra.common.kernel.geos.GeoFunctionable;
 import org.geogebra.common.kernel.geos.GeoNumeric;
 import org.geogebra.common.plugin.Operation;
 
 public class AlgoIsFactored extends AlgoElement {
 
-	private GeoElement inputGeo; // input
-	private GeoBoolean outputBoolean; // output
+	private final GeoFunctionable inputGeo;
+	private final GeoBoolean outputBoolean;
 
 	private FunctionVariable fv;
 
@@ -33,21 +34,18 @@ public class AlgoIsFactored extends AlgoElement {
 
 	/**
 	 * @param cons construction
-	 * @param label label
 	 * @param inputGeo function or number
 	 */
-	public AlgoIsFactored(Construction cons, String label, GeoElement inputGeo) {
+	public AlgoIsFactored(Construction cons, GeoFunctionable inputGeo) {
 		super(cons);
 		this.inputGeo = inputGeo;
-
-		outputBoolean = new GeoBoolean(cons);
+		this.outputBoolean = new GeoBoolean(cons);
 
 		eqnSolver = cons.getKernel().getEquationSolver();
 		solution.resetRoots();
 
 		setInputOutput();
 		compute();
-		outputBoolean.setLabel(label);
 	}
 
 	@Override
@@ -57,19 +55,9 @@ public class AlgoIsFactored extends AlgoElement {
 
 	@Override
 	protected void setInputOutput() {
-		input = new GeoElement[1];
-		input[0] = inputGeo;
-
-		super.setOutputLength(1);
-		super.setOutput(0, outputBoolean);
+		input = new GeoElement[]{inputGeo.toGeoElement()};
+		setOnlyOutput(outputBoolean);
 		setDependencies(); // done by AlgoElement
-	}
-
-	/**
-	 * @return boolean result
-	 */
-	public GeoBoolean getResult() {
-		return outputBoolean;
 	}
 
 	@Override
@@ -78,20 +66,19 @@ public class AlgoIsFactored extends AlgoElement {
 			outputBoolean.setValue(true);
 			return;
 		}
-		if (inputGeo instanceof GeoFunction) {
-			if (!((GeoFunction) inputGeo).getFunction().isPolynomialFunction(true, false)) {
-				outputBoolean.setUndefinedProverOnly();
-				return;
+		Function function = inputGeo.getFunction();
+		if (!function.isPolynomialFunction(true, false)) {
+			outputBoolean.setUndefinedProverOnly();
+			return;
+		}
+		fv = function.getFunctionVariable();
+		ExpressionNode node = function.getGeoFunction().getFunctionExpression();
+		if (node != null) {
+			boolean isFactored = isFactored(node);
+			if (isFactored && numberValues > 1) {
+				isFactored = false;
 			}
-			fv = ((GeoFunction) inputGeo).getFunction().getFunctionVariable();
-			ExpressionNode node = ((GeoFunction) inputGeo).getFunctionExpression();
-			if (node != null) {
-				boolean isFactored = isFactored(node);
-				if (isFactored && numberValues > 1) {
-					isFactored = false;
-				}
-				outputBoolean.setValue(isFactored);
-			}
+			outputBoolean.setValue(isFactored);
 		}
 	}
 
@@ -184,7 +171,7 @@ public class AlgoIsFactored extends AlgoElement {
 					}
 				}
 			}
-			return !(value < 0) || !isSameSign;
+			return value >= 0 || !isSameSign;
 		}
 		return true;
 	}

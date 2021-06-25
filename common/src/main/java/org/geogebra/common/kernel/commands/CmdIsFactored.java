@@ -4,6 +4,7 @@ import org.geogebra.common.kernel.Kernel;
 import org.geogebra.common.kernel.algos.AlgoIsFactored;
 import org.geogebra.common.kernel.arithmetic.Command;
 import org.geogebra.common.kernel.geos.GeoElement;
+import org.geogebra.common.kernel.geos.GeoFunctionable;
 import org.geogebra.common.main.MyError;
 
 public class CmdIsFactored extends CommandProcessor {
@@ -19,24 +20,18 @@ public class CmdIsFactored extends CommandProcessor {
 	}
 
 	@Override
-	final public GeoElement[] process(Command c) throws MyError {
+	final public GeoElement[] process(Command c, EvalInfo info) throws MyError {
 		int n = c.getArgumentNumber();
-		GeoElement[] arg;
-		arg = resArgs(c);
+		GeoElement[] arg = resArgs(c);
 
-		switch (n) {
-		case 1:
-			if (arg[0].isGeoElement()) {
-
-				AlgoIsFactored algo = new AlgoIsFactored(cons, c.getLabel(), arg[0]);
-
-				GeoElement[] ret = { algo.getResult() };
-				return ret;
+		if (n == 1) {
+			if (arg[0] instanceof GeoFunctionable) {
+				AlgoIsFactored algo = new AlgoIsFactored(cons, (GeoFunctionable) arg[0]);
+				algo.getOutput(0).setLabel(c.getLabel());
+				return new GeoElement[]{algo.getOutput(0)};
 			}
 			throw argErr(c, arg[0]);
-
-		default:
-			throw argNumErr(c);
 		}
+		throw argNumErr(c);
 	}
 }
