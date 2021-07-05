@@ -255,7 +255,7 @@ public class AlgoIsFactored extends AlgoElement {
 		if (node.getOperation().isPlusorMinus()) {
 			if (node.getLeft().isExpressionNode()) {
 				if (node.getRight().isExpressionNode()) {
-					return hasValidStructure(node.getLeft().wrap()) || hasValidStructure(
+					return hasValidStructure(node.getLeft().wrap()) && hasValidStructure(
 							node.getRight().wrap());
 				}
 				return hasValidStructure(node.getLeft().wrap());
@@ -270,12 +270,16 @@ public class AlgoIsFactored extends AlgoElement {
 			}
 		}
 		if (node.isOperation(Operation.MULTIPLY)) {
-			if (node.getLeft().isExpressionNode() && node.getLeft().wrap()
-					.getOperation().isPlusorMinus()) {
-				return false;
+			if (node.getLeft().isExpressionNode()) {
+				if (node.getRight().isExpressionNode()) {
+					return hasValidStructure(node.getLeft().wrap()) && hasValidStructure(
+							node.getRight().wrap());
+				}
+				return hasValidStructure(node.getLeft().wrap());
 			}
-			return !node.getRight().isExpressionNode() || !node.getRight().wrap()
-					.getOperation().isPlusorMinus();
+			if (node.getRight().isExpressionNode()) {
+				return hasValidStructure(node.getRight().wrap());
+			}
 		}
 		return true;
 	}
