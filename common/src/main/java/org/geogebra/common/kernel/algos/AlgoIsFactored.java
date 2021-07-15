@@ -3,6 +3,7 @@ package org.geogebra.common.kernel.algos;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import org.geogebra.common.factories.FormatFactory;
 import org.geogebra.common.kernel.Construction;
 import org.geogebra.common.kernel.EquationSolverInterface;
 import org.geogebra.common.kernel.Kernel;
@@ -19,6 +20,7 @@ import org.geogebra.common.kernel.geos.GeoFunction;
 import org.geogebra.common.kernel.geos.GeoFunctionable;
 import org.geogebra.common.kernel.geos.GeoNumeric;
 import org.geogebra.common.plugin.Operation;
+import org.geogebra.common.util.NumberFormatAdapter;
 
 public class AlgoIsFactored extends AlgoElement {
 
@@ -187,16 +189,15 @@ public class AlgoIsFactored extends AlgoElement {
 			if (numRoots > 1) {
 				for (int i = 0; i < numRoots; i++) {
 					// take only rational roots
-					if (!isRationalNumber(solution.curRoots[i])) {
-						return !hasConjugateComplexRoots(fun);
+					if (isRationalNumber(solution.curRoots[i])) {
+						return false;
 					}
 				}
-				return false;
 			}
 			boolean hasValidRealRoots = !(numRoots == 1
 					&& isRationalNumber(solution.curRoots[0]));
 			// check complex roots
-			if (hasConjugateComplexRoots(fun)) {
+			if (hasValidComplexRoots(fun, degree)) {
 				return false;
 			}
 			return hasValidRealRoots;
@@ -204,17 +205,53 @@ public class AlgoIsFactored extends AlgoElement {
 		return true;
 	}
 
-	private boolean hasConjugateComplexRoots(Function fun) {
-		// basic idea: if roots are conjugates: (x-z)(x-zconjugate) = x^2-2*Re(z)+|z|^2
+	private boolean hasValidComplexRoots(Function fun, int degree) {
+		// basic idea: if roots are conjugates: (x-z)(x-zconjugate) = x^2-2*Re(z)x+|z|^2
+		// coefficients should be integer
 		double[] curComplexRoots =
 				AlgoComplexRootsPolynomial.calcComplexRoots(fun, solution, null, eqnSolver);
 		double[] realRoots = solution.curRoots;
-		// check if there are complex conjugates
-		for (int i = 0; i < solution.curRealRoots; i++) {
-			for (int j = i; j < solution.curRealRoots; j++) {
-				if (realRoots[i] == realRoots[j]) {
-					if (curComplexRoots[i] != 0 && curComplexRoots[i] == -curComplexRoots[j]) {
+		NumberFormatAdapter nf = FormatFactory.getPrototype().getNumberFormat(4);
+		//check if there are roots with b = 0 (z=a+ib)
+		boolean complexRootsZero = true;
+		int numberOfRealRootsNoImaginaryPart = 0;
+		double[] realRootNoImaginaryPart = new double[realRoots.length];
+		for (int k = 0; k < solution.curRealRoots; k++) {
+			if (Math.abs(Double.parseDouble(nf.format(curComplexRoots[k])))== 0) {
+				numberOfRealRootsNoImaginaryPart += 1;
+				realRootNoImaginaryPart[k] = realRoots[k];
+			}
+			if (Math.abs(Double.parseDouble(nf.format(curComplexRoots[k])))!= 0) {
+				complexRootsZero = false;
+				break;
+			}
+		}
+		if (complexRootsZero && degree > 2) {
+			return true;
+		}
+		if (numberOfRealRootsNoImaginaryPart > 0) {
+			for (int n = 0; n < numberOfRealRootsNoImaginaryPart; n++) {
+				double value = realRootNoImaginaryPart[n];
+				for (int m = 0; m < degree - 1; m++) {
+					if (isRationalNumber(value)) {
 						return true;
+					}
+					value *= realRootNoImaginaryPart[n];
+				}
+			}
+		}
+		//check the complex conjugates
+		for (int i = 0; i < solution.curRealRoots; i++) {
+			for (int j = i + 1; j < solution.curRealRoots; j++) {
+				if (nf.format(realRoots[i]).equals(nf.format(realRoots[j]))) {
+					double acomplexRoot = Double.parseDouble(nf.format(curComplexRoots[i]));
+					double acomplexRoot2 = Double.parseDouble(nf.format(curComplexRoots[j]));
+					if (nf.format(curComplexRoots[i]).equals(nf.format(-curComplexRoots[j]))) {
+						double factor = realRoots[i] * realRoots[i] + acomplexRoot * acomplexRoot2;
+						double factor2 = 2 * realRoots[i];
+						if (isRationalNumber(factor) && isRationalNumber(factor2)) {
+							return true;
+						}
 					}
 				}
 			}
