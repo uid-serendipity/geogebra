@@ -2121,14 +2121,15 @@ public class CommandsTest {
 		t("IsFactored[ x^2-2 ]", "true");
 		t("IsFactored[ 3(x+1)^2+1 ]", "false");
 		t("IsFactored[ (x+1)x+2 ]", "false");
-		t("IsFactored[ x^15+27 ]", "false");
 		t("IsFactored[ x^3-64 ]", "false");
 		t("IsFactored[ x^4+4 ]", "false");
 		t("IsFactored[ 5(x-16/5)(x+3) ]", "false");
 		t("IsFactored[ 49(x-3/7)(x+3/7) ]", "false");
-		t("IsFactored[ x^6-9x^4+27x^2-27 ]", "false");
-		t("IsFactored[ x^7+x^6+6x^4+6x^3+9x+9 ]", "false");
 		t("IsFactored[ 45x^4+15x^3-34x^2+86x-60 ]", "false");
+		t("IsFactored[ (x^2+1)^2 ]", "true");
+		t("IsFactored[ x^4+2x^2+1 ]", "false");
+		t("IsFactored[ x^4+3x^2+1+2x^3+2x ]", "false");
+		t("IsFactored[ -4x^4+24x^3+5x^2+18x+6 ]", "false");
 	}
 
 	@Test

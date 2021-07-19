@@ -1426,9 +1426,4 @@ public abstract class CasTestJsonCommon {
 	public void testQuartile3() {
 		testCat("Q3.1");
 	}
-
-	@Test
-	public void testIsFactored() {
-		testCat("IsFactored.1");
-	}
 }
