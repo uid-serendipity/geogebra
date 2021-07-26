@@ -1578,4 +1578,13 @@ public class GeoSymbolicTest extends BaseSymbolicTest {
 				is("m1\\, = \\,\\left(\\begin{array}{rr}-2&1"
 						+ "\\\\\\frac{3}{2}&\\frac{-1}{2}\\\\ \\end{array}\\right)"));
 	}
+
+	@Test
+	public void testArgumentOrderRemainsUnchanged() {
+		add("f(x, a) = x^2 + a");
+		GeoSymbolic symbolic = add("fs(x,a)=Derivative(f(x,a),x)");
+		assertThat(symbolic.getFunctionVariables().length, is(2));
+		assertThat(symbolic.getFunctionVariables()[0].getSetVarString(), is("x"));
+		assertThat(symbolic.getFunctionVariables()[1].getSetVarString(), is("a"));
+	}
 }
