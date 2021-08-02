@@ -514,7 +514,7 @@ public abstract class EuclidianView implements EuclidianViewInterfaceCommon,
 
 	private Rectangle visibleRect;
 
-		public static class Rectangle {
+	public static class Rectangle {
 
 		private double minX;
 		private double maxX;
@@ -3644,14 +3644,7 @@ public abstract class EuclidianView implements EuclidianViewInterfaceCommon,
 			previewDrawable.drawPreview(g2);
 		}
 		adjustObjects();
-
-		if (hasSpotlight()) {
-			GeoElementND spotlight = euclidianController.getSpotlight();
-			Drawable d = (Drawable) getDrawableFor(spotlight);
-			if (d != null) {
-				d.draw(g2);
-			}
-		}
+		drawMasks(g2);
 	}
 
 	/**
