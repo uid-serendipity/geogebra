@@ -2130,6 +2130,9 @@ public class CommandsTest {
 		t("IsFactored[ x^4+2x^2+1 ]", "false");
 		t("IsFactored[ x^4+3x^2+1+2x^3+2x ]", "false");
 		t("IsFactored[ -4x^4+24x^3+5x^2+18x+6 ]", "false");
+		t("IsFactored[ -36x^4-56x^3+69x^2+53x-18 ]", "false");
+		t("IsFactored[ 26x^4+16x^3-69x^2-53x+18 ]", "true");
+		t("IsFactored[ -x^4+3x^2+1 ]", "true");
 	}
 
 	@Test
