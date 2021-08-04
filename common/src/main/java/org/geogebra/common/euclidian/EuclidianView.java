@@ -3637,7 +3637,6 @@ public abstract class EuclidianView implements EuclidianViewInterfaceCommon,
 	 */
 	public void drawObjects(GGraphics2D g2) {
 		drawGeometricObjects(g2);
-		drawMasks(g2);
 		drawActionObjects(g2);
 
 		if (previewDrawable != null) {
