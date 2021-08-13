@@ -2111,11 +2111,11 @@ public class CommandsTest {
 		t("IsFactored[ x(2x+2) ]", "false");
 		t("IsFactored[ x^3-1 ]", "false");
 		t("IsFactored[ x(x/2+1/2) ]", "false");
-		t("IsFactored[ sin^2(x)-cos^2(x) ]", "false");
-		t("IsFactored[ (sin(x)+cos(x))(sin(x)+cos(x)) ]", "false");
+		t("IsFactored[ sin^2(x)-cos^2(x) ]", "?");
+		t("IsFactored[ (sin(x)+cos(x))(sin(x)+cos(x)) ]", "?");
 		t("IsFactored[ 0.5(x+1)2 ]", "false");
 		t("IsFactored[ (x+1)(x^2-1) ]", "false");
-		t("IsFactored[ (x+1)^2(x+2)^2((x+1)(2x+2))^2 ]", "false");
+		t("IsFactored[ (x+1)^2(x+2)^2((x+1)(2x+2))^2 ]", "?");
 		t("IsFactored[ (x+1)(2x+2) ]", "false");
 		t("IsFactored[ -2x-2 ]", "false");
 		t("IsFactored[ -x-1 ]", "false");
@@ -2150,7 +2150,7 @@ public class CommandsTest {
 
 	@Test
 	public void cmdIsPrime() {
-		t("IsPrime[0]", "false");
+		t("IsPrime[0]", "?");
 	}
 
 	@Test
