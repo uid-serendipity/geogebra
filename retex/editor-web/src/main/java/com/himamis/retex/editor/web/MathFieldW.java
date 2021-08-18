@@ -131,6 +131,7 @@ public class MathFieldW implements MathField, IsWidget, MathFieldAsync, BlurHand
 	private int fixMargin = 0;
 	private int minHeight = 0;
 	private boolean wasPaintedWithCursor;
+	private int rightMargin = 30;
 
 	/**
 	 * @param converter
@@ -596,7 +597,7 @@ public class MathFieldW implements MathField, IsWidget, MathFieldAsync, BlurHand
 	}
 
 	private double computeWidth() {
-		return roundUp(lastIcon.getIconWidth() + 30);
+		return roundUp(lastIcon.getIconWidth() + rightMargin);
 	}
 
 	/**
@@ -1214,7 +1215,8 @@ public class MathFieldW implements MathField, IsWidget, MathFieldAsync, BlurHand
 	 *            panel to be scrolled
 	 */
 	public void scrollParentHorizontally(FlowPanel parentPanel) {
-		MathFieldScroller.scrollHorizontallyToCursor(parentPanel, lastIcon.getCursorX());
+		MathFieldScroller.scrollHorizontallyToCursor(parentPanel,
+				rightMargin, lastIcon.getCursorX());
 	}
 
 	/**
@@ -1239,5 +1241,9 @@ public class MathFieldW implements MathField, IsWidget, MathFieldAsync, BlurHand
 	public void setInputBoxFunctionVariables(List<String> funcVars) {
 		metaModel.setInputBoxFunctionVars(funcVars);
 		metaModel.enableSubstitutions();
+	}
+
+	public void setRightMargin(int rightMargin) {
+		this.rightMargin = rightMargin;
 	}
 }
