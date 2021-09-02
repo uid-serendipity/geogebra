@@ -202,11 +202,7 @@ class SimpleTableValuesModel implements TableValuesModel {
 		return -1;
 	}
 
-	/**
-	 * Get the evaluatable from the model.
-	 * @param index index of the object
-	 * @return evaluatable if present in the model
-	 */
+	@Override
 	public GeoEvaluatable getEvaluatable(int index) {
 		if (index < columns.size() && index > -1) {
 			return columns.get(index).getEvaluatable();
