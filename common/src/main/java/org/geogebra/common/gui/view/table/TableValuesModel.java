@@ -1,5 +1,7 @@
 package org.geogebra.common.gui.view.table;
 
+import org.geogebra.common.kernel.kernelND.GeoEvaluatable;
+
 /**
  * Class to hold values of table view and handle listeners.
  */
@@ -43,4 +45,11 @@ public interface TableValuesModel {
 	 * @return the header string
 	 */
 	String getHeaderAt(int column);
+
+	/**
+	 * Return the evaluatable at the given index.
+	 * @param index of the column
+	 * @return the evaluatable
+	 */
+	GeoEvaluatable getEvaluatable(int index);
 }
