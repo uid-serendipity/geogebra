@@ -88,6 +88,8 @@ public class GgbMockitoTestRunner extends GwtMockitoTestRunner {
                 Boolean.class);
         StubGenerator.replaceMethodWithMock(StyleInjector.class, "inject",
                 Void.class);
+        StubGenerator.replaceMethodWithMock(Dom.class, "querySelector", Void.class);
+        StubGenerator.replaceMethodWithMock(Dom.class, "querySelectorForElement", Void.class);
     }
 
     @Override
