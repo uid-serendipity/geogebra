@@ -6987,6 +6987,10 @@ public abstract class GeoElement extends ConstructionElement implements GeoEleme
 
 	@Override
 	public boolean addAuralCaption(ScreenReaderBuilder sb) {
+		if (hasDynamicCaption()) {
+			sb.append(dynamicCaption.getTextString());
+			return true;
+		}
 		if (!StringUtil.empty(getCaptionSimple())) {
 			if (CanvasDrawable.isLatexString(caption)) {
 				String myCaption = getCaption(StringTemplate.latexTemplate);
