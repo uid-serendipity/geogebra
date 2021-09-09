@@ -1588,6 +1588,15 @@ public class GeoSymbolicTest extends BaseSymbolicTest {
 	}
 
 	@Test
+	public void testRedefinitionWithTwoVariables() {
+		add("f(a)=k a^2");
+		GeoSymbolic symbolic = add("f(a, k)=k+a^2");
+		assertThat(symbolic.toString(StringTemplate.defaultTemplate), is("f(a, k) = a² + k"));
+		GeoSymbolic result = add("f(1,2)");
+		assertThat(result.toString(StringTemplate.defaultTemplate), is("a = 3"));
+	}
+
+	@Test
 	public void testArgumentOrderRemainsUnchanged() {
 		add("f(x, a) = x^2 + a");
 		GeoSymbolic symbolic = add("fs(x,a)=Derivative(f(x,a),x)");
@@ -1597,11 +1606,9 @@ public class GeoSymbolicTest extends BaseSymbolicTest {
 	}
 
 	@Test
-	public void testRedefinitionWithTwoVariables() {
-		add("f(a)=k a^2");
-		GeoSymbolic symbolic = add("f(a, k)=k+a^2");
-		assertThat(symbolic.toString(StringTemplate.defaultTemplate), is("f(a, k) = a² + k"));
-		GeoSymbolic result = add("f(1,2)");
-		assertThat(result.toString(StringTemplate.defaultTemplate), is("a = 3"));
+	public void numericAlternativeCommand() {
+		add("f(x) = -x^2 * e^(-x)");
+		add("g(x) = 1 + (f'(x))^2");
+		t("Integral(sqrt(g),0,20)", "20.12144888423");
 	}
 }
