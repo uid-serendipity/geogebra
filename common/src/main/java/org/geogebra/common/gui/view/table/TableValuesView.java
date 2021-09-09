@@ -396,4 +396,10 @@ public class TableValuesView implements TableValues, SettingListener {
 	public TableValuesProcessor getProcessor() {
 		return processor;
 	}
+
+	public TableValuesModel getModel() {
+		return model;
+	}
+
+
 }

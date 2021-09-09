@@ -45,11 +45,4 @@ public interface TableValuesModel {
 	 * @return the header string
 	 */
 	String getHeaderAt(int column);
-
-	/**
-	 * Return the evaluatable at the given index.
-	 * @param index of the column
-	 * @return the evaluatable
-	 */
-	GeoEvaluatable getEvaluatable(int index);
 }
