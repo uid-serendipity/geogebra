@@ -3571,10 +3571,6 @@ public abstract class App implements UpdateSelection, AppInterface, EuclidianHos
 		}
 	}
 
-	public void doRepaintViews() {
-		// TODO Auto-generated method stub
-	}
-
 	/**
 	 * @return SignInOperation eventFlow
 	 */
