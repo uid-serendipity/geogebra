@@ -311,7 +311,12 @@
 
                         target.evalXML(last.content);
                         target.api.previewRefresh();
-                        this.sendEvent("conflictResolution", target.api.getAlgorithmXML(newLabel), last.label);
+
+                        const getXML = (label) =>
+                            target.api.isIndependent(label) ? target.api.getXML(label) : target.api.getAlgorithmXML(label);
+
+                        this.sendEvent("conflictResolution", getXML(newLabel) + getXML(last.label), last.label);
+                        this.sendEvent("orderingChange", target.api.getOrdering(), null)
                     } else {
                         conflictedObjects.push(last.label);
                     }
@@ -321,6 +326,9 @@
                 }
             } else if (last.type == "conflictResolution") {
                 conflictedObjects.splice(conflictedObjects.indexOf(last.label), 1);
+                this.unregisterListeners();
+                target.api.deleteObject(last.label);
+                this.registerListeners();
                 target.evalXML(last.content);
                 target.api.previewRefresh();
             } else if (last.type == "evalXML") {
