@@ -91,7 +91,6 @@ public abstract class StickyTable<T> extends FlowPanel {
 	private void createDataProvider() {
 		dataProvider = new ListDataProvider<>();
 		dataProvider.addDataDisplay(cellTable);
-
 	}
 
 	/**
@@ -103,7 +102,6 @@ public abstract class StickyTable<T> extends FlowPanel {
 	 * Decreases the number of columns by removing the last column.
 	 */
 	protected void decreaseColumnNumber() {
-
 		// In AbstractCellTable model each column remembers its index
 		// so deleting last column and let dataProvider do the rest we need.
 		cellTable.removeColumn(cellTable.getColumnCount() - 1);
@@ -144,11 +142,9 @@ public abstract class StickyTable<T> extends FlowPanel {
 	 * @param column to get
 	 * @return the header element.
 	 */
-	public static Element getHeaderElement(int column) {
-		// gives the columnth element of the header row. (nth-child is 1 indexed)
-		NodeList<Element> list = Dom.querySelectorAll(
-				".values tr th:nth-child(" + (column + 1) + ") .cell");
-		return list != null ? list.getItem(0) : null;
+	public Element getHeaderElement(int column) {
+		return Dom.querySelectorForElement(cellTable.getTableHeadElement(),
+				".values tr th:nth-child(" + (column + 1) + ") .content");
 	}
 
 	/**
@@ -156,9 +152,10 @@ public abstract class StickyTable<T> extends FlowPanel {
 	 *            to get
 	 * @return the list of the specified value column elements (without the header).
 	 */
-	public static NodeList<Element> getColumnElements(int column) {
+	public elemental2.dom.NodeList<elemental2.dom.Element> getColumnElements(int column) {
+		elemental2.dom.Element body = Js.uncheckedCast(cellTable.getTableBodyElement());
 		// gives the columnth element of each row of the value table. (nth-child is 1 indexed)
-		return Dom.querySelectorAll(".values tr td:nth-child(" + (column + 1) + ") .cell");
+		return body.querySelectorAll(".values tr td:nth-child(" + (column + 1) + ")");
 	}
 
 	/**

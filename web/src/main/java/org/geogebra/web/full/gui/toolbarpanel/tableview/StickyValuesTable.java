@@ -2,7 +2,6 @@ package org.geogebra.web.full.gui.toolbarpanel.tableview;
 
 import java.util.List;
 
-import org.geogebra.common.gui.view.table.InvalidValuesException;
 import org.geogebra.common.gui.view.table.TableValuesListener;
 import org.geogebra.common.gui.view.table.TableValuesModel;
 import org.geogebra.common.gui.view.table.TableValuesView;
@@ -15,14 +14,13 @@ import org.geogebra.web.full.gui.util.MyToggleButtonW;
 import org.geogebra.web.html5.gui.util.MathKeyboardListener;
 import org.geogebra.web.html5.gui.util.NoDragImage;
 import org.geogebra.web.html5.main.AppW;
-import org.geogebra.web.html5.util.CSSEvents;
+import org.geogebra.web.html5.util.Dom;
 import org.geogebra.web.html5.util.StickyTable;
 import org.geogebra.web.html5.util.TestHarness;
 
 import com.google.gwt.cell.client.Cell;
 import com.google.gwt.cell.client.SafeHtmlCell;
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.NodeList;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.Header;
@@ -30,6 +28,7 @@ import com.google.gwt.user.cellview.client.SafeHtmlHeader;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 
+import elemental2.dom.NodeList;
 import jsinterop.base.Js;
 
 /**
@@ -102,13 +101,6 @@ public class StickyValuesTable extends StickyTable<TVRowData> implements TableVa
 			return false;
 		});
 		addBodyPointerDownHandler((row, column, evt) -> {
-			if (tableModel.getRowCount() == 0) {
-				try {
-					view.setValues(0, 10, 1);
-				} catch (InvalidValuesException e) {
-					e.printStackTrace();
-				}
-			}
 			if (row < tableModel.getRowCount()
 					&& column < tableModel.getColumnCount()) {
 				if (isColumnEditable(column)) {
@@ -118,7 +110,7 @@ public class StickyValuesTable extends StickyTable<TVRowData> implements TableVa
 			} else if (column == tableModel.getColumnCount()) {
 				// do nothing now, start editing empty column in follow up ticket
 			} else if (row == tableModel.getRowCount()) {
-				// do nothing now, start editing empty row in follow up ticket
+				editor.startEditing(row, column, evt);
 			}
 			return false;
 		});
@@ -204,7 +196,7 @@ public class StickyValuesTable extends StickyTable<TVRowData> implements TableVa
 			reset();
 			return;
 		}
-		NodeList<Element> elems = getColumnElements(column);
+		NodeList<elemental2.dom.Element> elems = getColumnElements(column);
 		Element header = getHeaderElement(column);
 
 		if (elems == null || elems.getLength() == 0 || header == null) {
@@ -212,14 +204,13 @@ public class StickyValuesTable extends StickyTable<TVRowData> implements TableVa
 			return;
 		}
 		transitioning = true;
-
-		header.addClassName("delete");
-
-		CSSEvents.runOnTransition(this::onDeleteColumn, header, "delete");
+		header.getParentElement().addClassName("deleteCol");
+		Dom.addEventListener(header, "transitionend", e -> onDeleteColumn());
+		app.invokeLater(() -> header.addClassName("delete"));
 
 		for (int i = 0; i < elems.getLength(); i++) {
-			Element e = elems.getItem(i);
-			e.addClassName("delete");
+			elemental2.dom.Element e = elems.getAt(i);
+			e.classList.add("deleteCol");
 		}
 	}
 
@@ -271,7 +262,8 @@ public class StickyValuesTable extends StickyTable<TVRowData> implements TableVa
 
 		Element headerElement = getHeaderElement(view.getColumn(geo));
 		if (headerElement != null) {
-			setHorizontalScrollPosition(headerElement.getAbsoluteLeft());
+			setHorizontalScrollPosition(headerElement.getParentElement().getAbsoluteLeft()
+					- getAbsoluteLeft());
 		}
 	}
 
@@ -284,13 +276,13 @@ public class StickyValuesTable extends StickyTable<TVRowData> implements TableVa
 	@Override
 	public void notifyColumnChanged(TableValuesModel model, GeoEvaluatable evaluatable,
 			int column) {
-		//
+		reset();
 	}
 
 	@Override
 	public void notifyCellChanged(TableValuesModel model, GeoEvaluatable evaluatable, int column,
 			int row) {
-		//
+		reset();
 	}
 
 	@Override
