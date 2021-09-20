@@ -7277,6 +7277,7 @@ public abstract class EuclidianController implements SpecialPointsListener {
 				if (!app.showView(App.VIEW_PROPERTIES)) {
 					selection.removeSelectedGeo(movedGeoBoolean); // make sure
 					// doesn't get selected
+					selection.setTempSelectedBoolean(movedGeoBoolean);
 				}
 				movedGeoBoolean.updateCascade();
 				this.checkboxChangeOccured = true;
