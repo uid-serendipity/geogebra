@@ -78,10 +78,6 @@ public class Browser {
 		return base != null && Js.asPropertyMap(base).has(propertyName);
 	}
 
-	public static boolean supportsPointerEvents() {
-		return hasGlobal("PointerEvent");
-	}
-
 	/**
 	 * @param thumb
 	 *            original URL
