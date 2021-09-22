@@ -87,6 +87,7 @@ public class MathFieldEditor implements IsWidget, HasKeyboardPopup, BlurHandler 
 		mathField.setExpressionReader(ScreenReader.getExpressionReader(app));
 		mathField.setOnBlur(this);
 		updatePixelRatio();
+		app.addWindowResizeListener(this::updatePixelRatio);
 		getMathField().setBackgroundColor("rgba(255,255,255,0)");
 		app.addWindowResizeListener(this::updatePixelRatio);
 		app.getGlobalHandlers().addEventListener(mathField.asWidget().getElement(),
@@ -107,8 +108,8 @@ public class MathFieldEditor implements IsWidget, HasKeyboardPopup, BlurHandler 
 	private void initEventHandlers() {
 		blurHandlers = new ArrayList<>();
 		EventUtil.stopPointer(main.getElement());
-
 		ClickStartHandler.init(main,
+
 				new ClickStartHandler(false, true) {
 
 					@Override
@@ -345,14 +346,6 @@ public class MathFieldEditor implements IsWidget, HasKeyboardPopup, BlurHandler 
 		return AccessibleInputBox.getErrorText(app.getLocalization());
 	}
 
-	public void setRightMargin(int rightMargin) {
-		mathField.setRightMargin(rightMargin);
-	}
-
-	public void adjustCaret(double x, double y) {
-		mathField.adjustCaret((int) x, (int) y);
-	}
-
 	/**
 	 * Remove all listeners
 	 */
@@ -366,5 +359,13 @@ public class MathFieldEditor implements IsWidget, HasKeyboardPopup, BlurHandler 
 		mathField.getInternal().setFieldListener(null);
 		mathField.getInternal().setSyntaxAdapter(null);
 		mathField.setExpressionReader(null);
+	}
+
+	public void setRightMargin(int rightMargin) {
+		mathField.setRightMargin(rightMargin);
+	}
+
+	public void adjustCaret(double x, double y) {
+		mathField.adjustCaret((int) x, (int) y);
 	}
 }
