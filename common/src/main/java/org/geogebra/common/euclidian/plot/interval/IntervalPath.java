@@ -66,11 +66,11 @@ public class IntervalPath {
 		Interval x = view.toScreenIntervalX(point.x());
 		Interval y = view.toScreenIntervalY(point.y());
 		if (model.isAscending(point)) {
-			gp.moveTo(x.getLow(), y.getHigh());
-			gp.lineTo(x.getHigh(), y.getLow());
-		} else {
 			gp.moveTo(x.getLow(), y.getLow());
 			gp.lineTo(x.getHigh(), y.getHigh());
+		} else {
+			gp.moveTo(x.getLow(), y.getHigh());
+			gp.lineTo(x.getHigh(), y.getLow());
 		}
 	}
 
