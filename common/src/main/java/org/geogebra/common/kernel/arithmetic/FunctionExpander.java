@@ -23,6 +23,7 @@ public class FunctionExpander implements Traversing {
 	private static FunctionExpander collector = new FunctionExpander();
 	// store function variables if needed
 	private FunctionVariable[] variables = null;
+	private int constructionIndex = Integer.MAX_VALUE;
 
 	private ExpressionValue expand(GeoElement geo) {
 		if (geo instanceof FunctionalNVar) {
@@ -240,7 +241,7 @@ public class FunctionExpander implements Traversing {
 						&& !contains((GeoDummyVariable) en.getLeft())) {
 					geo = ((GeoDummyVariable) en.getLeft())
 							.getElementWithSameName();
-					if (geo != null) {
+					if (geo != null && hasLowerConstructionIndex(geo)) {
 						en.setLeft(expand(geo));
 					}
 				}
@@ -267,7 +268,7 @@ public class FunctionExpander implements Traversing {
 						&& !contains((GeoDummyVariable) en.getRight())) {
 					geo = ((GeoDummyVariable) en.getRight())
 							.getElementWithSameName();
-					if (geo != null) {
+					if (geo != null && hasLowerConstructionIndex(geo)) {
 						en.setRight(expand(geo));
 					}
 				}
@@ -275,7 +276,7 @@ public class FunctionExpander implements Traversing {
 		} else if (ev instanceof GeoDummyVariable
 				&& !contains((GeoDummyVariable) ev)) {
 			GeoElement geo = ((GeoDummyVariable) ev).getElementWithSameName();
-			if (geo != null) {
+			if (geo != null && hasLowerConstructionIndex(geo)) {
 				return expand(geo);
 			}
 		} else if (ev instanceof GeoCasCell) {
@@ -294,12 +295,27 @@ public class FunctionExpander implements Traversing {
 		return ev;
 	}
 
+	private boolean hasLowerConstructionIndex(GeoElement element) {
+		return element.getConstructionIndex() < constructionIndex;
+	}
+
 	/**
 	 * Resets and returns the collector
 	 *
 	 * @return function expander
 	 */
 	public static FunctionExpander getCollector() {
+		return getCollector(null);
+	}
+
+	/**
+	 * Resets and returns the collector
+	 * @param element geo element to use collector for
+	 * @return function expander
+	 */
+	public static FunctionExpander getCollector(GeoElement element) {
+		collector.constructionIndex = element == null
+				? Integer.MAX_VALUE : element.getConstructionIndex();
 		collector.variables = null;
 		return collector;
 	}
