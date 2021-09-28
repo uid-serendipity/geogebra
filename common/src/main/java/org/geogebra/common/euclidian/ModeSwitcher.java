@@ -85,6 +85,7 @@ public class ModeSwitcher {
 			if (embedManager != null) {
 				setUpEmbedManager(embedManager);
 			}
+			break;
 
 		default:
 			break;
