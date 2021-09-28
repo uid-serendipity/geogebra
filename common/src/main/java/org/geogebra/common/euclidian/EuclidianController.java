@@ -748,10 +748,6 @@ public abstract class EuclidianController implements SpecialPointsListener {
 				app.setMode(mode, ModeSetter.DOCK_PANEL);
 				return;
 			}
-			if (embedManager != null
-					&& newMode == EuclidianConstants.MODE_CALCULATOR) {
-				setUpEmbedManager(embedManager);
-			}
 		}
 
 		endOfMode(mode);
@@ -781,20 +777,6 @@ public abstract class EuclidianController implements SpecialPointsListener {
 		}
 
 		kernel.notifyRepaint();
-	}
-
-	private void setUpEmbedManager(EmbedManager embedManager) {
-		final GeoEmbed ge = new GeoEmbed(kernel.getConstruction());
-		ge.setAppName("suite");
-		ge.initDefaultPosition(view);
-		embedManager.initAppEmbed(ge);
-		ge.setLabel(null);
-		app.storeUndoInfo();
-		app.invokeLater(() -> {
-			selectAndShowSelectionUI(ge);
-			ge.setBackground(false);
-			view.update(ge); // force painting in the foreground
-		});
 	}
 
 	/**
