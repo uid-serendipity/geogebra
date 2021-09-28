@@ -732,47 +732,8 @@ public abstract class EuclidianController implements SpecialPointsListener {
 		}
 
 		if (ms == ModeSetter.TOOLBAR) {
-			EmbedManager embedManager = app.getEmbedManager();
 			if (app.getGuiManager() != null) {
-				switch (newMode) {
-				case EuclidianConstants.MODE_CAMERA:
-					app.getGuiManager().loadWebcam();
-					return;
-
-				case EuclidianConstants.MODE_AUDIO:
-					getDialogManager().showAudioInputDialog();
-					break;
-
-				case EuclidianConstants.MODE_VIDEO:
-					getDialogManager().showVideoInputDialog();
-					break;
-
-				case EuclidianConstants.MODE_PDF:
-					getDialogManager().showPDFInputDialog();
-					break;
-
-				case EuclidianConstants.MODE_GRASPABLE_MATH:
-					if (embedManager != null) {
-						embedManager.openGraspableMTool();
-					}
-					break;
-
-				case EuclidianConstants.MODE_EXTENSION:
-					getDialogManager().showEmbedDialog();
-					break;
-
-				case EuclidianConstants.MODE_H5P:
-					getDialogManager().showH5PDialog();
-					break;
-
-				default:
-					break;
-				}	
-			}
-
-			if (embedManager != null
-					&& newMode == EuclidianConstants.MODE_CALCULATOR) {
-					setUpEmbedManager(embedManager);
+				new ModeSwitcher(app).switchMode(newMode);
 			}
 
 			if (newMode == EuclidianConstants.MODE_IMAGE) {
@@ -782,7 +743,15 @@ public abstract class EuclidianController implements SpecialPointsListener {
 						ModeSetter.DOCK_PANEL);
 				return;
 			}
-
+			if (newMode == EuclidianConstants.MODE_RULER
+					|| newMode == EuclidianConstants.MODE_PROTRACTOR) {
+				app.setMode(mode, ModeSetter.DOCK_PANEL);
+				return;
+			}
+			if (embedManager != null
+					&& newMode == EuclidianConstants.MODE_CALCULATOR) {
+				setUpEmbedManager(embedManager);
+			}
 		}
 
 		endOfMode(mode);
@@ -10003,7 +9972,6 @@ public abstract class EuclidianController implements SpecialPointsListener {
 			}
 
 			selectAndShowSelectionUI(geo);
-			showDynamicStylebar();
 			app.getUndoManager().storeAddGeo(geo);
 			return;
 		}

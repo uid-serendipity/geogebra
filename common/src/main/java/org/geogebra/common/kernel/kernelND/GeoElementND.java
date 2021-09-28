@@ -1625,6 +1625,8 @@ public interface GeoElementND extends ExpressionValue, GeoElementConvertable {
 	 */
 	boolean hasSpecialEditor();
 
+	boolean isMeasurementTool();
+
 	boolean hasDynamicCaption();
 
 	/**
