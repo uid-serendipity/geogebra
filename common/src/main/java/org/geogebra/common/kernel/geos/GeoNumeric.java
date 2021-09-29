@@ -535,7 +535,7 @@ public class GeoNumeric extends GeoElement
 	 *            number value
 	 */
 	@Override
-	final public void setValue(double x) {
+	public final void setValue(double x) {
 		setValue(x, true);
 	}
 
