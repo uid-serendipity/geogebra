@@ -1195,6 +1195,14 @@ public class GeoSymbolicTest extends BaseSymbolicTest {
 	}
 
 	@Test
+	public void testBinomialDistNumericIsDefined() {
+		GeoSymbolic binomialDist = add("BinomialDist(230,0.68,140,true)");
+		AlgebraItem.toggleSymbolic(binomialDist);
+		assertNotEquals(binomialDist.toValueString(StringTemplate.defaultTemplate), ("?"));
+		assertEquals(binomialDist.toValueString(StringTemplate.defaultTemplate), ("0.0132819219"));
+	}
+
+	@Test
 	public void testToggleSymbolicNumeric() {
 		GeoSymbolic solveX = add("Solve(2x=5)");
 		GeoSymbolic solveA = add("NSolve(a*a=5)");
