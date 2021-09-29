@@ -293,16 +293,14 @@ public class GeoSymbolic extends GeoElement
 	}
 
 	private ExpressionValue computeNumericValue(ExpressionValue casOutput) {
-		Command command;
 		numericPrintFigures = kernel.getPrintFigures();
 		numericPrintDecimals = kernel.getPrintDecimals();
+
+		Command command = new Command(kernel, "Numeric", false);
+		command.addArgument(casOutput.wrap());
 		if (numericPrintFigures == -1) {
-			command = new Command(kernel, "Round", false);
-			command.addArgument(casOutput.wrap());
 			command.addArgument(new MyDouble(kernel, numericPrintDecimals).wrap());
 		} else {
-			command = new Command(kernel, "Numeric", false);
-			command.addArgument(casOutput.wrap());
 			command.addArgument(new MyDouble(kernel, numericPrintFigures).wrap());
 		}
 
