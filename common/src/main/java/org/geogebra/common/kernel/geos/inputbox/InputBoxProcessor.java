@@ -187,6 +187,10 @@ public class InputBoxProcessor {
 			defineText = defineText.replace('I', 'i');
 		}
 
+		if (!linkedGeo.isGeoPoint()) {
+			defineText = defineText.replace(",", "");
+		}
+
 		return defineText;
 	}
 
