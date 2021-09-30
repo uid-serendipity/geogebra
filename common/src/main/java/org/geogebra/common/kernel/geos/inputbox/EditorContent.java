@@ -32,6 +32,13 @@ public class EditorContent {
 		}
 	}
 
+	protected String getCommaFreeInput(Localization loc) {
+		if (entries.length == 0 && !loc.isUsingDecimalComma()) {
+			return inputText.replaceAll(",", "");
+		}
+		return getEditorInput();
+	}
+
 	protected String buildMatrixText() {
 		StringBuilder sb = new StringBuilder("{{");
 		int cells = entries.length;

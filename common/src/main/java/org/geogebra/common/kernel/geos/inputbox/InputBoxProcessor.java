@@ -54,7 +54,8 @@ public class InputBoxProcessor {
 	 */
 	public void updateLinkedGeo(EditorContent content, StringTemplate tpl) {
 		content.removeCommas(kernel.getLocalization());
-		String inputText = content.getEditorInput();
+		String inputText = !linkedGeo.isGeoPoint()
+				? content.getCommaFreeInput(kernel.getLocalization()) : content.getEditorInput();
 
 		// first clear temp input, so that the string representation of the input
 		// box is correct when updating dependencies
@@ -185,10 +186,6 @@ public class InputBoxProcessor {
 
 		if (GeoPoint.isComplexNumber(linkedGeo)) {
 			defineText = defineText.replace('I', 'i');
-		}
-
-		if (!linkedGeo.isGeoPoint()) {
-			defineText = defineText.replace(",", "");
 		}
 
 		return defineText;
