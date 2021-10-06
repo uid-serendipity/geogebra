@@ -19,6 +19,7 @@ public class GeoGebraSerializer implements Serializer {
 
 	private String leftBracket = "[";
 	private String rightBracket = "]";
+	private static boolean filterCommas = false;
 
 	@Override
 	public String serialize(MathFormula formula) {
@@ -54,6 +55,9 @@ public class GeoGebraSerializer implements Serializer {
 
 	private static void serialize(MathCharacter mathCharacter,
 			StringBuilder stringBuilder) {
+		if (mathCharacter.getName() == "," && filterCommas) {
+			return;
+		}
 		stringBuilder.append(mathCharacter.getUnicode());
 	}
 
@@ -197,7 +201,9 @@ public class GeoGebraSerializer implements Serializer {
 			stringBuilder.append(open);
 			for (int j = 0; j < mathArray.columns(); j++) {
 				serialize(mathArray.getArgument(i, j), stringBuilder);
-				stringBuilder.append(field);
+				if (!filterCommas) {
+					stringBuilder.append(field);
+				}
 			}
 			stringBuilder.deleteCharAt(stringBuilder.length() - field.length());
 			stringBuilder.append(close);
@@ -261,5 +267,10 @@ public class GeoGebraSerializer implements Serializer {
 			}
 		}
 		return new String[0];
+	}
+
+	@Override
+	public void setFilterCommas(boolean filterCommas) {
+		this.filterCommas = filterCommas;
 	}
 }

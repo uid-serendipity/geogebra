@@ -9,4 +9,6 @@ public interface Serializer {
 
     String serialize(MathFormula formula);
 
+    void setFilterCommas(boolean filterCommas);
+
 }

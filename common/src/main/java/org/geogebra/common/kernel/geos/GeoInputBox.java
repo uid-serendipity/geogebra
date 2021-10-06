@@ -61,6 +61,8 @@ public class GeoInputBox extends GeoButton implements HasSymbolicMode, HasAlignm
 
 	private String tempUserEvalInput;
 	private String tempUserDisplayInput;
+	private String userInputWithReplacedCommas;
+	private String userInputWithReplacedCommasLatex;
 
 	private boolean serifContent = true;
 
@@ -154,7 +156,8 @@ public class GeoInputBox extends GeoButton implements HasSymbolicMode, HasAlignm
 	public String getDisplayText() {
 		return isSymbolicMode() && tempUserDisplayInput != null
 				? tempUserDisplayInput
-				: getText();
+				: getText().isEmpty() && userInputWithReplacedCommasLatex != null ?
+				userInputWithReplacedCommasLatex : getText();
 	}
 
 	private boolean hasLaTeXEditableVector() {
@@ -170,7 +173,8 @@ public class GeoInputBox extends GeoButton implements HasSymbolicMode, HasAlignm
 		if (tempUserEvalInput != null) {
 			return tempUserEvalInput;
 		}
-		return inputBoxRenderer.getText();
+		return inputBoxRenderer.getText().isEmpty() && userInputWithReplacedCommas != null
+				? userInputWithReplacedCommas : inputBoxRenderer.getText();
 	}
 
 	@Override
@@ -505,6 +509,30 @@ public class GeoInputBox extends GeoButton implements HasSymbolicMode, HasAlignm
 	public void clearTempUserInput() {
 		this.tempUserDisplayInput = null;
 		this.tempUserEvalInput = null;
+	}
+
+	/**
+	 * Clears the comma free user inputs.
+	 */
+	public void clearCommaFreeUserInput() {
+		this.userInputWithReplacedCommas = null;
+		this.userInputWithReplacedCommasLatex = null;
+	}
+
+	public void setUserInputWithReplacedCommas(String userInputWithReplacedCommas) {
+		this.userInputWithReplacedCommas = userInputWithReplacedCommas;
+	}
+
+	public String getUserInputWithReplacedCommas() {
+		return userInputWithReplacedCommas;
+	}
+
+	public void setUserInputWithReplacedCommasLatex(String userInputWithReplacedCommasLatex) {
+		this.userInputWithReplacedCommasLatex = userInputWithReplacedCommasLatex;
+	}
+
+	public String getUserInputWithReplacedCommasLatex() {
+		return userInputWithReplacedCommasLatex;
 	}
 
 	public boolean isSerifContent() {

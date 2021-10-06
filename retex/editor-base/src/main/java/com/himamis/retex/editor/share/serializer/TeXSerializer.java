@@ -38,7 +38,8 @@ public class TeXSerializer extends SerializerAdapter {
 	@Override
 	public void serialize(MathCharacter mathCharacter,
 			StringBuilder stringBuilder) {
-		if (mathCharacter.getUnicode() == Unicode.ZERO_WIDTH_SPACE) {
+		if (mathCharacter.getUnicode() == Unicode.ZERO_WIDTH_SPACE
+			|| (mathCharacter.getName() == "," && shouldFilterCommas())) {
 			return;
 		}
 		// jmathtex v0.7: incompatibility

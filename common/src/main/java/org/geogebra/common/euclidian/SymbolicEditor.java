@@ -15,6 +15,7 @@ import com.himamis.retex.editor.share.event.KeyEvent;
 import com.himamis.retex.editor.share.event.MathFieldListener;
 import com.himamis.retex.editor.share.model.MathFormula;
 import com.himamis.retex.editor.share.serializer.GeoGebraSerializer;
+import com.himamis.retex.editor.share.serializer.Serializer;
 import com.himamis.retex.editor.share.serializer.TeXSerializer;
 import com.himamis.retex.editor.share.util.JavaKeyCodes;
 import com.himamis.retex.editor.share.util.Unicode;
@@ -46,9 +47,20 @@ public abstract class SymbolicEditor implements MathFieldListener {
 		String[] entries = asciiSerializer.serializeMatrixEntries(formula);
 		if (entries.length == 0) {
 			editedText = asciiSerializer.serialize(formula);
+			geoInputBox.setUserInputWithReplacedCommas(
+					getCommaFreeInput(formula, asciiSerializer));
+			geoInputBox.setUserInputWithReplacedCommasLatex(
+					getCommaFreeInput(formula, texSerializer));
 		}
 		geoInputBox.updateLinkedGeo(editedText,
 				texSerializer.serialize(formula), entries);
+	}
+
+	private String getCommaFreeInput(MathFormula formula, Serializer serializer) {
+		serializer.setFilterCommas(!app.getLocalization().isUsingDecimalComma());
+		String commaFreeInput = serializer.serialize(formula);
+		serializer.setFilterCommas(false);
+		return commaFreeInput;
 	}
 
 	protected boolean isTextMode() {

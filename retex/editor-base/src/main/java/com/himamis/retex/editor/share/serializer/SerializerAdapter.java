@@ -14,6 +14,7 @@ public abstract class SerializerAdapter implements Serializer {
 	protected MathComponent currentSelStart = null;
 	protected MathComponent currentSelEnd = null;
 	protected int mCurrentOffset = 0;
+	private static boolean filterCommas = false;
 
 	@Override
 	public String serialize(MathFormula formula) {
@@ -93,13 +94,10 @@ public abstract class SerializerAdapter implements Serializer {
 	public void serialize(MathComponent container, StringBuilder stringBuilder) {
 		if (container instanceof MathCharacter) {
 			serialize((MathCharacter) container, stringBuilder);
-
 		} else if (container instanceof MathSequence) {
 			serialize((MathSequence) container, stringBuilder);
-
 		} else if (container instanceof MathArray) {
 			serialize((MathArray) container, stringBuilder);
-
 		} else if (container instanceof MathFunction) {
 			serialize((MathFunction) container, stringBuilder);
 		}
@@ -129,4 +127,13 @@ public abstract class SerializerAdapter implements Serializer {
 	abstract void serialize(MathFunction function, StringBuilder stringBuilder);
 
 	abstract void serialize(MathArray array, StringBuilder stringBuilder);
+
+	@Override
+	public void setFilterCommas(boolean filterCommas) {
+		this.filterCommas = filterCommas;
+	}
+
+	public boolean shouldFilterCommas() {
+		return filterCommas;
+	}
 }

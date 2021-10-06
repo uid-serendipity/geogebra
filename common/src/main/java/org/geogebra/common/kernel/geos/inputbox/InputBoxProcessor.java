@@ -54,8 +54,7 @@ public class InputBoxProcessor {
 	 */
 	public void updateLinkedGeo(EditorContent content, StringTemplate tpl) {
 		content.removeCommas(kernel.getLocalization());
-		String inputText = !linkedGeo.isGeoPoint()
-				? content.getCommaFreeInput(kernel.getLocalization()) : content.getEditorInput();
+		String inputText = content.getEditorInput();
 
 		// first clear temp input, so that the string representation of the input
 		// box is correct when updating dependencies
@@ -64,6 +63,11 @@ public class InputBoxProcessor {
 		updateLinkedGeoNoErrorHandling(tpl, errorHandler, content);
 
 		if (errorHandler.errorOccured) {
+			inputBox.setTempUserInput(null, null);
+			if (!commaFreeInputHasError(tpl)) {
+				return;
+			}
+			inputBox.clearCommaFreeUserInput();
 			if ("?".equals(inputText)) {
 				inputBox.setTempUserInput("", "");
 			} else {
@@ -74,6 +78,17 @@ public class InputBoxProcessor {
 			linkedGeo.resetDefinition(); // same as SetValue(linkedGeo, ?)
 			linkedGeo.updateRepaint();
 		}
+	}
+
+	private boolean commaFreeInputHasError(StringTemplate tpl) {
+		if (inputBox.getUserInputWithReplacedCommas() == null) {
+			return true;
+		}
+		EditorContent content = new EditorContent(inputBox.getUserInputWithReplacedCommas(),
+				inputBox.getUserInputWithReplacedCommasLatex(), new String[0], 1);
+		InputBoxErrorHandler errorHandler = new InputBoxErrorHandler();
+		updateLinkedGeoNoErrorHandling(tpl, errorHandler, content);
+		return errorHandler.errorOccured;
 	}
 
 	private String maybeClampInputForNumeric(String inputText, StringTemplate tpl) {
