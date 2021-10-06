@@ -156,8 +156,8 @@ public class GeoInputBox extends GeoButton implements HasSymbolicMode, HasAlignm
 	public String getDisplayText() {
 		return isSymbolicMode() && tempUserDisplayInput != null
 				? tempUserDisplayInput
-				: getText().isEmpty() && userInputWithReplacedCommasLatex != null ?
-				userInputWithReplacedCommasLatex : getText();
+				: getText().isEmpty() && userInputWithReplacedCommasLatex != null
+				? userInputWithReplacedCommasLatex : getText();
 	}
 
 	private boolean hasLaTeXEditableVector() {

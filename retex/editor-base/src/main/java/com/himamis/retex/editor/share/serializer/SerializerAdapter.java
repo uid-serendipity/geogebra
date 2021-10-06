@@ -14,7 +14,7 @@ public abstract class SerializerAdapter implements Serializer {
 	protected MathComponent currentSelStart = null;
 	protected MathComponent currentSelEnd = null;
 	protected int mCurrentOffset = 0;
-	private static boolean filterCommas = false;
+	private boolean filterCommas = false;
 
 	@Override
 	public String serialize(MathFormula formula) {
