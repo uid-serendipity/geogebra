@@ -2,7 +2,6 @@ package org.geogebra.web.full.gui.browser;
 
 import org.geogebra.common.main.App;
 import org.geogebra.common.util.debug.Log;
-import org.geogebra.web.html5.MebisGlobal;
 import org.geogebra.web.shared.SignInController;
 
 /**
@@ -20,15 +19,29 @@ public class MebisSignInController extends SignInController {
 
 	@Override
 	public void login() {
-		if (!MebisGlobal.nativeLogin()) {
+		if (!nativeLogin()) {
 			super.login();
 		}
 	}
 
 	@Override
 	public void loginFromApp() {
-		if (!MebisGlobal.nativeLogin()) {
+		if (!nativeLogin()) {
 			Log.warn("Can't open popup programatically");
 		}
 	}
+
+	private native boolean nativeLogin() /*-{
+		try {
+			if ($wnd.parent && $wnd.parent.login) {
+				$wnd.parent.login();
+				return true;
+			}
+			return false;
+		} catch (ex) {
+			//running in CORS iframe
+		}
+		return false;
+	}-*/;
+
 }

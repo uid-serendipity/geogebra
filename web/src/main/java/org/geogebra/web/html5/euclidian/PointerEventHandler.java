@@ -37,15 +37,15 @@ public class PointerEventHandler {
 	/**
 	 * Mutable representation of pointer events
 	 */
-	private class PointerState {
+	private static class PointerState {
 		public double x;
 		public double y;
 		public double id;
 
 		public PointerState(NativePointerEvent e) {
 			id = e.getPointerId();
-			x = e.getOffsetX() / off.getZoomLevel();
-			y = e.getOffsetY() / off.getZoomLevel();
+			x = e.getOffsetX();
+			y = e.getOffsetY();
 		}
 	}
 
@@ -125,12 +125,12 @@ public class PointerEventHandler {
 	private void onPointerMove(NativePointerEvent e) {
 		if (first != null && second != null) {
 			if (second.id == e.getPointerId()) {
-				second.x = e.getOffsetX() / off.getZoomLevel();
-				second.y = e.getOffsetY() / off.getZoomLevel();
+				second.x = e.getOffsetX();
+				second.y = e.getOffsetY();
 				twoPointersMove(first, second);
 			} else if (first.id == e.getPointerId()) {
-				first.x = e.getOffsetX() / off.getZoomLevel();
-				first.y = e.getOffsetY() / off.getZoomLevel();
+				first.x = e.getOffsetX();
+				first.y = e.getOffsetY();
 			}
 		} else if (match(first, e) || match(second, e)
 				|| "mouse".equals(e.getPointerType())) {
@@ -176,8 +176,8 @@ public class PointerEventHandler {
 	}
 
 	private PointerEvent convertEvent(NativePointerEvent e) {
-		PointerEvent ex = new PointerEvent(e.getOffsetX() / off.getZoomLevel(),
-				e.getOffsetY() / off.getZoomLevel(), types(e.getPointerType()), off);
+		PointerEvent ex = new PointerEvent(e.getOffsetX(), e.getOffsetY(),
+				types(e.getPointerType()), off);
 		adjust(ex, e);
 		return ex;
 	}

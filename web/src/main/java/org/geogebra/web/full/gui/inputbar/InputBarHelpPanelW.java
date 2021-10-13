@@ -116,21 +116,18 @@ public class InputBarHelpPanelW extends VerticalPanel implements SetLabels, Bool
 
 		// create the index tree and put it in a scroll panel
 		indexTree = new Tree() {
-			private boolean canFocus = true;
-
-			@Override
-			public void setFocus(boolean focus) {
-				if (canFocus) {
-					super.setFocus(focus);
-				}
-			}
-
 			@Override
 			public void setSelectedItem(TreeItem item, boolean fireEvents) {
-				canFocus = false;
-				super.setSelectedItem(item, fireEvents);
-				canFocus = true;
+				if (item == null) {
+					super.setSelectedItem(null, fireEvents);
+					return;
+				}
+				onSelectionNative(item, fireEvents);
 			}
+
+			private native void onSelectionNative(TreeItem item, boolean fireEvents) /*-{
+				this.@com.google.gwt.user.client.ui.Tree::onSelection(Lcom/google/gwt/user/client/ui/TreeItem;ZZ)(item, fireEvents, false);
+			}-*/;
 		};
 
 		indexTree.addStyleName("inputHelp-tree");

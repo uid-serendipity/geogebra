@@ -727,7 +727,7 @@ public class GeoSymbolic extends GeoElement
 		String def = getDefinition(StringTemplate.defaultTemplate);
 		String val = getValueForInputBar();
 		String twin = twinGeo != null
-				? twinGeo.toValueString(StringTemplate.algebraTemplate) : null;
+				? twinGeo.toValueString(StringTemplate.defaultTemplate) : null;
 
 		setSymbolicMode(symbolicMode, false);
 		if (def.equals(val) && (twin == null || twin.equals(val))) {

@@ -53,10 +53,8 @@ public class ViewTextFieldW extends ViewTextField {
 	@Override
 	public void setBoxBounds(GRectangle bounds) {
 		ensureBoxExists();
-		if (box.getParent() != null) {
-			((AbsolutePanel) box.getParent()).setWidgetPosition(box,
-					(int) bounds.getMinX(), (int) bounds.getMinY());
-		}
+		((AbsolutePanel) box.getParent()).setWidgetPosition(box,
+				(int) bounds.getMinX(), (int) bounds.getMinY());
 	}
 
 	@Override

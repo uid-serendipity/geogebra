@@ -347,8 +347,9 @@ public abstract class Layout implements SettingListener {
 				AwtFactory.getPrototype().newRectangle(100, 100, 600, 400),
 				"1,1,1", 500);
 
+		String wbToolbar = ToolBar.getWBToolBarDefString();
 		Perspective whiteboard = new Perspective(Perspective.NOTES, spData, dpData,
-				"", true, false, false, false, true,
+				wbToolbar, true, false, false, false, true,
 				InputPosition.algebraView);
 		whiteboard.setToolBarPosition(SwingConstants.SOUTH);
 

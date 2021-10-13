@@ -1920,8 +1920,7 @@ public abstract class GeoElement extends ConstructionElement implements GeoEleme
 	public boolean isProtected(EventType type) {
 		return !kernel.getLoadingMode() && isLocked()
 				&& this.getSpreadsheetCoords() != null
-				&& (type == EventType.REMOVE || !(this instanceof GeoFunction))
-				|| (type == EventType.REMOVE && isMeasurementTool());
+				&& (type == EventType.REMOVE || !(this instanceof GeoFunction));
 	}
 
 	@Override
@@ -7248,11 +7247,6 @@ public abstract class GeoElement extends ConstructionElement implements GeoEleme
 	}
 
 	@Override
-	public boolean isMeasurementTool() {
-		return false;
-	}
-
-	@Override
 	public boolean hasDynamicCaption() {
 		return dynamicCaption != null;
 	}
@@ -7299,9 +7293,5 @@ public abstract class GeoElement extends ConstructionElement implements GeoEleme
 	public void removeDynamicCaption() {
 		unregisterDynamicCaption();
 		dynamicCaption = null;
-	}
-
-	public void removeZoomerAnimationListenerIfNeeded() {
-		// implemented in GeoFunction
 	}
 }

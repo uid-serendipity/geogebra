@@ -11,7 +11,10 @@ import elemental2.dom.Element;
 import elemental2.dom.NodeList;
 
 /**
- * Injects the javascript and css resources needed in WebSimple
+ * @author gabor
+ *
+ *         injects the javascript resources
+ *
  */
 public class ResourcesInjector {
 
@@ -26,6 +29,8 @@ public class ResourcesInjector {
 			return;
 		}
 		setResourcesInjected();
+		// always need English properties available, eg Function.sin
+		fixComputedStyle();
 
 		JavaScriptInjector.inject(GuiResourcesSimple.INSTANCE.clipboardJs());
 
@@ -41,6 +46,14 @@ public class ResourcesInjector {
 	private void setResourcesInjected() { // extracted to make SpotBugs happy
 		resourcesInjected = true;
 	}
+
+	/** Works around https://bugzilla.mozilla.org/show_bug.cgi?id=548397 */
+	private static native void fixComputedStyle() /*-{
+		var oldCS = $wnd.getComputedStyle;
+		$wnd.getComputedStyle = function(el) {
+			return oldCS(el) || el.style;
+		}
+	}-*/;
 
 	/**
 	 * Inject resources for GUI, such as CSS, english properties, and fonts (only in full)

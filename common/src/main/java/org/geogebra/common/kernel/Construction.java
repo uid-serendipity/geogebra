@@ -35,7 +35,6 @@ import org.geogebra.common.kernel.geos.GeoAxis;
 import org.geogebra.common.kernel.geos.GeoCasCell;
 import org.geogebra.common.kernel.geos.GeoElement;
 import org.geogebra.common.kernel.geos.GeoElementSpreadsheet;
-import org.geogebra.common.kernel.geos.GeoImage;
 import org.geogebra.common.kernel.geos.GeoNumberValue;
 import org.geogebra.common.kernel.geos.GeoNumeric;
 import org.geogebra.common.kernel.geos.GeoPoint;
@@ -201,8 +200,6 @@ public class Construction {
 	private ArrayList<Group> groups;
 
 	private LayerManager layerManager;
-	private GeoImage ruler;
-	private GeoImage protractor;
 
 	/**
 	 * Creates a new Construction.
@@ -328,22 +325,6 @@ public class Construction {
 	 */
 	final private void newConstructionDefaults() {
 		consDefaults = companion.newConstructionDefaults();
-	}
-
-	public GeoImage getRuler() {
-		return this.ruler;
-	}
-
-	public GeoImage getProtractor() {
-		return this.protractor;
-	}
-
-	public void setRuler(GeoImage ruler) {
-		this.ruler = ruler;
-	}
-
-	public void setProtractor(GeoImage protractor) {
-		this.protractor = protractor;
 	}
 
 	/**
@@ -3089,9 +3070,6 @@ public class Construction {
 		usedMacros = null;
 		spreadsheetTraces = false;
 		supressLabelCreation = false;
-
-		ruler = null;
-		protractor = null;
 
 		groups.clear();
 	}

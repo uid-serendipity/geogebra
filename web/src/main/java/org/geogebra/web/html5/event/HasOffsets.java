@@ -12,6 +12,4 @@ public interface HasOffsets {
 	int getEvID();
 
 	PointerEventType getDefaultEventType();
-
-	double getZoomLevel();
 }

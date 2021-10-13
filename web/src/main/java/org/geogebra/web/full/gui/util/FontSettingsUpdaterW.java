@@ -13,8 +13,7 @@ public class FontSettingsUpdaterW extends FontSettingsUpdater {
 	@Override
 	public void setAppFontSize(int fontSize) {
 		super.setAppFontSize(fontSize);
-		if (getApp().isWhiteboardActive()) {
-			CarotaUtil.setDefaultFontSize(fontSize);
-		}
+		CarotaUtil.setDefaultFontSize(fontSize);
 	}
+
 }

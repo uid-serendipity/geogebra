@@ -19,6 +19,12 @@ import com.himamis.retex.renderer.web.FactoryProviderGWT;
 
 public class StepsEntry implements EntryPoint {
 
+	private AppWsolver app;
+	private AbsolutePanel solverRoot;
+	private AbsolutePanel practiceRoot;
+
+	private GeoGebraFrameSimple geogebraFrame;
+
 	@Override
 	public void onModuleLoad() {
 		SuperDevUncaughtExceptionHandler.register();
@@ -38,18 +44,58 @@ public class StepsEntry implements EntryPoint {
 			FactoryProvider.setInstance(new FactoryProviderGWT());
 		}
 
-		GeoGebraFrameSimple geogebraFrame =
-				new GeoGebraFrameSimple(geoGebraElement, parameters, new CASFactoryDummy());
+		geogebraFrame = new GeoGebraFrameSimple(geoGebraElement, parameters, new CASFactoryDummy());
 
-		AppWsolver app = new AppWsolver(geoGebraElement, parameters, geogebraFrame);
+		app = new AppWsolver(geoGebraElement, parameters, geogebraFrame);
 		LoggerW.startLogger(app.getAppletParameters());
 
+		String type = geoGebraElement.getAttribute("data-param-appType");
 		RootPanel.get(geoGebraElement.getId()).add(geogebraFrame);
 
-		AbsolutePanel solverRoot = new AbsolutePanel();
-		new Solver(app, solverRoot).setupApplication();
-
-		geogebraFrame.add(solverRoot);
+		switchMode(type);
 		Stub3DFragment.load();
+	}
+
+	/**
+	 * @param mode
+	 *            "solver" or "practice"
+	 */
+	public void switchMode(String mode) {
+		switch (mode) {
+		case "solver":
+			if (practiceRoot != null) {
+				practiceRoot.setVisible(false);
+			}
+
+			if (solverRoot == null) {
+				solverRoot = new AbsolutePanel();
+				new Solver(app, solverRoot).setupApplication();
+
+				geogebraFrame.add(solverRoot);
+			} else {
+				solverRoot.setVisible(true);
+			}
+
+			break;
+
+		case "practice":
+			if (solverRoot != null) {
+				solverRoot.setVisible(false);
+			}
+
+			if (practiceRoot == null) {
+				practiceRoot = new AbsolutePanel();
+				new Exercise(app, practiceRoot).setupApplication();
+
+				geogebraFrame.add(practiceRoot);
+			} else {
+				practiceRoot.setVisible(true);
+			}
+
+			break;
+
+		default:
+			// shouldn't happen
+		}
 	}
 }

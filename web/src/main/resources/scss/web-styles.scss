@@ -1783,16 +1783,15 @@
 		position: relative;
 		left: 227px;
 		top: 1px;
-		border: 2px solid #555555;
+		border: 2px solid #555555 !important;
 		cursor: pointer;
-		background-color: #ffffff;
+		background-color: #ffffff !important;
 		width: 14px;
 		height: 14px;
-		text-align: center;
+	}
 
-		&:hover {
-			border: 2px solid colors.$teal-default;
-		}
+	button.CustomColorButton:hover {
+		background-color: rgb(204, 204, 255) !important;
 	}
 
 	button.CustomColorButton:active {

@@ -1,7 +1,5 @@
 package org.geogebra.common.kernel.interval;
 
-import static org.geogebra.common.kernel.interval.IntervalOperands.*;
-
 import org.geogebra.common.plugin.Operation;
 
 import com.google.j2objc.annotations.Weak;
@@ -37,18 +35,18 @@ class IntervalEvaluate {
 		case MINUS:
 			return interval.subtract(other);
 		case MULTIPLY:
-			return multiply(interval, other);
+			return interval.multiply(other);
 		case DIVIDE:
-			return divide(interval, other);
+			return interval.divide(other);
 		case POWER:
-			return pow(interval, other);
+			return interval.pow(other);
 		case NROOT:
-			return nthRoot(interval, other);
+			return interval.nthRoot(other);
 		case INTEGRAL:
 		case INVERSE_NORMAL:
 			break;
 		case DIFF:
-			return difference(interval, other);
+			return interval.difference(other);
 		}
 		return interval;
 	}
@@ -62,41 +60,41 @@ class IntervalEvaluate {
 	Interval evaluate(Operation operation) {
 		switch (operation) {
 		case COS:
-			return cos(interval);
+			return interval.cos();
 		case SIN:
-			return sin(interval);
+			return interval.sin();
 		case SEC:
-			return sec(interval);
+			return interval.sec();
 		case COT:
-			return cot(interval);
+			return interval.cot();
 		case TAN:
-			return tan(interval);
+			return interval.tan();
 		case EXP:
-			return exp(interval);
+			return interval.exp();
 		case LOG:
-			return log(interval);
+			return interval.log();
 		case ARCCOS:
-			return acos(interval);
+			return interval.acos();
 		case ARCSIN:
-			return asin(interval);
+			return interval.asin();
 		case ARCTAN:
-			return atan(interval);
+			return interval.atan();
 		case SQRT:
-			return sqrt(interval);
+			return interval.sqrt();
 		case SQRT_SHORT:
 			break;
 		case ABS:
-			return abs(interval);
+			return interval.abs();
 		case COSH:
-			return cosh(interval);
+			return interval.cosh();
 		case SINH:
-			return sinh(interval);
+			return interval.sinh();
 		case TANH:
-			return tanh(interval);
+			return interval.tanh();
 		case LOG10:
-			return log10(interval);
+			return interval.log10();
 		case LOG2:
-			return log2(interval);
+			return interval.log2();
 		default:
 			return interval;
 		}

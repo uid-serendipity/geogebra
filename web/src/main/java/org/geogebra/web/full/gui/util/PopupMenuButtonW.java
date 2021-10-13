@@ -65,7 +65,6 @@ public class PopupMenuButtonW extends MyCJButton
 	 * panel for slider
 	 */
 	protected FlowPanel sliderPanel;
-	private static ButtonPopupMenu currentPopup = null;
 
 	/**
 	 * @param app
@@ -141,19 +140,6 @@ public class PopupMenuButtonW extends MyCJButton
 	}
 
 	/**
-	 * Hide current popup if visible
-	 */
-	public static void hideCurrentPopup() {
-		if (currentPopup != null) {
-			currentPopup.hide();
-		}
-	}
-
-	public static void resetCurrentPopup() {
-		currentPopup = null;
-	}
-
-	/**
 	 * creates a new {@link ButtonPopupMenu}
 	 */
 	private void createPopup() {
@@ -170,9 +156,9 @@ public class PopupMenuButtonW extends MyCJButton
 			@Override
 			public void hide() {
 				super.hide();
-				if (currentPopup != null
-						&& currentPopup.equals(this)) {
-					currentPopup = null;
+				if (EuclidianStyleBarW.getCurrentPopup() != null
+						&& EuclidianStyleBarW.getCurrentPopup().equals(this)) {
+					EuclidianStyleBarW.setCurrentPopup(null);
 				}
 			}
 		};
@@ -185,17 +171,19 @@ public class PopupMenuButtonW extends MyCJButton
 	 */
 	void handleClick() {
 		onClickAction();
-		if (currentPopup != myPopup) {
-			if (currentPopup != null) {
-				currentPopup.hide();
+		if (EuclidianStyleBarW.getCurrentPopup() != myPopup) {
+			if (EuclidianStyleBarW.getCurrentPopup() != null) {
+				EuclidianStyleBarW.getCurrentPopup().hide();
 			}
-			currentPopup = myPopup;
+			EuclidianStyleBarW.setCurrentPopup(myPopup);
+			EuclidianStyleBarW.setCurrentPopupButton(this);
 			app.registerPopup(myPopup);
 			myPopup.showRelativeTo(getWidget());
 			myPopup.getFocusPanel().getElement().focus();
 		} else {
 			myPopup.setVisible(false);
-			currentPopup = null;
+			EuclidianStyleBarW.setCurrentPopup(null);
+			EuclidianStyleBarW.setCurrentPopupButton(null);
 		}
 	}
 

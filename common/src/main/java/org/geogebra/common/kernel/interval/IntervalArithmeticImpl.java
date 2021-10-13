@@ -7,10 +7,18 @@ import static org.geogebra.common.kernel.interval.IntervalConstants.undefined;
 import static org.geogebra.common.kernel.interval.RMath.mulHigh;
 import static org.geogebra.common.kernel.interval.RMath.mulLow;
 
+import com.google.j2objc.annotations.Weak;
+
 public class IntervalArithmeticImpl implements IntervalArithmetic {
+	@Weak
+	private final Interval interval;
+
+	public IntervalArithmeticImpl(Interval interval) {
+		this.interval = interval;
+	}
 
 	@Override
-	public Interval divide(Interval interval, Interval other) {
+	public Interval divide(Interval other) {
 		if (interval.isEmpty() || other.isEmpty()) {
 			interval.setEmpty();
 			return interval;
@@ -19,24 +27,24 @@ public class IntervalArithmeticImpl implements IntervalArithmetic {
 		if (other.hasZero()) {
 			if (other.getLow() != 0) {
 				if (other.getHigh() != 0) {
-					return divisionByZero(interval);
+					return divisionByZero();
 				} else {
-					return divisionByNegative(interval, other.getLow());
+					return divisionByNegative(other.getLow());
 				}
 			} else {
 				if (other.getHigh() != 0) {
-					return divisionByPositive(interval, other.getHigh());
+					return divisionByPositive(other.getHigh());
 				} else {
 					interval.setUndefined();
 				}
 			}
 		} else {
-			return nonZero(interval, other);
+			return nonZero(other);
 		}
 		return interval;
 	}
 
-	private Interval nonZero(Interval interval, Interval other) {
+	private Interval nonZero(Interval other) {
 		double xl = interval.getLow();
   		double xh = interval.getHigh();
   		double yl = other.getLow();
@@ -63,7 +71,7 @@ public class IntervalArithmeticImpl implements IntervalArithmetic {
 		return interval;
 	}
 
-	private Interval divisionByPositive(Interval interval, double x) {
+	private Interval divisionByPositive(double x) {
 		if (interval.isZero()) {
 			return interval;
 		}
@@ -80,7 +88,7 @@ public class IntervalArithmeticImpl implements IntervalArithmetic {
 		return interval;
 	}
 
-	private Interval divisionByNegative(Interval interval, double x) {
+	private Interval divisionByNegative(double x) {
 		if (interval.isZero()) {
 			return interval;
 		}
@@ -98,7 +106,7 @@ public class IntervalArithmeticImpl implements IntervalArithmetic {
 		return interval;
 	}
 
-	private Interval divisionByZero(Interval interval) {
+	private Interval divisionByZero() {
 		if (interval.isZero()) {
 			return interval;
 		}
@@ -107,7 +115,7 @@ public class IntervalArithmeticImpl implements IntervalArithmetic {
 	}
 
 	@Override
-	public Interval multiply(Interval interval, Interval other) {
+	public Interval multiply(Interval other) {
 		if (interval.isEmpty() || other.isEmpty()) {
 			return empty();
 		}

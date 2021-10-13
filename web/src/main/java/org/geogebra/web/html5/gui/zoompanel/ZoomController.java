@@ -194,7 +194,7 @@ public class ZoomController {
 			scaler.getStyle().setMarginLeft(marginLeft, Unit.PX);
 			scaler.getStyle().setMarginTop(marginTop, Unit.PX);
 		}
-		app.getGeoGebraElement().resetScale();
+		app.getGeoGebraElement().resetScale(scale);
 		app.recalculateEnvironments();
 		app.deferredForceResize();
 	}
@@ -228,7 +228,7 @@ public class ZoomController {
 				double scale = cssScale > 0 ? cssScale
 						: app.getAppletParameters().getDataParamScale();
 				Browser.scale(scaler, scale, 0, 0);
-				app.getGeoGebraElement().resetScale();
+				app.getGeoGebraElement().resetScale(scale);
 				app.checkScaleContainer();
 			}
 		}

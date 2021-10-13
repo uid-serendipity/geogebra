@@ -8,14 +8,13 @@ import com.himamis.retex.editor.share.serializer.TeXEscaper;
 import com.himamis.retex.editor.share.util.Unicode;
 
 class InputBoxRenderer {
-	private GeoInputBox inputBox;
 	private GeoElementND linkedGeo;
 	private StringTemplate stringTemplateForLaTeX;
+	private GeoInputBox inputBox;
 
 	InputBoxRenderer(GeoInputBox inputBox) {
 		this.inputBox = inputBox;
 		this.linkedGeo = inputBox.getLinkedGeo();
-		this.stringTemplateForLaTeX = inputBox.tpl.deriveLaTeXTemplate();
 	}
 
 	String getText() {
@@ -59,7 +58,7 @@ class InputBoxRenderer {
 		boolean isComplexFunction = linkedGeo.isGeoSurfaceCartesian()
 				&& linkedGeo.getDefinition() != null;
 		if (isRestrictedPoint()) {
-			return linkedGeo.toValueString(stringTemplateForLaTeX);
+			return linkedGeo.toValueString(StringTemplate.latexTemplate);
 		} else if (inputBox.hasSymbolicFunction() || flatEditableList || isComplexFunction) {
 			return getLaTeXRedefineString();
 		} else if (hasVector()) {
@@ -74,19 +73,17 @@ class InputBoxRenderer {
 	}
 
 	private String getTextForNumeric(GeoNumeric numeric) {
-		if (inputBox.symbolicMode) {
-			return numeric.getRedefineString(true, true, stringTemplateForLaTeX);
-		}
-
-		if (numeric.isDefined() && numeric.isIndependent() && !numeric.isAngle()) {
+		if (inputBox.symbolicMode && !numeric.isSimple()) {
+			return toLaTex();
+		} else if (numeric.isDefined() && numeric.isIndependent() && !numeric.isAngle()) {
 			return numeric.toValueString(inputBox.tpl);
 		}
 
-		return numeric.getRedefineString(true, true, inputBox.tpl);
+		return numeric.getRedefineString(true, true);
 	}
 
 	private String toLaTex() {
-		return linkedGeo.toLaTeXString(true, stringTemplateForLaTeX);
+		return linkedGeo.toLaTeXString(true, StringTemplate.latexTemplate);
 	}
 
 	private boolean hasVector() {
@@ -95,17 +92,20 @@ class InputBoxRenderer {
 
 	private String getVectorRenderString(GeoVectorND vector) {
 		return vector.hasSpecialEditor()
-				? vector.toLaTeXString(true, stringTemplateForLaTeX)
+				? vector.toLaTeXString(true, StringTemplate.latexTemplate)
 				: getLaTeXRedefineString();
 	}
 
 	private String getLaTeXRedefineString() {
 		return linkedGeo.getRedefineString(true, true,
-				stringTemplateForLaTeX);
+				getStringTemplateForLaTeX());
 	}
 
-	void updateLatexTemplate() {
-		stringTemplateForLaTeX = inputBox.tpl.deriveLaTeXTemplate();
+	private StringTemplate getStringTemplateForLaTeX() {
+		if (stringTemplateForLaTeX == null) {
+			stringTemplateForLaTeX = StringTemplate.latexTemplate;
+		}
+		return stringTemplateForLaTeX;
 	}
 
 	void setLinkedGeo(GeoElementND linkedGeo) {

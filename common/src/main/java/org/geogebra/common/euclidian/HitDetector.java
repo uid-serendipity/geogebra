@@ -46,8 +46,7 @@ public class HitDetector {
 			if (d.isEuclidianVisible()) {
 				if (d.hit(p.x, p.y, hitThreshold)) {
 					GeoElement geo = d.getGeoElement();
-					hitMask = hitMask || (geo.isMask() || geo.isMeasurementTool())
-							&& !ev.hasSpotlight();
+					hitMask = hitMask || geo.isMask();
 
 					if (geo.getLastHitType() == HitType.ON_BOUNDARY) {
 						hitPointOrBoundary.add(geo);
@@ -93,8 +92,7 @@ public class HitDetector {
 		}
 		for (int i = hits.size() - 1; i >= 0; i--) {
 			GeoElement geo = hits.get(i);
-			if (geo.getLayer() < maxlayer || (hitMask && !geo.isMask() && !geo
-					.isMeasurementTool())) {
+			if (geo.getLayer() < maxlayer || (hitMask && !geo.isMask())) {
 				hits.remove(i);
 			}
 		}

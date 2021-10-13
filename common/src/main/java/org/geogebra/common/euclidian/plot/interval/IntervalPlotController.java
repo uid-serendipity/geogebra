@@ -27,7 +27,7 @@ public class IntervalPlotController implements CoordSystemAnimationListener {
 	 */
 	public void attachEuclidianController(EuclidianController controller) {
 		euclidianController = controller;
-		euclidianController.addZoomerAnimationListener(this, model.getGeoFunction());
+		euclidianController.addZoomerAnimationListener(this);
 	}
 
 	@Override
@@ -53,6 +53,6 @@ public class IntervalPlotController implements CoordSystemAnimationListener {
 	 * Remove controller as zoomer animation listener.
 	 */
 	public void detach() {
-		euclidianController.removeZoomerAnimationListener(model.getGeoFunction());
+		euclidianController.removeZoomerAnimationListener(this);
 	}
 }

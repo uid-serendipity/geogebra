@@ -338,7 +338,27 @@ public abstract class CommandProcessor {
 			int initPos, int lastCheckPos) {
 		// check if there is a local variable in arguments
 		String localVarName = c.getVariableName(varPos);
-		localVarName = checkLocalVarName(c, varPos, localVarName);
+		if (localVarName == null) {
+			throw argErr(c, c.getArgument(varPos));
+		}
+		// imaginary unit as local variable name
+		else if (localVarName.equals(Unicode.IMAGINARY + "")) {
+			// replace all imaginary unit objects in command arguments by a
+			// variable "i"object
+			localVarName = "i";
+			Variable localVar = new Variable(kernel, localVarName);
+			c.traverse(
+					Replacer.getReplacer(kernel.getImaginaryUnit(), localVar));
+		}
+		// Euler constant as local variable name
+		else if (localVarName.equals(Unicode.EULER_STRING)) {
+			// replace all imaginary unit objects in command arguments by a
+			// variable "i"object
+			localVarName = "e";
+			Variable localVar = new Variable(kernel, localVarName);
+			c.traverse(
+					Replacer.getReplacer(kernel.getEulerNumber(), localVar));
+		}
 
 		// add local variable name to construction
 		Construction cmdCons = c.getKernel().getConstruction();
@@ -425,7 +445,9 @@ public abstract class CommandProcessor {
 						.getVariableName(0);
 			}
 
-			localVarName = checkLocalVarName(c, varPos, localVarName);
+			if (localVarName == null) {
+				throw argErr(c, c.getArgument(varPos));
+			}
 
 			// add local variable name to construction
 
@@ -590,7 +612,27 @@ public abstract class CommandProcessor {
 		for (int i = 0; i < varPos.length; i++) {
 			// check if there is a local variable in arguments
 			localVarName[i] = c.getVariableName(varPos[i]);
-			localVarName[i] = checkLocalVarName(c, varPos[i], localVarName[i]);
+			if (localVarName[i] == null) {
+				throw argErr(c, c.getArgument(varPos[i]));
+			}
+			// imaginary unit as local variable name
+			else if (localVarName[i].equals(Unicode.IMAGINARY + "")) {
+				// replace all imaginary unit objects in command arguments by a
+				// variable "i"object
+				localVarName[i] = "i";
+				Variable localVar = new Variable(kernel, localVarName[i]);
+				c.traverse(Replacer.getReplacer(kernel.getImaginaryUnit(),
+						localVar));
+			}
+			// Euler constant as local variable name
+			else if (localVarName[i].equals(Unicode.EULER_STRING)) {
+				// replace all imaginary unit objects in command arguments by a
+				// variable "i"object
+				localVarName[i] = "e";
+				Variable localVar = new Variable(kernel, localVarName[i]);
+				c.traverse(Replacer.getReplacer(kernel.getEulerNumber(),
+						localVar));
+			}
 		}
 
 		// add local variable name to construction
@@ -636,33 +678,6 @@ public abstract class CommandProcessor {
 		return arg;
 	}
 
-	private String checkLocalVarName(Command c, int varPos, String localVarName) {
-		if (localVarName == null) {
-			throw argErr(c, c.getArgument(varPos));
-		}
-
-		String newVarName = localVarName;
-		// imaginary unit as local variable name
-		if (localVarName.equals(Unicode.IMAGINARY + "")) {
-			// replace all imaginary unit objects in command arguments by a
-			// variable "i" object
-			newVarName = "i";
-			Variable localVar = new Variable(kernel, newVarName);
-			c.traverse(
-					Replacer.getReplacer(kernel.getImaginaryUnit(), localVar));
-		}
-		// Euler constant as local variable name
-		else if (localVarName.equals(Unicode.EULER_STRING)) {
-			// replace all Euler e objects in command arguments by a
-			// variable "e" object
-			newVarName = "e";
-			Variable localVar = new Variable(kernel, newVarName);
-			c.traverse(
-					Replacer.getReplacer(kernel.getEulerNumber(), localVar));
-		}
-		return newVarName;
-	}
-
 	/**
 	 * Creates wrong argument error
 	 * 
@@ -687,7 +702,7 @@ public abstract class CommandProcessor {
 	 */
 	protected final MyError argErr(String cmd, ExpressionValue arg) {
 		String message = commandErrorMessageBuilder.buildArgumentError(cmd, arg);
-		return MyError.forCommand(loc, message, cmd, null, Errors.IllegalArgument);
+		return MyError.forCommand(loc, message, cmd, null);
 	}
 
 	/**
@@ -703,7 +718,7 @@ public abstract class CommandProcessor {
 		String commandName = cmd.getName();
 		String message = commandErrorMessageBuilder.buildArgumentNumberError(
 				commandName, argNumber);
-		return MyError.forCommand(loc, message, commandName, null, Errors.IllegalArgumentNumber);
+		return MyError.forCommand(loc, message, commandName, null);
 	}
 
 	/**

@@ -101,7 +101,7 @@ public abstract class GeoGebraFrameW extends FlowPanel implements
 		this.appletParameters = appletParameters;
 
 		if (!appletParameters.getDataParamApp()) {
-			addFocusHandlers(geoGebraElement);
+			addFocusHandlers(this.geoGebraElement.getElement());
 		}
 	}
 
@@ -442,19 +442,13 @@ public abstract class GeoGebraFrameW extends FlowPanel implements
 			app = createApplication(geoGebraElement, appletParameters, this.laf);
 			app.setCustomToolBar();
 
-			if (app.isApplet()) {
-				Event.sinkEvents(geoGebraElement, Event.ONKEYPRESS | Event.ONKEYDOWN);
-				Event.setEventListener(geoGebraElement,
-						app.getGlobalKeyDispatcher().getGlobalShortcutHandler());
-			} else {
-				Element parent = geoGebraElement.getParentElement();
-				if (parent != null) {
-					Element grandparent = parent.getParentElement();
-					if (grandparent != null) {
-						Event.sinkEvents(parent, Event.ONKEYPRESS | Event.ONKEYDOWN);
-						Event.setEventListener(parent,
-								app.getGlobalKeyDispatcher().getGlobalShortcutHandler());
-					}
+			Element parent = geoGebraElement.getParentElement();
+			if (parent != null) {
+				Element grandparent = parent.getParentElement();
+				if (grandparent != null) {
+					Event.sinkEvents(parent, Event.ONKEYPRESS | Event.ONKEYDOWN);
+					Event.setEventListener(parent,
+							app.getGlobalKeyDispatcher().getGlobalShortcutHandler());
 				}
 			}
 
@@ -664,8 +658,9 @@ public abstract class GeoGebraFrameW extends FlowPanel implements
 		removeFromParent();
 		clear();
 		GeoGebraFrameW.instances.remove(this);
-		geoGebraElement.removeFromParent();
-		Event.setEventListener(geoGebraElement, null);
+		geoGebraElement.getElement().removeFromParent();
+		Event.setEventListener(geoGebraElement.getElement(),
+				null);
 		geoGebraElement = null;
 		app.getGlobalHandlers().removeAllListeners();
 		SymbolicEditor symbolicEditor = app.getEuclidianView1().getSymbolicEditor();
@@ -701,9 +696,5 @@ public abstract class GeoGebraFrameW extends FlowPanel implements
 		String imageDataUrl = app.getEuclidianView1()
 				.getExportImageDataUrl(scale, false, false);
 		callback.consume(StringUtil.removePngMarker(imageDataUrl));
-	}
-
-	public void setNotesMode(int mode) {
-		// nothing to do here
 	}
 }

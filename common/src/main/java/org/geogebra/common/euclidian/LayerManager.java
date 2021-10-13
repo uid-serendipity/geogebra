@@ -38,7 +38,7 @@ public class LayerManager {
 			}
 		}
 
-		if (!geo.isMask() && !geo.isMeasurementTool()) {
+		if (!geo.isMask()) {
 			geo.setOrdering(getNextOrder());
 			drawingOrder.add(geo);
 		}

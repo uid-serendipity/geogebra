@@ -30,11 +30,7 @@ public class AppMocker {
 
 		@Override
 		public void print(Level level, Object logEntry) {
-			if (logEntry instanceof Throwable) {
-				((Throwable) logEntry).printStackTrace(System.out);
-			} else {
-				System.out.println(logEntry);
-			}
+			System.out.println(logEntry);
 		}
 	}
 

@@ -140,8 +140,7 @@ public class PageListController implements PageListControllerInterface,
 			app.resetPerspectiveParam();
 			app.loadGgbFile(slides.get(i).getFile(), true);
 			restoreMaterialProperties();
-			// to clear ruler and protractor selection
-			app.setMode(app.getMode());
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -6,25 +6,25 @@ public interface IntervalMiscOperands {
 	 *
 	 * @return e^x
 	 */
-	Interval exp(Interval interval);
+	Interval exp();
 
 	/**
 	 *
 	 * @return the natural logarithm of the interval.
 	 */
-	Interval log(Interval interval);
+	Interval log();
 
 	/**
 	 *
 	 * @return base 10 logarithm of the interval
 	 */
-	Interval log10(Interval interval);
+	Interval log10();
 
 	/**
 	 *
 	 * @return base 2 logarithm of the interval
 	 */
-	Interval log2(Interval interval);
+	Interval log2();
 
 	/**
 	 * From interval-arithmetic.js:
@@ -36,7 +36,7 @@ public interface IntervalMiscOperands {
 	 * @param other to compute the hull with
 	 * @return this as result.
 	 */
-	Interval hull(Interval interval, Interval other);
+	Interval hull(Interval other);
 
 	/**
 	 * Computes an interval that has all the values that belong to both x and y
@@ -44,14 +44,14 @@ public interface IntervalMiscOperands {
 	 * @param interval to intersect with
 	 * @return this as result
 	 */
-	Interval intersect(Interval interval, Interval other);
+	Interval intersect(Interval interval);
 
 	/**
 	 * Union of intervals
 	 * @param other to union with.
 	 * @return this as result.
 	 */
-	Interval union(Interval interval, Interval other) throws IntervalsNotOverlapException;
+	Interval union(Interval other) throws IntervalsNotOverlapException;
 
 	/**
 	 * Computes the difference between two intervals,
@@ -60,12 +60,12 @@ public interface IntervalMiscOperands {
 	 * @param other to difference with.
 	 * @return this as result.
 	 */
-	Interval difference(Interval interval, Interval other) throws IntervalsDifferenceException;
+	Interval difference(Interval other) throws IntervalsDifferenceException;
 
 	/**
 	 * Absolute value of the interval.
 	 *
 	 * @return this as result.
 	 */
-	Interval abs(Interval interval);
+	Interval abs();
 }

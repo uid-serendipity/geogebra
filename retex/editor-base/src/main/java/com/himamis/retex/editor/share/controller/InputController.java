@@ -1,7 +1,5 @@
 package com.himamis.retex.editor.share.controller;
 
-import static com.himamis.retex.editor.share.input.Character.isLetter;
-
 import java.util.ArrayList;
 
 import com.google.j2objc.annotations.Weak;
@@ -949,8 +947,7 @@ public class InputController {
 
 			MathCharacter character = (MathCharacter) currentField
 					.getArgument(currentOffset - 1);
-			if (character.isOperator() || (character.isSymbol()
-					&& !isLetter(character.getUnicode()))) {
+			if (character.isOperator() || character.isSymbol()) {
 				break;
 			}
 			currentField.delArgument(currentOffset - 1);

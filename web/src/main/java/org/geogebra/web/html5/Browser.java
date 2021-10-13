@@ -207,7 +207,8 @@ public class Browser {
 			return;
 		}
 		style.setProperty("transform", "none");
-		style.setProperty("zoom", externalScale + "");
+		int zoomPercent = (int) Math.round(externalScale * 100);
+		style.setProperty("zoom", zoomPercent + "%");
 	}
 
 	/**

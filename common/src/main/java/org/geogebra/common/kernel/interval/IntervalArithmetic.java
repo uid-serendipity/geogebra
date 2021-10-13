@@ -8,7 +8,7 @@ public interface IntervalArithmetic {
 	 * @param other to multiply this interval with.
 	 * @return this as result.
 	 */
-	Interval multiply(Interval interval, Interval other);
+	Interval multiply(Interval other);
 
 	/**
 	 * Interval division
@@ -16,5 +16,5 @@ public interface IntervalArithmetic {
 	 * @param other to divide this interval with.
 	 * @return this as result.
 	 */
-	Interval divide(Interval interval, Interval other);
+	Interval divide(Interval other);
 }

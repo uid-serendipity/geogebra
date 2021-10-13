@@ -802,7 +802,6 @@ public class TabbedKeyboard extends FlowPanel
 	 *            keyboard type
 	 */
 	public void selectTab(KeyboardType keyboardType) {
-		clearAndUpdate();
 		switcher.select(keyboardType);
 	}
 
@@ -933,7 +932,7 @@ public class TabbedKeyboard extends FlowPanel
 			processField.setFocus(true);
 		}
 		if (Action.SWITCH_TO_123.name().equals(btn.getSecondaryAction())) {
-			switcher.select(KeyboardType.NUMBERS);
+			selectTab(KeyboardType.NUMBERS);
 		}
 	}
 
@@ -957,13 +956,13 @@ public class TabbedKeyboard extends FlowPanel
 			}
 			break;
 		case SWITCH_TO_SPECIAL_SYMBOLS:
-			switcher.select(KeyboardType.SPECIAL);
+			selectTab(KeyboardType.SPECIAL);
 			break;
 		case SWITCH_TO_GREEK_CHARACTERS:
-			switcher.select(KeyboardType.GREEK);
+			selectTab(KeyboardType.GREEK);
 			break;
 		case SWITCH_TO_ABC:
-			switcher.select(getSwitchToAbcSource());
+			selectTab(getSwitchToAbcSource());
 			break;
 		case ANS:
 			processField.ansPressed();

@@ -7,6 +7,9 @@ import org.geogebra.web.html5.main.AppW;
 
 /**
  * Tools submenu for MOWToolbar.
+ * 
+ * @author Laszlo Gal
+ * 
  */
 public class ToolsSubMenu extends SubMenuPanel {
 	/**
@@ -21,7 +24,7 @@ public class ToolsSubMenu extends SubMenuPanel {
 	@Override
 	protected void createContentPanel() {
 		super.createContentPanel();
-		super.createPanelRow(ToolBar.getNotesShapesToolBar());
+		super.createPanelRow(ToolBar.getMOWToolsDefString());
 		makeButtonsAccessible(AccessibilityGroup.NOTES_TOOL_TOOLS);
 	}
 
@@ -30,4 +33,8 @@ public class ToolsSubMenu extends SubMenuPanel {
 		return EuclidianConstants.MODE_SHAPE_RECTANGLE;
 	}
 
+	@Override
+	public boolean isValidMode(int mode) {
+		return EuclidianConstants.isShapeMode(mode);
+	}
 }

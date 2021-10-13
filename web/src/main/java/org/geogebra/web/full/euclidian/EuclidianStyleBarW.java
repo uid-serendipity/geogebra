@@ -62,6 +62,7 @@ import org.geogebra.web.full.gui.color.ColorPopupMenuButton;
 import org.geogebra.web.full.gui.color.FillingStyleButton;
 import org.geogebra.web.full.gui.dialog.DialogManagerW;
 import org.geogebra.web.full.gui.util.BorderStylePopup;
+import org.geogebra.web.full.gui.util.ButtonPopupMenu;
 import org.geogebra.web.full.gui.util.GeoGebraIconW;
 import org.geogebra.web.full.gui.util.MyCJButton;
 import org.geogebra.web.full.gui.util.MyToggleButtonW;
@@ -92,6 +93,8 @@ public class EuclidianStyleBarW extends StyleBarW2
 		NONE, UPDATE, UPDATE_STYLE
 	}
 
+	private static ButtonPopupMenu currentPopup = null;
+	private static PopupMenuButtonW currentPopupBtn = null;
 	private EuclidianController ec;
 	protected EuclidianView ev;
 	protected EuclidianStyleBarSelection selection;
@@ -220,7 +223,9 @@ public class EuclidianStyleBarW extends StyleBarW2
 			return;
 		}
 
-		PopupMenuButtonW.hideCurrentPopup();
+		if (getCurrentPopup() != null) {
+			getCurrentPopup().hide();
+		}
 
 		updateStyleBar();
 	}
@@ -1902,7 +1907,9 @@ public class EuclidianStyleBarW extends StyleBarW2
 
 	@Override
 	public void hidePopups() {
-		PopupMenuButtonW.hideCurrentPopup();
+		if (EuclidianStyleBarW.getCurrentPopup() != null) {
+			EuclidianStyleBarW.getCurrentPopup().hide();
+		}
 	}
 
 	@Override
@@ -2049,6 +2056,22 @@ public class EuclidianStyleBarW extends StyleBarW2
 	@Override
 	public void reinit() {
 		// nothing to do here
+	}
+
+	public static ButtonPopupMenu getCurrentPopup() {
+		return currentPopup;
+	}
+
+	public static void setCurrentPopup(ButtonPopupMenu currentPopup) {
+		EuclidianStyleBarW.currentPopup = currentPopup;
+	}
+
+	public static PopupMenuButtonW getCurrentPopupButton() {
+		return currentPopupBtn;
+	}
+
+	public static void setCurrentPopupButton(PopupMenuButtonW currentPopupBtn) {
+		EuclidianStyleBarW.currentPopupBtn = currentPopupBtn;
 	}
 
 	@Override

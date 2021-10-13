@@ -113,7 +113,7 @@ public class GeoGebraCAS implements GeoGebraCasInterface {
 			cas = getGiac();
 			app.getSettings().getCasSettings().addListener(cas);
 		} catch (Exception e) {
-			Log.debug(e);
+			e.printStackTrace();
 		}
 	}
 

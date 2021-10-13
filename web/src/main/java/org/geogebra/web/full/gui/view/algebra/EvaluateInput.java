@@ -103,6 +103,7 @@ public class EvaluateInput {
 		if (!ctrl.isInputAsText()) {
 			boolean valid = input.equals(userInput);
 			err = item.getErrorHandler(valid, keepFocus, withSliders);
+			err.resetError();
 		}
 		EvalInfo info = EvalInfoFactory.getEvalInfoForAV(app, withSliders);
 

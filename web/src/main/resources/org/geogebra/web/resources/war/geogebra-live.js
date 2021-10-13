@@ -139,6 +139,8 @@
             } else {
                 this.sendEvent("addObject", xml, label);
             }
+            this.sendEvent("deselect");
+            this.sendEvent("select", label, "true");
             window.setTimeout(function(){
                 that.initEmbed(label);
             },500); //TODO avoid timeout
@@ -309,12 +311,7 @@
 
                         target.evalXML(last.content);
                         target.api.previewRefresh();
-
-                        const getXML = (label) =>
-                            target.api.isIndependent(label) ? target.api.getXML(label) : target.api.getAlgorithmXML(label);
-
-                        this.sendEvent("conflictResolution", getXML(newLabel) + getXML(last.label), last.label);
-                        this.sendEvent("orderingChange", target.api.getOrdering(), null)
+                        this.sendEvent("conflictResolution", target.api.getAlgorithmXML(newLabel), last.label);
                     } else {
                         conflictedObjects.push(last.label);
                     }
@@ -322,31 +319,18 @@
                     target.evalXML(last.content);
                     target.api.previewRefresh();
                 }
-                let user = this.users[last.clientId];
-                if (user && last.content) {
-                    target.api.removeMultiuserSelections(user.name);
-                    // user name, user color, label of geo selected, 'true' if the geo was just added
-                    target.api.addMultiuserSelection(user.name, user.color, last.content, true);
-                }
             } else if (last.type == "conflictResolution") {
                 conflictedObjects.splice(conflictedObjects.indexOf(last.label), 1);
-                this.unregisterListeners();
-                target.api.deleteObject(last.label);
-                this.registerListeners();
                 target.evalXML(last.content);
                 target.api.previewRefresh();
             } else if (last.type == "evalXML") {
-                if (target.checkExists(last.label)) {
-                    target.evalXML(last.content);
-                    target.api.previewRefresh();
-                }
+                target.evalXML(last.content);
+                target.api.previewRefresh();
             } else if (last.type == "setXML") {
                 target.setXML(last.content);
             } else if (last.type == "evalCommand") {
-                if (target.checkExists(last.label)) {
-                    target.evalCommand(last.content);
-                    target.api.previewRefresh();
-                }
+                target.evalCommand(last.content);
+                target.api.previewRefresh();
             } else if (last.type == "deleteObject") {
                 target.unregisterListeners();
                 if (target === this) {
@@ -365,11 +349,7 @@
                 || last.type == "removeSlide"
                 || last.type == "moveSlide"
                 || last.type == "clearSlide") {
-                try {
-                    target.api.handleSlideAction(last.type, last.content);
-                } catch (ex) {
-                    this.sendErrorEvent();
-                }
+                target.api.handleSlideAction(last.type, last.content);
             } else if (last.type == "selectSlide") {
                 target.unregisterListeners();
                 target.api.selectSlide(last.content);
@@ -394,7 +374,7 @@
                 let user = this.users[last.clientId];
                 if (user && last.content) {
                     // user name, user color, label of geo selected, 'true' if the geo was just added
-                    target.api.addMultiuserSelection(user.name, user.color, last.content, false);
+                    target.api.addMultiuserSelection(user.name, user.color, last.content, !!last.label);
                 }
             } else if (last.type == "deselect") {
                 let user = this.users[last.clientId];
@@ -420,42 +400,17 @@
             } else if (last.type == "showPointsTV") {
                 target.api.showPointsTV(last.content, last.label);
             } else if (last.type == "lockTextElement") {
-                if (target.checkInline(last.content)) {
-                    target.api.lockTextElement(last.content);
-                }
+                target.api.lockTextElement(last.content);
             } else if (last.type == "unlockTextElement") {
-                if (target.checkInline(last.content)) {
-                    target.api.unlockTextElement(last.content);
-                }
+                target.api.unlockTextElement(last.content);
             }
         };
-
-        this.sendErrorEvent = function(label) {
-            this.createEvent("error", label).fire(this.eventCallbacks['error']);
-        };
-
-        this.checkInline = function(label) {
-            const inlineTypes = ['inlinetext', 'table', 'formula', 'mindmap'];
-            if (label && !inlineTypes.includes(this.api.getObjectType(label))) {
-                 this.sendErrorEvent()
-                 return false;
-            }
-            return true;
-        };
-
-        this.checkExists = function(label) {
-            if (label && !this.api.exists(label)) {
-                 this.createEvent("error", label).fire(this.eventCallbacks['error']);
-                 return false;
-            }
-            return true;
-        }
    }
 
     window.GeoGebraLive = function(api, id, delay) {
         var mainSession = new LiveApp(id);
         mainSession.api = api;
-        mainSession.eventCallbacks = {"construction": [], "error": []}
+        mainSession.eventCallbacks = {"construction": []}
         mainSession.registerListeners();
         mainSession.delay = delay;
 

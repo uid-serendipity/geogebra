@@ -939,9 +939,4 @@ public class GeoQuadric3DLimited extends GeoQuadricND
 		}
 		return ret;
 	}
-
-	@Override
-	public boolean showLineProperties() {
-		return true;
-	}
 }

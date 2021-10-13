@@ -108,13 +108,6 @@ public class InputTokenizerTest extends TokenizerBaseTest {
 	}
 
 	@Test
-	public void testGreekFunctionVars() {
-		withGeos("f(" + Unicode.Delta + "y, y)");
-		shouldBeSplitTo(Unicode.Delta + "y(1 + y)", Unicode.Delta + "y",
-				"(", "1", " ", "+", " ", "y", ")");
-	}
-
-	@Test
 	public void testAmbiguousTokenization() {
 		withGeos("a", "a1");
 		shouldBeSplitTo("a1b", "a", "1", "b");

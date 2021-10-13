@@ -19,7 +19,6 @@ import org.geogebra.common.awt.GBufferedImage;
 import org.geogebra.common.awt.GColor;
 import org.geogebra.common.awt.GDimension;
 import org.geogebra.common.awt.GFont;
-import org.geogebra.common.awt.MyImage;
 import org.geogebra.common.cas.singularws.SingularWebService;
 import org.geogebra.common.euclidian.Drawable;
 import org.geogebra.common.euclidian.EmbedManager;
@@ -5187,10 +5186,5 @@ public abstract class App implements UpdateSelection, AppInterface, EuclidianHos
 
 	public void setActiveMaterial(Material material) {
 		activeMaterial = material;
-	}
-
-	@Override
-	public MyImage getInternalImageAdapter(String filename, int width, int height) {
-		return null;
 	}
 }

@@ -48,17 +48,13 @@ public class MediaBoundingBox extends BoundingBox<GShape> {
 						(int) corners[(i + 1) % 4].getX(), (int) corners[(i + 1) % 4].getY());
 			}
 			if (showHandlers() && !isCropBox()) {
-				drawLineToRotateHandler(g2);
+				g2.drawLine((int) corners[4].getX(), (int) corners[4].getY(),
+						(int) corners[8].getX(), (int) corners[8].getY());
 			}
 		}
 		if (showHandlers()) {
 			delegate.draw(g2);
 		}
-	}
-
-	protected void drawLineToRotateHandler(GGraphics2D g2) {
-		g2.drawLine((int) corners[4].getX(), (int) corners[4].getY(),
-				(int) corners[8].getX(), (int) corners[8].getY());
 	}
 
 	@Override
@@ -72,13 +68,13 @@ public class MediaBoundingBox extends BoundingBox<GShape> {
 		updateHandlers();
 	}
 
-	protected void setHandlerTransformed(int handlerIndex, double x, double y) {
+	private void setHandlerTransformed(int handlerIndex, double x, double y) {
 		corners[handlerIndex] = transform.transform(new GPoint2D(x, y), null);
 		delegate.setHandlerFromCenter(handlerIndex,
 				corners[handlerIndex].getX(), corners[handlerIndex].getY());
 	}
 
-	protected void updateHandlers() {
+	private void updateHandlers() {
 		double width = geo.getWidth();
 		double height = geo.getHeight();
 

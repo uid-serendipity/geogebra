@@ -125,6 +125,11 @@
 					background-color: colors.$white;
 				}
 
+				.panelRow {
+					padding: 0;
+					position: relative;
+				}
+
 				.mowSubMenu {
 					width: calc(100% / 3);
 					overflow-x: auto;
@@ -140,31 +145,26 @@
 						.toolButton {
 							display: inline-block;
 							vertical-align: bottom;
-							margin: 0px 10px;
+							margin: 0px 10px !important;
 						}
 					}
 				}
 
 				.penSubMenu {
+					.penPanel {
+						width: 160px;
+					}
+
 					.mowSubMenuContent {
-						display: inline-flex;
-						margin: 6px 10px 3px 43px;
-						min-width: 547px;
-
-						.groupPanel {
-							margin: 0;
-							width: 276px !important;
-						}
-
-						.toolButton {
-							margin: 0 5px;
-						}
+						margin: 8px 10px 3px 8px;
 					}
 
 					.colorPanel {
-						height: 90px;
-						width: 220px;
-						padding: 6px 0px 0px 20px;
+						position: absolute;
+						left: 152px;
+						margin: 0;
+						top: 20px;
+						width: 440px;
 
 						.mowColorButton {
 							 width: 32px;
@@ -172,7 +172,6 @@
 							 border-radius: 2px;
 							 margin: 6px;
 							 cursor: pointer;
-							 display: inline-block;
 
 							&:hover:not(.disabled) {
 								opacity: 0.65;
@@ -194,13 +193,9 @@
 						}
 
 						.mowColorPlusButton {
-							@extend .mowColorButton;
 							 width: 30px;
 							 height: 30px;
 							 border: 1px solid colors.$tool-border !important;
-							 position: relative;
-							 top: -7px;
-
 							 img {
 								opacity: 0.54;
 							 }
@@ -215,16 +210,16 @@
 					}
 
 					.sizePanel {
-						position: relative;
-						left: initial;
-						top: 5px;
+						position: absolute;
+						left: 172px;
+						top: 84px;
 
 						.mowOptionsSlider {
 							.preview {
 								position: absolute;
-								top: 0;
-								left: 172px;
-								margin-right: 0px;
+								display: inline-block;
+								padding-left: 30px;
+								top: -2px;
 							}
 
 							.gwt-Label {
@@ -255,7 +250,7 @@
 
 	.toolButton {
 		display: inline-block;
-		margin: 0px;
+		margin: 0px !important;
 		border-radius: 4px;
 		height: 72px;
 		cursor: pointer;

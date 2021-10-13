@@ -29,10 +29,10 @@ public interface GeoGebraActivity {
 	/**
 	 * Initialize the activity
 	 *
-	 * @param app
+	 * @param appW
 	 *            app
 	 */
-	void start(AppW app);
+	void start(AppW appW);
 
 	/**
 	 * @return icon for numeric toggle button

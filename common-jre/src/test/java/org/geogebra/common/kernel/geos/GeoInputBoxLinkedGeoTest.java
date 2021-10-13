@@ -112,13 +112,6 @@ public class GeoInputBoxLinkedGeoTest extends BaseUnitTest {
 	}
 
 	@Test
-	public void symbolicShouldShowPercentageForPercentage() {
-		setupInput("l", "3%");
-		assertEquals("3\\%", inputBox.getText());
-		assertEquals("3%", inputBox.getTextForEditor());
-	}
-
-	@Test
 	public void shouldShowValueForSimpleNumeric() {
 		setupInput("l", "5");
 		inputBox.setSymbolicMode(true, false);
@@ -494,9 +487,11 @@ public class GeoInputBoxLinkedGeoTest extends BaseUnitTest {
 		GeoInputBox inputBox = add("InputBox(A)");
 		add("B=(1,3)");
 		inputBox.updateLinkedGeo("B2");
-		assertThat(lookup("A"), hasValue("(2, 6)"));
+		assertEquals(lookup("A").toValueString(StringTemplate.testTemplate),
+				"(2, 6)");
 		inputBox.updateLinkedGeo("O");
-		assertThat(lookup("A"), hasValue("(?, ?)"));
+		assertEquals(lookup("A").toValueString(StringTemplate.testTemplate),
+				"(?, ?)");
 	}
 
 	@Test
@@ -524,7 +519,8 @@ public class GeoInputBoxLinkedGeoTest extends BaseUnitTest {
 		GeoElement point = add("A=Point(y=2)");
 		GeoInputBox inputBox = add("InputBox(A)");
 		inputBox.updateLinkedGeo("(3,7)");
-		assertThat(point, hasValue("(3, 2)"));
+		assertEquals(point.toValueString(StringTemplate.editTemplate),
+				"(3, 2)");
 	}
 
 	@Test
@@ -532,7 +528,8 @@ public class GeoInputBoxLinkedGeoTest extends BaseUnitTest {
 		GeoElement point = add("A=PointIn(xx+yy=2)");
 		GeoInputBox inputBox = add("InputBox(A)");
 		inputBox.updateLinkedGeo("(5,-5)");
-		assertThat(point, hasValue("(1, -1)"));
+		assertEquals(point.toValueString(StringTemplate.editTemplate),
+				"(1, -1)");
 	}
 
 	@Test

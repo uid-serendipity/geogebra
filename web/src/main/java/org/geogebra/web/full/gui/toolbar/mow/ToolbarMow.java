@@ -54,7 +54,6 @@ public class ToolbarMow extends FlowPanel
 		notesLayout = layout;
 		add(header);
 		initGui();
-		setMode(appW.getMode());
 	}
 
 	/**

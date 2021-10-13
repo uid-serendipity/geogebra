@@ -29,7 +29,6 @@ import org.geogebra.common.kernel.kernelND.GeoElementND;
 import org.geogebra.common.plugin.EuclidianStyleConstants;
 import org.geogebra.common.scientific.LabelController;
 import org.geogebra.common.util.DoubleUtil;
-import org.geogebra.desktop.main.AppD;
 import org.geogebra.test.TestErrorHandler;
 import org.geogebra.test.TestStringUtil;
 import org.geogebra.test.UndoRedoTester;
@@ -38,7 +37,6 @@ import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -1615,7 +1613,6 @@ public class GeoSymbolicTest extends BaseSymbolicTest {
 
 	@Test
 	public void numericAlternativeCommand() {
-		Assume.assumeTrue(!AppD.WINDOWS);
 		add("f(x) = -x^2 * e^(-x)");
 		add("g(x) = 1 + (f'(x))^2");
 		t("Integral(sqrt(g),0,20)", "20.12144888423");

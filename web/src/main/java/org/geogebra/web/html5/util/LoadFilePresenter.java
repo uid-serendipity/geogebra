@@ -251,9 +251,7 @@ public class LoadFilePresenter {
 	 */
 	void finishEmptyLoading(AppW app, Perspective p) {
 		app.setActivePerspective(p);
-		if (app.getAppletParameters().getDataParamApp()) {
-			app.getAppletFrame().updateHeaderSize();
-		}
+		app.getAppletFrame().updateHeaderSize();
 		app.setPreferredSize(
 				new Dimension(app.getAppletWidth(), app.getAppletHeight()));
 		app.ensureStandardView();

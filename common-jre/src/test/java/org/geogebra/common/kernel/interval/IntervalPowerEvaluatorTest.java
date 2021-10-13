@@ -1,8 +1,5 @@
 package org.geogebra.common.kernel.interval;
 
-import static org.geogebra.common.kernel.interval.IntervalOperands.nthRoot;
-import static org.geogebra.common.kernel.interval.IntervalOperands.pow;
-import static org.geogebra.common.kernel.interval.IntervalOperands.sqrt;
 import static org.geogebra.common.kernel.interval.IntervalTest.interval;
 import static org.junit.Assert.assertEquals;
 
@@ -15,28 +12,28 @@ public class IntervalPowerEvaluatorTest extends BaseUnitTest {
 	@Test
 	public void evaluateXSquared() throws Exception {
 		assertEquals(
-				pow(interval(1, 2), 2),
+				interval(1, 2).pow(2),
 				evalOnInterval("x^2", 1, 2));
 	}
 
 	@Test
 	public void evaluateXExponental() throws Exception {
 		assertEquals(
-				pow(interval(1, 2), Math.E),
+				interval(1, 2).pow(Math.E),
 				evalOnInterval("x^e", 1, 2));
 	}
 
 	@Test
 	public void evaluateXOnNegativePower() throws Exception {
 		assertEquals(
-				pow(interval(1, 2), 2).multiplicativeInverse(),
+				interval(1, 2).pow(2).multiplicativeInverse(),
 				evalOnInterval("x^-2", 1, 2));
 	}
 
 	@Test
 	public void evaluateXPowerHalf() throws Exception {
 		assertEquals(
-				nthRoot(interval(1, 16), 2),
+				interval(1, 16).nthRoot(2),
 				evalOnInterval("x^(1/2)", 1, 16));
 	}
 
@@ -47,26 +44,25 @@ public class IntervalPowerEvaluatorTest extends BaseUnitTest {
 
 	@Test
 	public void evaluateXPowerForth() throws Exception {
-		assertEquals(nthRoot(interval(1, 16), 4),
+		assertEquals(interval(1, 16).nthRoot(4),
 				evalOnInterval("x^(1/4)", 1, 16));
 	}
 
 	@Test
 	public void evaluateXPowerTwoThird() throws Exception {
-		assertEquals(nthRoot(pow(interval(1, 16), 2), 3),
+		assertEquals(interval(1, 16).pow(2).nthRoot(3),
 				evalOnInterval("x^(2/3)", 1, 16));
 	}
 
 	@Test
 	public void evaluateXOnNegativeFractionPower() throws Exception {
-		assertEquals(
-				sqrt(pow(interval(9, 10), 3)).multiplicativeInverse(),
+		assertEquals(interval(9, 10).pow(3).sqrt().multiplicativeInverse(),
 				evalOnInterval("x^(-3/2)", 9, 10));
 	}
 
 	@Test
 	public void evaluateXOnDoublePower() throws Exception {
-		assertEquals(sqrt(interval(9, 10)),
+		assertEquals(interval(9, 10).sqrt(),
 				evalOnInterval("x^0.5", 9, 10));
 	}
 

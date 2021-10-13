@@ -48,7 +48,7 @@ public class BaseActivity implements GeoGebraActivity {
 	}
 
 	@Override
-	public void start(AppW app) {
+	public void start(AppW appW) {
 		// nothing to do
 	}
 
