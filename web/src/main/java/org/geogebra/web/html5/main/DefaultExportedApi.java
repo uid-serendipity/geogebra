@@ -1047,7 +1047,7 @@ public class DefaultExportedApi implements ExportedApi {
 		ggbAPI.unlockTextElement(label);
 	}
 
-	public void enableUndoRedo(String enable) {
-		ggbAPI.enableUndoRedo(enable);
+	public void enableUndoRedo(Object enable) {
+		ggbAPI.enableUndoRedo(Js.isTruthy(enable));
 	}
 }

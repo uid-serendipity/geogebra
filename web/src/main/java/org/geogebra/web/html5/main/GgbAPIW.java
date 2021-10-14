@@ -1249,6 +1249,17 @@ public class GgbAPIW extends GgbAPI {
 				app.showError(MyError.Errors.SaveFileFailed);
 			}
 		});
+	}
 
+	/**
+	 *
+	 * @param enable true if undo/redo should be visible
+	 */
+	public void enableUndoRedo(boolean enable) {
+		app.setUndoRedoEnabled(enable);
+		GuiManagerInterfaceW guiManagerW = (GuiManagerInterfaceW) app.getGuiManager();
+		if (guiManagerW != null) {
+			guiManagerW.updateToolbarActions();
+		}
 	}
 }
