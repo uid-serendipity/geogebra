@@ -2409,4 +2409,8 @@ public abstract class GgbAPI implements JavaScriptAPI {
 		GeoElement geo = kernel.lookupLabel(label);
 		return geo != null && geo.isSelectionAllowed(app.getActiveEuclidianView());
 	}
+
+	public void enableUndoRedo(String enable) {
+		app.setUndoRedoEnabled(Boolean.getBoolean(enable));
+	}
 }
