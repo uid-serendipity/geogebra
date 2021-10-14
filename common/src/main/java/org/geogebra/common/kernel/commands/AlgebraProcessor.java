@@ -3062,7 +3062,19 @@ public class AlgebraProcessor {
 			if (leaf instanceof Command) {
 				Command c = (Command) leaf;
 				c.setLabels(n.getLabels());
-				return cmdDispatcher.processCommand(c, info);
+				String commandName = c.getName();
+				boolean isRedefinition = getReplaceable(c.getLabels()) != null;
+				boolean isOk = true;
+				GeoElement[] result;
+				try {
+					result = cmdDispatcher.processCommand(c, info);
+				} catch (MyError | RuntimeException e) {
+					isOk = false;
+					System.out.println("");
+					throw e;
+				}
+				System.out.println("");
+				return result;
 			} else if (leaf instanceof Equation) {
 				Equation eqn = (Equation) leaf;
 				eqn.setLabels(n.getLabels());
