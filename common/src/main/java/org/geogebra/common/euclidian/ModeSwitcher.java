@@ -81,14 +81,12 @@ public class ModeSwitcher {
 			}
 			break;
 
-		case EuclidianConstants.MODE_CALCULATOR:
-			if (embedManager != null) {
-				setUpEmbedManager(embedManager);
-			}
-			break;
-
 		default:
 			break;
+		}
+		if (embedManager != null
+				&& newMode == EuclidianConstants.MODE_CALCULATOR) {
+			setUpEmbedManager(embedManager);
 		}
 
 	}
@@ -98,17 +96,13 @@ public class ModeSwitcher {
 	}
 
 	private void setUpEmbedManager(EmbedManager embedManager) {
-		EuclidianView view = app.getActiveEuclidianView();
 		final GeoEmbed ge = new GeoEmbed(cons);
 		ge.setAppName("suite");
+		EuclidianView view = app.getActiveEuclidianView();
 		ge.initDefaultPosition(view);
 		embedManager.initAppEmbed(ge);
 		ge.setLabel(null);
 		app.storeUndoInfo();
-		app.invokeLater(() -> {
-			view.getEuclidianController().selectAndShowSelectionUI(ge);
-			ge.setBackground(false);
-			view.update(ge); // force painting in the foreground
-		});
+		app.invokeLater(() -> view.getEuclidianController().selectAndShowSelectionUI(ge));
 	}
 }
