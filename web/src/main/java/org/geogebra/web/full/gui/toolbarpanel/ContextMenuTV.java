@@ -76,33 +76,49 @@ public class ContextMenuTV {
 
 	private void buildGui() {
 		wrappedPopup = new GPopupMenuW(app);
+		wrappedPopup.getPopupPanel().addStyleName("tvContextMenu");
 		if (getColumnIdx() > 0) {
-			// column index > 0 -> edit function
-			if (view.getEvaluatable(getColumnIdx()) instanceof GeoList) {
-				addStats("Statistics", view::getStatistics1Var);
-				addStats("Statistics2", view::getStatistics2Var);
-				addCommand(this::showRegression, "Regression",
-						"regression");
+			GeoEvaluatable column = view.getEvaluatable(getColumnIdx());
+			if (column instanceof GeoList) {
+				buildYColumnMenu();
 			} else {
-				addShowHide();
-				addEdit(() -> {
-					GuiManagerInterfaceW guiManager = getApp().getGuiManager();
-					if (guiManager != null) {
-						guiManager.startEditing(geo);
-					}
-				});
+				buildFunctionColumnMenu();
 			}
-			addDelete();
 		} else {
-			// column index = 0 -> edit x-column
-			addEdit(() -> {
-				DialogManager dialogManager = getApp().getDialogManager();
-				if (dialogManager != null) {
-					dialogManager.openTableViewDialog(null);
-				}
-			});
-			addClear();
+			buildXColumnMenu();
 		}
+	}
+
+	private void buildXColumnMenu() {
+		addEdit(() -> {
+			DialogManager dialogManager = getApp().getDialogManager();
+			if (dialogManager != null) {
+				dialogManager.openTableViewDialog(null);
+			}
+		});
+		addClear();
+	}
+
+	private void buildYColumnMenu() {
+		addDelete();
+		addShowHidePoints();
+		wrappedPopup.addVerticalSeparator();
+		String headerHTMLName = view.getHeaderNameHTML(getColumnIdx());
+		addStats(headerHTMLName + " Statistics", view::getStatistics1Var);
+		addStats("x, " + headerHTMLName + " Statistics", view::getStatistics2Var);
+		addCommand(this::showRegression, "Regression",
+				"regression");
+	}
+
+	private void buildFunctionColumnMenu() {
+		addShowHidePoints();
+		addEdit(() -> {
+			GuiManagerInterfaceW guiManager = getApp().getGuiManager();
+			if (guiManager != null) {
+				guiManager.startEditing(geo);
+			}
+		});
+		addDelete();
 	}
 
 	private void addStats(String transKey, Function<Integer, List<StatisticGroup>> statFunction) {
@@ -120,7 +136,7 @@ public class ContextMenuTV {
 		dialog.updateContent(statFunction);
 	}
 
-	private void addShowHide() {
+	private void addShowHidePoints() {
 		final TableValuesPoints tvPoints = getApp().getGuiManager()
 				.getTableValuesPoints();
 		final int column = getColumnIdx();
