@@ -66,21 +66,6 @@ public class TableValuesPointsImpl implements TableValuesPoints {
 	}
 
 	@Override
-	public void notifyRowRemoved(TableValuesModel model, int row) {
-		// TODO
-	}
-
-	@Override
-	public void notifyRowChanged(TableValuesModel model, int row) {
-		// TODO
-	}
-
-	@Override
-	public void notifyRowAdded(TableValuesModel model, int row) {
-		// TODO
-	}
-
-	@Override
 	public void notifyDatasetChanged(TableValuesModel model) {
 		for (int i = points.size() - 1; i >= 0; i--) {
 			removePointsFromList(i);
@@ -146,8 +131,7 @@ public class TableValuesPointsImpl implements TableValuesPoints {
 
 	private static void maybeSetPointColor(GeoPoint point,
 			GeoEvaluatable evaluatable) {
-		GColor color = evaluatable.isGeoFunction() ? evaluatable.getObjectColor()
-				: GColor.MIND_MAP_PARENT_BORDER_COLOR;
+		GColor color = evaluatable.getObjectColor();
 		point.setObjColor(color);
 	}
 

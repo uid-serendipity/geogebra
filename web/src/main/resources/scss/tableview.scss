@@ -88,10 +88,6 @@ $deleteTime: 120ms;
 					height: 50px;
 				}
 			}
-
-			&.notEditable {
-				cursor: default;
-			}
 		}
 
 		.values {
@@ -182,10 +178,6 @@ $deleteTime: 120ms;
 				&.deleteCol .content {
 					margin-left: 16px;
 					margin-right: 32px;
-				}
-
-				&.notEditable .content {
-					color: colors.$black-54;
 				}
 			}
 		}
