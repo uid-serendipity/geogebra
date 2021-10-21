@@ -8,7 +8,7 @@ import org.geogebra.common.gui.view.table.column.TableValuesFunctionColumn;
 import org.geogebra.common.gui.view.table.column.TableValuesListColumn;
 import org.geogebra.common.kernel.Kernel;
 import org.geogebra.common.kernel.geos.GeoElement;
-import org.geogebra.common.kernel.geos.GeoFunction;
+import org.geogebra.common.kernel.geos.GeoFunctionable;
 import org.geogebra.common.kernel.geos.GeoList;
 import org.geogebra.common.kernel.geos.GeoNumeric;
 import org.geogebra.common.kernel.geos.GeoText;
@@ -189,7 +189,7 @@ class SimpleTableValuesModel implements TableValuesModel {
 					updateCell(evaluatable, i, index);
 					updatedXRow = i == 0 ? index : -1;
 				}
-			} else if (evaluatable instanceof GeoFunction && updatedXRow > -1) {
+			} else if (evaluatable instanceof GeoFunctionable && updatedXRow > -1) {
 				updateCell(evaluatable, i, updatedXRow);
 			}
 		}
@@ -348,14 +348,24 @@ class SimpleTableValuesModel implements TableValuesModel {
 		}
 	}
 
+	/**
+	 * clears the first (x) column
+	 */
+	public void clearXColumn() {
+		GeoEvaluatable evaluatable = getEvaluatable(0);
+		if (evaluatable instanceof GeoList) {
+			((GeoList) evaluatable).setZero();
+			((GeoList) evaluatable).notifyUpdate();
+			kernel.getApplication().storeUndoInfo();
+		}
+	}
+
 	@Override
-	public void set(GeoElement element, GeoList column, int rowIndex) {
+	public void set(GeoElement element, GeoList column, int rowIndex, int oldRowCount) {
 		int columnIndex = getEvaluatableIndex(column);
 		if (columnIndex == -1) {
 			return;
 		}
-		int oldRowCount = getRowCount();
-		ensureCapacity(column, rowIndex);
 		column.setListElement(rowIndex, element);
 		column.setDefinition(null);
 		columns.get(columnIndex).invalidateValue(rowIndex);
@@ -369,22 +379,6 @@ class SimpleTableValuesModel implements TableValuesModel {
 		if (getEvaluatableIndex(column) > -1 && column.listContains(element)) {
 			element.notifyUpdate();
 		}
-	}
-
-	private void ensureCapacity(GeoList list, int index) {
-		boolean listWillChange = list.size() < index + 1;
-		list.ensureCapacity(index + 1);
-		for (int i = list.size(); i < index + 1; i++) {
-			list.add(createEmptyValue());
-		}
-		if (listWillChange) {
-			list.notifyUpdate();
-		}
-	}
-
-	@Override
-	public GeoElement createEmptyValue() {
-		return new GeoText(kernel.getConstruction(), "");
 	}
 
 	@Override
@@ -456,17 +450,5 @@ class SimpleTableValuesModel implements TableValuesModel {
 			}
 		}
 		return true;
-	}
-
-	/**
-	 * clears the first (x) column
-	 */
-	public void clearXColumn() {
-		GeoEvaluatable evaluatable = getEvaluatable(0);
-		if (evaluatable instanceof GeoList) {
-			((GeoList) evaluatable).setZero();
-			((GeoList) evaluatable).notifyUpdate();
-			kernel.getApplication().storeUndoInfo();
-		}
 	}
 }
