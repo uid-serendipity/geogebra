@@ -12,7 +12,7 @@ def getChangelog() {
     return lines.join("\n").toString()
 }
 
-def isGiac = env.BRANCH_NAME.matches("dependabot.*giac.*")
+def isGiac = env.BRANCH_NAME.matches("dependabot.*giac.*|apps-3339")
 def nodeLabel = isGiac ? "Ubuntu" : "posix"
 
 def s3uploadDefault = { dir, pattern, encoding ->
@@ -88,6 +88,13 @@ pipeline {
                     agent {label 'Ubuntu'}
                     steps {
                         sh label: 'test', script: "./gradlew :desktop:test"
+                        junit '**/build/test-results/test/*.xml'
+                    }
+                }
+                stage('windows') {
+                    agent {label 'winbuild'}
+                    steps {
+                        bat label: 'test', script: ".\\gradlew.bat :desktop:test"
                         junit '**/build/test-results/test/*.xml'
                     }
                 }
