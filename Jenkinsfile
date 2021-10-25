@@ -12,7 +12,7 @@ def getChangelog() {
     return lines.join("\n").toString()
 }
 
-def isGiac = env.BRANCH_NAME.matches("dependabot.*giac.*|apps-3339")
+def isGiac = env.BRANCH_NAME.matches("dependabot.*giac.*")
 def nodeLabel = isGiac ? "Ubuntu" : "posix"
 
 def s3uploadDefault = { dir, pattern, encoding ->
