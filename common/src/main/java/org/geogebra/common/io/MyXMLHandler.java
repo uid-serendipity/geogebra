@@ -3524,6 +3524,8 @@ public class MyXMLHandler implements DocHandler {
 						((ExpressionNode) ve).setForceInequality();
 					} else if ("surfacecartesian".equals(type)) {
 						((ExpressionNode) ve).setForceSurfaceCartesian();
+					} else if ("list".equals(type)) {
+						((ExpressionNode) ve).setForceList();
 					}
 				} else if (ve instanceof Equation) {
 					if ("line".equals(type)) {
