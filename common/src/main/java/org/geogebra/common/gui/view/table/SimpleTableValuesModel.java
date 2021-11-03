@@ -336,7 +336,7 @@ class SimpleTableValuesModel implements TableValuesModel {
 		GeoEvaluatable evaluatable = getEvaluatable(0);
 		if (evaluatable instanceof GeoList) {
 			((GeoList) evaluatable).setZero();
-			((GeoList) evaluatable).notifyUpdate();
+			notifyDatasetChanged();
 			kernel.getApplication().storeUndoInfo();
 		}
 	}
