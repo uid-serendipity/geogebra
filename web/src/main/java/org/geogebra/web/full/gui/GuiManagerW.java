@@ -130,6 +130,8 @@ import org.geogebra.web.html5.util.Dom;
 import org.geogebra.web.html5.util.FileConsumer;
 import org.geogebra.web.html5.util.StringConsumer;
 import org.geogebra.web.shared.GlobalHeader;
+import org.geogebra.web.shared.components.ComponentDialog;
+import org.geogebra.web.shared.components.DialogData;
 
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.core.client.Scheduler;
@@ -139,6 +141,7 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.resources.client.ResourcePrototype;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 import elemental2.dom.DomGlobal;
@@ -1576,23 +1579,14 @@ public class GuiManagerW extends GuiManager
 	@Override
 	public boolean checkAutoCreateSliders(final String s,
 			final AsyncOperation<String[]> callback) {
-		final String[] options = { loc.getMenu("Cancel"),
-				loc.getMenu("CreateSliders") };
-
-		final Image icon = new NoDragImage(
-				ImgResourceHelper.safeURI(
-						ToolbarSvgResourcesSync.INSTANCE.mode_slider_32()),
-				32);
-		icon.addStyleName("dialogToolIcon");
-		// icon.getElement().getStyle()
-		// .setProperty("border", "3px solid steelblue");
-
-		getOptionPane().showOptionDialog(
-				loc.getPlain("CreateSlidersForA", s),
-				loc.getMenu("CreateSliders"),
-				Integer.parseInt(AlgebraProcessor.CREATE_SLIDER),
-				GOptionPane.INFORMATION_MESSAGE, icon, options, callback);
-
+		DialogData data = new DialogData("CreateSliders", "Cancel",
+				"CreateSliders");
+		ComponentDialog createSlider = new ComponentDialog((AppW) app, data, false, true);
+		Label message = new Label(loc.getPlain("CreateSlidersForA", s));
+		createSlider.addDialogContent(message);
+		createSlider.setOnPositiveAction(() ->
+				callback.callback(new String[] { AlgebraProcessor.CREATE_SLIDER }));
+		createSlider.show();
 		return false;
 	}
 
