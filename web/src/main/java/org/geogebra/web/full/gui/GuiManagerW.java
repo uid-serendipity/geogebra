@@ -64,6 +64,8 @@ import org.geogebra.web.full.gui.app.GGWMenuBar;
 import org.geogebra.web.full.gui.app.GGWToolBar;
 import org.geogebra.web.full.gui.applet.GeoGebraFrameFull;
 import org.geogebra.web.full.gui.browser.BrowseGUI;
+import org.geogebra.web.full.gui.components.ComponentInputDialog;
+import org.geogebra.web.full.gui.components.ComponentInputField;
 import org.geogebra.web.full.gui.dialog.DialogManagerW;
 import org.geogebra.web.full.gui.dialog.options.OptionsTab.ColorPanel;
 import org.geogebra.web.full.gui.dialog.template.TemplateChooserController;
@@ -1861,26 +1863,25 @@ public class GuiManagerW extends GuiManager
 	@Override
 	public void exportGGB(boolean showDialog) {
 		final String extension = ((AppW) app).getFileExtension();
-
 		if (showDialog) {
-			getOptionPane().showSaveDialog(loc.getMenu("Save"),
-					getApp().getExportTitle() + extension, null,
-					obj -> {
-						if (Integer.parseInt(obj[0]) == 0) {
+			DialogData data = new DialogData("Save", "Cancel", "Save");
+			ComponentDialog dialog = new ComponentDialog((AppW) app, data, false, true);
+			ComponentInputField inputTextField = new ComponentInputField((AppW) app,
+					"", "", "", getApp().getExportTitle() + extension, -1, 1,
+					false, "");
+			dialog.addDialogContent(inputTextField);
+			dialog.setOnPositiveAction(() -> {
+				String filename = inputTextField.getText();
+				if (filename == null || filename.trim().isEmpty()) {
+					filename = getApp().getExportTitle();
+				}
 
-							String filename = obj[1];
-
-							if (filename == null || filename.trim().isEmpty()) {
-								filename = getApp().getExportTitle();
-							}
-
-							// in case user removes extension
-							if (!filename.endsWith(extension)) {
-								filename += extension;
-							}
-							exportGgb(filename, extension);
-						}
-					}, loc.getMenu("Save"));
+				if (!filename.endsWith(extension)) {
+					filename += extension;
+				}
+				exportGgb(filename, extension);
+			});
+			dialog.show();
 		} else {
 			exportGGBDirectly();
 		}

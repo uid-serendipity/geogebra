@@ -357,65 +357,6 @@ public class GOptionPaneW extends GDialogBox
 		showDialog(true);
 	}
 
-	/**
-	 * Launches a simple input dialog. The dialog result is returned in the
-	 * parameter of the handler callback function as an array of two strings:
-	 * <br>
-	 * 
-	 * dialogResult[0] = returnOption <br>
-	 * dialogResult[1] = returnValue
-	 * 
-	 */
-	public void showInputDialog(String message,
-			String initialSelectionValue, Object icon,
-			AsyncOperation<String[]> handler) {
-		this.mMessage = message;
-		this.mTitle = null;
-		this.mOptionType = GOptionPane.OK_CANCEL_OPTION;
-		this.mMessageType = GOptionPane.PLAIN_MESSAGE;
-		this.mIcon = (Image) icon;
-
-		this.mInitialSelectionValue = initialSelectionValue;
-		this.mReturnHandler = handler;
-		requiresReturnValue = true;
-
-		showDialog(true);
-	}
-
-	/**
-	 * Simple download as dialog.
-	 * 
-	 * @param title
-	 *            title
-	 * @param initialSelectionValue
-	 *            initial input value (filename)
-	 * @param icon
-	 *            icon
-	 * @param handler
-	 *            button handler
-	 * @param okLabel
-	 *            label for OK
-	 */
-	public void showSaveDialog(String title,
-			String initialSelectionValue, Object icon,
-			AsyncOperation<String[]> handler, String okLabel) {
-		if (app.isWhiteboardActive()) {
-			this.addStyleName("mow");
-		}
-		this.mMessage = "";
-		this.mTitle = title;
-		this.mOkLabel = okLabel;
-		this.mOptionType = GOptionPane.OK_CANCEL_OPTION;
-		this.mMessageType = GOptionPane.PLAIN_MESSAGE;
-		this.mIcon = (Image) icon;
-
-		this.mInitialSelectionValue = initialSelectionValue;
-		this.mReturnHandler = handler;
-		requiresReturnValue = true;
-
-		showDialog(false);
-	}
-
 	public Element getContentElement() {
 		return this.getContainerElement();
 	}

@@ -1489,16 +1489,6 @@ public abstract class AppW extends App implements SetLabels, HasLanguage {
 		}
 	}
 
-	/**
-	 * Get a pane for showing messages
-	 *
-	 * @return option pane
-	 */
-	public GOptionPaneW getOptionPane() {
-		return getGuiManager() != null ? getGuiManager().getOptionPane()
-				: new GOptionPaneW(getPanel(), this);
-	}
-
 	@Override
 	public void setActiveView(int evID) {
 		if (getGuiManager() != null) {

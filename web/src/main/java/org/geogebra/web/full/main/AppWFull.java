@@ -665,17 +665,6 @@ public class AppWFull extends AppW implements HasKeyboard, MenuViewListener {
 		dialog.show();
 	}
 
-	/**
-	 * @param msg error/info message
-	 */
-	@Override
-	public void showErrorInfoDialog(String msg) {
-		String title = GeoGebraConstants.APPLICATION_NAME + " - "
-				+ getLocalization().getError("Error");
-		DialogData data = new DialogData(title, null, "OK");
-		new ErrorInfoDialog(this, data, msg, true).show();
-	}
-
 	@Override
 	public RelationPaneW getRelationDialog() {
 		DialogData data = new DialogData(getLocalization().getCommand("Relation"),

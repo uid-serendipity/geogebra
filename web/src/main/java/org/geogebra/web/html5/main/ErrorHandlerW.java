@@ -1,9 +1,12 @@
 package org.geogebra.web.html5.main;
 
-import org.geogebra.common.GeoGebraConstants;
-import org.geogebra.common.javax.swing.GOptionPane;
 import org.geogebra.common.main.error.ErrorHandler;
 import org.geogebra.common.util.AsyncOperation;
+import org.geogebra.web.shared.components.ComponentDialog;
+import org.geogebra.web.shared.components.DialogData;
+
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.Label;
 
 /**
  * Default error handler
@@ -24,7 +27,8 @@ public class ErrorHandlerW implements ErrorHandler {
 		if (!app.isErrorDialogsActive()) {
 			return;
 		}
-		app.showErrorInfoDialog(msg);
+		DialogData data = new DialogData("Error", null, "OK");
+		showErrorDialog(data, msg, null);
 	}
 
 	@Override
@@ -43,18 +47,23 @@ public class ErrorHandlerW implements ErrorHandler {
 		if (!app.isErrorDialogsActive()) {
 			return;
 		}
-		String title = GeoGebraConstants.APPLICATION_NAME + " - "
-				+ app.getLocalization().getError("Error");
+		DialogData data = new DialogData(app.getLocalization().getError("Error"),
+				"Close", "ShowOnlineHelp");
+		showErrorDialog(data, message, () -> openCommandHelp(command));
+	}
 
-		String[] optionNames = { app.getLocalization().getMenu("OK"),
-				app.getLocalization().getMenu("ShowOnlineHelp") };
-		app.getOptionPane().showOptionDialog(message, title, 0,
-				GOptionPane.ERROR_MESSAGE, null, optionNames,
-				dialogResult -> {
-					if ("1".equals(dialogResult[0])) {
-						openCommandHelp(command);
-					}
-				});
+	private void showErrorDialog(DialogData data, String message, Runnable posBtnAction) {
+		ComponentDialog dialog = new ComponentDialog(app, data, false, true);
+		FlowPanel messagePanel = new FlowPanel();
+		String[] lines = message.split("\n");
+		for (String item : lines) {
+			messagePanel.add(new Label(item));
+		}
+		dialog.addDialogContent(messagePanel);
+		if (posBtnAction != null) {
+			dialog.setOnPositiveAction(posBtnAction::run);
+		}
+		dialog.show();
 	}
 
 	/**

@@ -4363,10 +4363,6 @@ public abstract class App implements UpdateSelection, AppInterface, EuclidianHos
 		// overridden in platforms supporting exam
 	}
 
-	public void showErrorInfoDialog(String msg) {
-		// overridden in web
-	}
-
 	/**
 	 * @return relation tool dialog
 	 */
