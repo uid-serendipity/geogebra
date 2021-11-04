@@ -402,8 +402,10 @@ public class ToolCreationDialogW extends DialogBoxW implements
 		} else {
 			DialogData data = new DialogData(appw.getLocalization().getError("Error"),
 					null, "OK");
-			new ErrorInfoDialog((AppW) app, data,
-					loc.getMenu("Tool.NotCompatible"), true).show();
+			ComponentDialog dialog = new ComponentDialog(appw, data, false, true);
+			Label label = new Label(loc.getMenu("Tool.NotCompatible"));
+			dialog.addDialogContent(label);
+			dialog.show();
 		}
 
 		if (appw.isToolLoadedFromStorage()) {
