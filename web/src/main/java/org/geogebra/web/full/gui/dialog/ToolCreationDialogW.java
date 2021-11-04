@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.geogebra.common.awt.GColor;
 import org.geogebra.common.gui.dialog.ToolCreationDialogModel;
 import org.geogebra.common.gui.dialog.ToolInputOutputListener;
-import org.geogebra.common.javax.swing.GOptionPane;
 import org.geogebra.common.kernel.Macro;
 import org.geogebra.common.kernel.geos.GeoElement;
 import org.geogebra.common.kernel.kernelND.GeoElementND;
@@ -17,6 +16,7 @@ import org.geogebra.web.full.gui.ToolNameIconPanelW;
 import org.geogebra.web.html5.gui.tooltip.ToolTipManagerW;
 import org.geogebra.web.html5.main.AppW;
 import org.geogebra.web.shared.DialogBoxW;
+import org.geogebra.web.shared.components.ComponentDialog;
 import org.geogebra.web.shared.components.DialogData;
 
 import com.google.gwt.dom.client.Element;
@@ -366,21 +366,13 @@ public class ToolCreationDialogW extends DialogBoxW implements
 
 		final String commandName = toolNameIconPanel.getCommandName();
 		if (appToSave.getKernel().getMacro(commandName) != null) {
-			String[] options = { loc.getMenu("Tool.Replace"),
-					loc.getMenu("Tool.DontReplace") };
-			appw.getGuiManager()
-					.getOptionPane()
-					.showOptionDialog(
-							appw.getLocalization().getPlain(
-									"Tool.ReplaceQuestion", commandName),
-							loc.getMenu("Question"),
- 0,
-							GOptionPane.QUESTION_MESSAGE, null, options,
-							dialogResult -> {
-								if ("0".equals(dialogResult[0])) {
-									saveMacro(appToSave);
-								}
-							});
+			DialogData data = new DialogData("Question", "Cancel", "Tool.Replace");
+			ComponentDialog dialog = new ComponentDialog(appw, data, false, true);
+			Label message = new Label(appw.getLocalization().getPlain(
+					"Tool.ReplaceQuestion", commandName));
+			dialog.addDialogContent(message);
+			dialog.setOnPositiveAction(() -> saveMacro(appToSave));
+			dialog.show();
 		} else {
 			saveMacro(appToSave);
 		}

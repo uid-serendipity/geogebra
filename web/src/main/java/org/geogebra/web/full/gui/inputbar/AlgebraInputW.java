@@ -353,7 +353,7 @@ public class AlgebraInputW extends FlowPanel
 
 			@Override
 			public void showCommandError(String command, String message) {
-				if (true) {
+				if (explicit) {
 					app.getDefaultErrorHandler().showCommandError(command,
 							message);
 				}

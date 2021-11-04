@@ -56,7 +56,6 @@ import org.geogebra.web.editor.MathFieldProcessing;
 import org.geogebra.web.full.cas.view.CASTableW;
 import org.geogebra.web.full.cas.view.CASViewW;
 import org.geogebra.web.full.cas.view.RowHeaderPopupMenuW;
-import org.geogebra.web.full.css.ToolbarSvgResourcesSync;
 import org.geogebra.web.full.euclidian.DynamicStyleBar;
 import org.geogebra.web.full.euclidian.EuclidianStyleBarW;
 import org.geogebra.web.full.euclidian.SymbolicEditorW;
@@ -64,7 +63,6 @@ import org.geogebra.web.full.gui.app.GGWMenuBar;
 import org.geogebra.web.full.gui.app.GGWToolBar;
 import org.geogebra.web.full.gui.applet.GeoGebraFrameFull;
 import org.geogebra.web.full.gui.browser.BrowseGUI;
-import org.geogebra.web.full.gui.components.ComponentInputDialog;
 import org.geogebra.web.full.gui.components.ComponentInputField;
 import org.geogebra.web.full.gui.dialog.DialogManagerW;
 import org.geogebra.web.full.gui.dialog.options.OptionsTab.ColorPanel;
@@ -122,11 +120,9 @@ import org.geogebra.web.html5.gui.ToolBarInterface;
 import org.geogebra.web.html5.gui.inputfield.AutoCompleteTextFieldW;
 import org.geogebra.web.html5.gui.textbox.GTextBox;
 import org.geogebra.web.html5.gui.util.HasResource;
-import org.geogebra.web.html5.gui.util.ImgResourceHelper;
 import org.geogebra.web.html5.gui.util.MathKeyboardListener;
 import org.geogebra.web.html5.gui.util.NoDragImage;
 import org.geogebra.web.html5.gui.view.browser.BrowseViewI;
-import org.geogebra.web.html5.javax.swing.GOptionPaneW;
 import org.geogebra.web.html5.main.AppW;
 import org.geogebra.web.html5.util.Dom;
 import org.geogebra.web.html5.util.FileConsumer;
@@ -142,7 +138,6 @@ import com.google.gwt.dom.client.Style;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.resources.client.ResourcePrototype;
 import com.google.gwt.user.client.ui.AbsolutePanel;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -182,8 +177,6 @@ public class GuiManagerW extends GuiManager
 	private boolean listeningToLogin = false;
 	private ToolBarW toolbarForUpdate = null;
 	private GeoGebraFrameFull frame;
-
-	private GOptionPaneW optionPane;
 
 	private ColorPanel colorPanel;
 
@@ -1590,14 +1583,6 @@ public class GuiManagerW extends GuiManager
 				callback.callback(new String[] { AlgebraProcessor.CREATE_SLIDER }));
 		createSlider.show();
 		return false;
-	}
-
-	@Override
-	public GOptionPaneW getOptionPane() {
-		if (optionPane == null) {
-			optionPane = new GOptionPaneW(getApp().getPanel(), getApp());
-		}
-		return optionPane;
 	}
 
 	@Override
