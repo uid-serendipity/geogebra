@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name=viewport content="width=device-width,initial-scale=1">
+    <title>Home Page - webdev_code_base</title>
+    
+    <script src="https://cdn.geogebra.org/apps/deployggb.js"></script>
+</head>
+<body>
+
+    <div id="ggb-element"></div>
+    <script>
+
+        var ggbApp = new GGBApplet({
+            "allowStyleBar": false,
+            "appName": "graphing",
+            "width": window.innerWidth,
+            "height": window.innerHeight,
+            "language": "en-US",
+            "showToolBar": true,
+            "showAlgebraInput": true,
+            "showMenuBar": true,
+            "appletOnLoad": initCommands
+        }, true);
+
+        window.addEventListener("load", function () {
+            ggbApp.inject('ggb-element');
+        });
+
+        function initCommands() {
+            
+			ggbApplet.evalCommand("c=Circle((0,0), 3)");
+            ggbApplet.evalCommand("a=Slider(0,2)");
+            
+        }
+        
+    </script>
+</body>
+</html>
