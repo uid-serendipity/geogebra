@@ -27,7 +27,6 @@ import org.geogebra.common.gui.view.consprotocol.ConstructionProtocolView;
 import org.geogebra.common.gui.view.properties.PropertiesView;
 import org.geogebra.common.gui.view.table.InvalidValuesException;
 import org.geogebra.common.io.layout.DockPanelData;
-import org.geogebra.common.javax.swing.GOptionPane;
 import org.geogebra.common.javax.swing.SwingConstants;
 import org.geogebra.common.kernel.ModeSetter;
 import org.geogebra.common.kernel.View;
@@ -1790,7 +1789,6 @@ public class GuiManagerW extends GuiManager
 	public void updateCheckBoxesForShowConstructinProtocolNavigation(int id) {
 		getLayout().getDockManager().getPanel(id)
 		.updateNavigationBar();
-		// ((AppW) app).getEuclidianViewpanel().updateNavigationBar();
 	}
 
 	public DockSplitPaneW getRootComponent() {

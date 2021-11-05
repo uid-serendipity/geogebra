@@ -91,8 +91,7 @@ class NamePanel extends OptionPanel
 
 		tfDefinition.addKeyHandler(e -> {
 			if (e.isEnterKey()) {
-				model.applyDefinitionChange(tfDefinition.getText(),
-						NamePanel.this);
+				model.applyDefinitionChange(tfDefinition.getText(), this);
 			}
 
 		});
