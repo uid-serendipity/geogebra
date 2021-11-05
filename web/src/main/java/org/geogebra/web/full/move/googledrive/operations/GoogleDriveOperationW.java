@@ -293,7 +293,7 @@ public class GoogleDriveOperationW implements GoogleDriveOperation {
 		((DialogManagerW) app.getDialogManager()).getSaveDialog(false, true).hide();
 		DialogData data = new DialogData(null, null, "OK");
 		ComponentDialog dialog = new ComponentDialog(app, data, false, true);
-		Label label = new Label((app.getLocalization().getMenu("GoogleDriveSaveProblem"));
+		Label label = new Label(app.getLocalization().getMenu("GoogleDriveSaveProblem"));
 		dialog.addDialogContent(label);
 		dialog.show();
 	}
