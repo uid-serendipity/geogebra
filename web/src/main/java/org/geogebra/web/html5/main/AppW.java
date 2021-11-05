@@ -116,7 +116,6 @@ import org.geogebra.web.html5.gui.util.ViewsChangedListener;
 import org.geogebra.web.html5.gui.zoompanel.ZoomPanel;
 import org.geogebra.web.html5.io.ConstructionException;
 import org.geogebra.web.html5.io.MyXMLioW;
-import org.geogebra.web.html5.javax.swing.GOptionPaneW;
 import org.geogebra.web.html5.kernel.GeoElementGraphicsAdapterW;
 import org.geogebra.web.html5.kernel.UndoManagerW;
 import org.geogebra.web.html5.kernel.commands.CommandDispatcherW;
