@@ -194,20 +194,7 @@ public class GDialogBox extends GDecoratedPopupPanel
 	 * widget has been added using {@link #add(Widget)}.
 	 */
 	public GDialogBox(Panel root, App app) {
-		this(false, root, app);
-	}
-
-	/**
-	 * Creates an empty dialog box specifying its "auto-hide" property. It
-	 * should not be shown until its child widget has been added using
-	 * {@link #add(Widget)}.
-	 *
-	 * @param autoHide
-	 *            <code>true</code> if the dialog should be automatically hidden
-	 *            when the user clicks outside of it
-	 */
-	public GDialogBox(boolean autoHide, Panel root, App app) {
-		this(autoHide, true, root, app);
+		this(false, true, root, app);
 	}
 
 	/**
