@@ -33,7 +33,7 @@ pipeline {
             steps {
                 updateGitlabCommitStatus name: 'build', state: 'pending'
                 writeFile file: 'changes.csv', text: getChangelog()
-                sh label: 'build web', script: './gradlew :web:prepareS3Upload :web:createDraftBundleZip :web:mergeDeploy -Pgdraft=true'
+                sh label: 'build web', script: './gradlew :web:prepareS3Upload :web:createDraftBundleZip :web:mergeDeploy'
                 sh label: 'test', script: "./gradlew :common-jre:test :desktop:test :common-jre:jacocoTestReport :web:test"
                 sh label: 'static analysis', script: './gradlew pmdMain :editor-base:spotbugsMain :web:spotbugsMain :desktop:spotbugsMain :ggbjdk:spotbugsMain :common-jre:spotbugsMain --max-workers=1'
                 sh label: 'spotbugs common', script: './gradlew :common:spotbugsMain'
