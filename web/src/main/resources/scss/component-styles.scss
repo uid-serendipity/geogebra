@@ -5,6 +5,13 @@
 .GeoGebraFrame {
 
     /* CHECKBOX COMPONENT */
+    @mixin checkboxBg($color) {
+    	.background {
+    		border-color: $color;
+    		background-color: $color;
+    	}
+    }
+
     .checkboxPanel {
     	display: flex;
     	width: fit-content;
