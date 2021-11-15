@@ -13,10 +13,9 @@ import static org.junit.Assert.assertTrue;
 import java.util.Arrays;
 import java.util.List;
 
+import org.geogebra.common.AppCommonFactory;
 import org.geogebra.common.awt.GColor;
 import org.geogebra.common.awt.GDimension;
-import org.geogebra.common.factories.AwtFactoryCommon;
-import org.geogebra.common.jre.headless.LocalizationCommon;
 import org.geogebra.common.jre.headless.ScreenReaderAccumulator;
 import org.geogebra.common.kernel.StringTemplate;
 import org.geogebra.common.kernel.algos.AlgoIntersectConics;
@@ -34,6 +33,7 @@ import org.geogebra.common.main.Feature;
 import org.geogebra.common.main.GeoGebraColorConstants;
 import org.geogebra.common.plugin.GeoClass;
 import org.geogebra.common.util.StringUtil;
+import org.geogebra.common.util.debug.Log;
 import org.geogebra.test.commands.AlgebraTestHelper;
 import org.geogebra.test.commands.CommandSignatures;
 import org.hamcrest.Matcher;
@@ -51,6 +51,7 @@ public class CommandsTest {
 	static AppCommon3D app;
 	static AlgebraProcessor ap;
 	static List<Integer> signature;
+	private static int syntaxes = -1000;
 
 	private static void tRound(String s, String... expected) {
 		testSyntax(s, AlgebraTestHelper.getMatchers(expected), app, ap,
@@ -90,20 +91,17 @@ public class CommandsTest {
 				cmdName = t.getStackTrace()[3].getMethodName().substring(3);
 			}
 
-			signature = CommandSignatures.getSigneture(cmdName);
+			signature = CommandSignatures.getSigneture(cmdName, app1);
 			if (signature != null) {
 				syntaxes = signature.size();
 				AlgebraTestHelper.dummySyntaxesShouldFail(cmdName, signature,
 						app1);
 			}
-			System.out.println();
-			System.out.print(cmdName);
+			Log.debug(cmdName);
 		}
 		syntaxes--;
-		AlgebraTestHelper.testSyntaxSingle(s, expected, proc, tpl);
+		AlgebraTestHelper.checkSyntaxSingle(s, expected, proc, tpl);
 	}
-
-	private static int syntaxes = -1000;
 
 	@Before
 	public void resetSyntaxes() {
@@ -134,8 +132,7 @@ public class CommandsTest {
 	 */
 	@BeforeClass
 	public static void setupApp() {
-		app = new AppCommon3D(new LocalizationCommon(3),
-				new AwtFactoryCommon());
+		app = AppCommonFactory.create3D();
 		ap = app.getKernel().getAlgebraProcessor();
 		app.setRandomSeed(42);
 	}
@@ -603,7 +600,6 @@ public class CommandsTest {
 		Assert.assertEquals(GeoClass.FUNCTION, get("f").getGeoClassType());
 		t("SetValue(f, x^2)");
 		Assert.assertEquals(GeoClass.FUNCTION, get("f").getGeoClassType());
-		System.out.println(app.getXML());
 		Assert.assertEquals(GeoClass.FUNCTION, get("f").getGeoClassType());
 	}
 

@@ -8,6 +8,7 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
+import static org.hamcrest.Matchers.matchesPattern;
 import static org.hamcrest.core.AnyOf.anyOf;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertEquals;
@@ -47,13 +48,13 @@ import com.himamis.retex.editor.share.util.Unicode;
 public class GeoSymbolicTest extends BaseSymbolicTest {
 
 	private void testValidResultCombinations(String input, String... validResults) {
-		AlgebraTestHelper.testValidResultCombinations(
+		AlgebraTestHelper.checkValidResultCombinations(
 				input, validResults,
 				ap, StringTemplate.testTemplate);
 	}
 
 	public void t(String input, Matcher<String> expected) {
-		AlgebraTestHelper.testSyntaxSingle(input, Collections.singletonList(expected), ap,
+		AlgebraTestHelper.checkSyntaxSingle(input, Collections.singletonList(expected), ap,
 				StringTemplate.testTemplate);
 	}
 
@@ -1619,5 +1620,14 @@ public class GeoSymbolicTest extends BaseSymbolicTest {
 		add("f(x) = -x^2 * e^(-x)");
 		add("g(x) = 1 + (f'(x))^2");
 		t("Integral(sqrt(g),0,20)", "20.12144888423");
+	}
+
+	@Test
+	public void testBinomialDistNumericIsDefined() {
+		GeoSymbolic binomialDist = add("BinomialDist(230,0.68,140,true)");
+		assertThat(binomialDist.toValueString(StringTemplate.defaultTemplate),
+				matchesPattern("[0-9]+ / [0-9]+"));
+		AlgebraItem.toggleSymbolic(binomialDist);
+		assertEquals(binomialDist.toValueString(StringTemplate.defaultTemplate), "0.0132819219");
 	}
 }

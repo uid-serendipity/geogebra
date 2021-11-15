@@ -17,6 +17,9 @@ public class CarotaTable implements HasContentAndFormat {
 	@JsProperty
 	public native int getTotalHeight();
 
+	/**
+	 * Serialize and deserialize the content
+	 */
 	@JsOverlay
 	public final void reload() {
 		if (Carota.get() != null) {
@@ -171,4 +174,6 @@ public class CarotaTable implements HasContentAndFormat {
 	public native void setExternalScale(double sx);
 
 	public native void setExternalPaint(boolean externalPaint);
+
+	public native void setHitCell(double x, double y);
 }

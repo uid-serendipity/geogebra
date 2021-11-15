@@ -2,14 +2,12 @@ package org.geogebra.common.kernel.commands;
 
 import java.util.List;
 
-import org.geogebra.common.factories.AwtFactory;
-import org.geogebra.common.factories.AwtFactoryCommon;
+import org.geogebra.common.AppCommonFactory;
 import org.geogebra.common.io.XmlTestUtil;
 import org.geogebra.common.jre.headless.AppCommon;
-import org.geogebra.common.jre.headless.LocalizationCommon;
 import org.geogebra.common.main.App;
-import org.geogebra.common.main.AppCommon3D;
 import org.geogebra.common.main.Feature;
+import org.geogebra.common.util.debug.Log;
 import org.geogebra.test.TestErrorHandler;
 import org.geogebra.test.commands.AlgebraTestHelper;
 import org.geogebra.test.commands.CommandSignatures;
@@ -23,14 +21,14 @@ import org.junit.Test;
 public class NoExceptionsTest {
 	static AppCommon app;
 	static AlgebraProcessor ap;
+	private static int syntaxes;
 
 	/**
 	 * Create app + basic test objects
 	 */
 	@BeforeClass
 	public static void setupApp() {
-		AwtFactory awt = new AwtFactoryCommon();
-		app = new AppCommon3D(new LocalizationCommon(3), awt);
+		app = AppCommonFactory.create3D();
 		app.setLanguage("en_US");
 		ap = app.getKernel().getAlgebraProcessor();
 		// Setting the general timeout to 11 seconds. Feel free to change this.
@@ -39,8 +37,6 @@ public class NoExceptionsTest {
 		// make sure x=y is a line, not plane
 		app.getGgbApi().setPerspective("1");
 	}
-
-	public static int syntaxes;
 
 	@Before
 	public void resetSyntaxes() {
@@ -61,7 +57,7 @@ public class NoExceptionsTest {
 		if (syntaxes == -1000) {
 			Throwable t = new Throwable();
 			String cmdName = t.getStackTrace()[2].getMethodName().substring(3);
-			List<Integer> signature = CommandSignatures.getSigneture(cmdName);
+			List<Integer> signature = CommandSignatures.getSigneture(cmdName, app);
 			syntaxes = 0;
 			if (signature != null) {
 				syntaxes = signature.size();
@@ -69,23 +65,21 @@ public class NoExceptionsTest {
 						app);
 			}
 
-			System.out.println();
-			System.out.print(cmdName + " ");
+			Log.debug(cmdName + " ");
 		}
 		try {
 			Assert.assertNotNull(ap.processAlgebraCommandNoExceptionHandling(s,
 					false, TestErrorHandler.INSTANCE, false, null));
 			syntaxes--;
-			System.out.print("+");
+			Log.debug("+");
 		} catch (final Throwable e) {
-			System.out.println("error occured:" + e.getClass().getName());
+			Log.error("error occured:" + e.getClass().getName());
 			Throwable t = e;
 			while (t.getCause() != null) {
 				t = t.getCause();
 			}
 
 			syntaxes--;
-			System.out.print("-");
 			Assert.assertNull(e.getMessage() + "," + e.getClass(), e);
 		}
 	}
@@ -106,8 +100,8 @@ public class NoExceptionsTest {
 	 * Check that all objects can be saved and reloaded.
 	 */
 	@AfterClass
-	public static void testSaving() {
-		XmlTestUtil.testCurrentXML(app);
+	public static void checkSaving() {
+		XmlTestUtil.checkCurrentXML(app);
 
 		app.getKernel().getConstruction().initUndoInfo();
 		app.getKernel().getConstruction().undo();

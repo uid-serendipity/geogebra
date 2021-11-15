@@ -1165,7 +1165,7 @@ public class AlgebraViewW extends Tree implements LayerView, AlgebraView,
 		this.isShowingAuxiliaryObjects = showAuxiliaryObjects();
 
 		if (geo.isLabelSet() && geo.showInAlgebraView()
-				&& geo.isSetAlgebraVisible()) {
+				&& geo.isSetAlgebraVisible() && !nodeTable.containsKey(geo)) {
 
 			// don't add auxiliary objects if the tree is categorized by type
 			if (!getTreeMode().equals(SortMode.DEPENDENCY)
@@ -1618,12 +1618,9 @@ public class AlgebraViewW extends Tree implements LayerView, AlgebraView,
 	}
 
 	private void doShowKeyboard() {
-		Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
-			@Override
-			public void execute() {
-				setActiveTreeItem(null);
-				getApp().showKeyboard(inputPanelLatex, true);
-			}
+		Scheduler.get().scheduleDeferred(() -> {
+			setActiveTreeItem(null);
+			getApp().showKeyboard(inputPanelLatex, true);
 		});
 	}
 

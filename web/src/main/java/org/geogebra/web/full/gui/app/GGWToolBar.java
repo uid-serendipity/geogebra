@@ -10,18 +10,16 @@ import org.geogebra.common.javax.swing.SwingConstants;
 import org.geogebra.common.kernel.Macro;
 import org.geogebra.common.kernel.ModeSetter;
 import org.geogebra.common.main.Localization;
-import org.geogebra.common.main.exam.ExamEnvironment;
-import org.geogebra.common.main.settings.Settings;
 import org.geogebra.common.util.debug.Log;
 import org.geogebra.web.full.css.ToolbarSvgResources;
 import org.geogebra.web.full.css.ToolbarSvgResourcesSync;
+import org.geogebra.web.full.gui.exam.ExamLogAndExitDialog;
 import org.geogebra.web.full.gui.exam.ExamUtil;
 import org.geogebra.web.full.gui.images.AppResources;
 import org.geogebra.web.full.gui.images.SvgPerspectiveResources;
 import org.geogebra.web.full.gui.toolbar.ToolBarW;
 import org.geogebra.web.full.gui.toolbar.ToolbarSubmenuP;
 import org.geogebra.web.full.gui.toolbar.images.ToolbarResources;
-import org.geogebra.web.full.main.AppWFull;
 import org.geogebra.web.html5.css.GuiResourcesSimple;
 import org.geogebra.web.html5.gui.ToolBarInterface;
 import org.geogebra.web.html5.gui.laf.GLookAndFeelI;
@@ -45,7 +43,6 @@ import com.google.gwt.resources.client.impl.ImageResourcePrototype;
 import com.google.gwt.safehtml.shared.UriUtils;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RequiresResize;
@@ -256,16 +253,9 @@ public class GGWToolBar extends Composite
 		info.setStyleName("examInfo");
 		fp.add(info);
 
-		final Localization loc = app.getLocalization();
-		final Settings settings = app.getSettings();
-		final ExamEnvironment exam = app.getExam();
-
 		// clicking on info button
 		fp.addDomHandler(event -> {
-			HTMLLogBuilder htmlBuilder = new HTMLLogBuilder();
-			exam.getLog(loc, settings, htmlBuilder);
-			HTML html = htmlBuilder.getHTML();
-			((AppWFull) app).showClassicExamLogExitDialog(html, "OK", null);
+			new ExamLogAndExitDialog(app, true, null, null, "OK").show();
 		}, ClickEvent.getType());
 		return fp;
 	}
@@ -787,9 +777,6 @@ public class GGWToolBar extends Composite
 		case EuclidianConstants.MODE_GRASPABLE_MATH:
 			return resourceBundle.mode_graspablemath_32();
 
-		case EuclidianConstants.MODE_CAS:
-			return resourceBundle.mode_cas_32();
-
 		case EuclidianConstants.MODE_VECTOR:
 			return resourceBundle.mode_vector_32();
 
@@ -924,14 +911,14 @@ public class GGWToolBar extends Composite
 		case EuclidianConstants.MODE_AUDIO:
 			return resourceBundle.mode_audio_32();
 
-		case EuclidianConstants.MODE_GRAPHING:
-			return resourceBundle.mode_graphing_32();
+		case EuclidianConstants.MODE_CALCULATOR:
+			return resourceBundle.mode_calculator();
 
 		case EuclidianConstants.MODE_EXTENSION:
 			return ToolbarSvgResourcesSync.INSTANCE.mode_extension();
 
 		case EuclidianConstants.MODE_H5P:
-			return ToolbarSvgResourcesSync.INSTANCE.mode_h5p();
+			return resourceBundle.mode_h5p();
 
 		case EuclidianConstants.MODE_PDF:
 			return resourceBundle.mode_pdf_32();

@@ -1509,19 +1509,6 @@ public abstract class App implements UpdateSelection, AppInterface, EuclidianHos
 	}
 
 	/**
-	 * This is needed for handling paths to images inside .ggb archive TODO
-	 * probably we should replace this methodby something else as images are
-	 * different in web
-	 *
-	 * @param fullPath
-	 *            path to image
-	 * @return legth of MD5 hash output
-	 */
-	public int getMD5folderLength(String fullPath) {
-		return 32;
-	}
-
-	/**
 	 * @return whether label dragging is enableded
 	 */
 	final public boolean isLabelDragsEnabled() {
@@ -4376,7 +4363,8 @@ public abstract class App implements UpdateSelection, AppInterface, EuclidianHos
 		// overridden in platforms supporting exam
 	}
 
-	public void showErrorInfoDialog(String msg) {
+	public void showErrorDialog(String title, String negBtn, String posBtn,
+			String message, Runnable posBtnAction) {
 		// overridden in web
 	}
 
