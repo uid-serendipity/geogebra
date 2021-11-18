@@ -112,16 +112,12 @@ public class OptionsAlgebraW
 				angleUnit.addChangeHandler(this);
 			}
 			sortMode.addChangeHandler(this);
-			description.addChangeHandler(new ChangeHandler() {
-
-			@Override
-			public void onChange(ChangeEvent event) {
+			description.addChangeHandler(event -> {
 				int idx = getDescription().getSelectedIndex();
 				getApp().getSettings().getAlgebra().setStyle(
 							AlgebraSettings.getStyleModeAt(idx));
 					getApp().getKernel().updateConstruction(false);
-				}
-			});
+				});
 			setLabels();
 		}
 
