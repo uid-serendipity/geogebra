@@ -501,7 +501,7 @@ public class DrawParametricCurve extends Drawable implements RemoveNeeded {
 			if (fillCurve) {
 				try {
 					// fill using default/hatching/image as appropriate
-					fill(g2, (geo.isInverseFill() ? getShape() : gp));
+					fill(g2, geo.isInverseFill() ? getShape() : gp);
 
 				} catch (Exception e) {
 					Log.error(e.getMessage());
@@ -530,8 +530,7 @@ public class DrawParametricCurve extends Drawable implements RemoveNeeded {
 		if (fillCurve) {
 			try {
 				// fill using default/hatching/image as appropriate
-				fill(g2, (geo.isInverseFill() ? getShape() : gp));
-
+				fill(g2, geo.isInverseFill() ? getShape() : gp);
 			} catch (Exception e) {
 				Log.error(e.getMessage());
 			}

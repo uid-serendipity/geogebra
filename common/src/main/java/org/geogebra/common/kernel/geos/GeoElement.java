@@ -1513,7 +1513,7 @@ public abstract class GeoElement extends ConstructionElement implements GeoEleme
 		return false;
 	}
 
-	/** @return true if this is fixed (moving forbidden, deleting OK) */
+	@Override
 	public boolean isLocked() {
 		return fixed;
 	}
@@ -1998,7 +1998,7 @@ public abstract class GeoElement extends ConstructionElement implements GeoEleme
 					final GeoPointND firstInputPoint = freeInputPoints.get(0);
 					final GeoPointND startPoint = ((Locateable) this)
 							.getStartPoint();
-					return (firstInputPoint == startPoint);
+					return firstInputPoint == startPoint;
 				}
 			}
 			break;
@@ -4751,7 +4751,7 @@ public abstract class GeoElement extends ConstructionElement implements GeoEleme
 			sb.append("\"");
 			sb.append(" type=\"").append(animationType).append("\"");
 			sb.append(" playing=\"");
-			sb.append((isAnimating() ? "true" : "false"));
+			sb.append(isAnimating());
 			sb.append("\"");
 			sb.append("/>\n");
 		}
@@ -5593,7 +5593,7 @@ public abstract class GeoElement extends ConstructionElement implements GeoEleme
 		try {
 			String diffSb = "Simplify[" + myFormula + "-(" + otherFormula + ")]";
 			final String diff = kernel.evaluateGeoGebraCAS(diffSb, null);
-			return (Double.parseDouble(diff) == 0d);
+			return Double.parseDouble(diff) == 0d;
 		} catch (final Throwable e) {
 			return false;
 		}
