@@ -1166,6 +1166,14 @@ public class GeoSymbolicTest extends BaseSymbolicTest {
 	}
 
 	@Test
+	public void testSolveODEConstant() {
+		GeoSymbolic symbolic = add("SolveODE(x)");
+		app.getGgbApi().setValue("c_1", 5);
+		assertThat(symbolic.getTwinGeo(), hasValue("5 + 1 / 2 x²"));
+		assertThat(symbolic, hasValue("c_{1} + 1 / 2 x²"));
+	}
+
+	@Test
 	public void testFunctionVariableFollowsConstOrder() {
 		GeoSymbolic symbolic1 = add("f(u)=u^2");
 		assertThat(symbolic1.toValueString(StringTemplate.latexTemplate), is("u^{2}"));
@@ -1175,14 +1183,6 @@ public class GeoSymbolicTest extends BaseSymbolicTest {
 		assertThat(symbolic3.toValueString(StringTemplate.latexTemplate), is("10"));
 		GeoSymbolic symbolic4 = add("f(5)");
 		assertThat(symbolic4.toValueString(StringTemplate.latexTemplate), is("25"));
-	}
-
-	@Test
-	public void testSolveODEConstant() {
-		GeoSymbolic symbolic = add("SolveODE(x)");
-		app.getGgbApi().setValue("c_1", 5);
-		assertThat(symbolic.getTwinGeo(), hasValue("5 + 1 / 2 x²"));
-		assertThat(symbolic, hasValue("c_{1} + 1 / 2 x²"));
 	}
 
 	@Test
