@@ -52,7 +52,6 @@ public class ExitExamAction extends DefaultMenuAction<Void> {
 			}
 		};
 		exit.setOnPositiveAction(() -> {
-			app.getExam().exit();
 			GlobalHeader.INSTANCE.resetAfterExam();
 			new ExamLogAndExitDialog(app, false, returnHandler, null, "Exit").show();
 		});
@@ -65,13 +64,14 @@ public class ExitExamAction extends DefaultMenuAction<Void> {
 	protected void exitAndResetExam() {
 		app.getLAF().toggleFullscreen(false);
 		ExamEnvironment exam = app.getExam();
+		StringBuilder settings = exam.getSettings(app.getLocalization(), app.getSettings());
 		exam.exit();
 		saveScreenshot(app.getLocalization().getMenu("exam_log_header")
-				+ " " + app.getVersionString());
+				+ " " + app.getVersionString(), settings);
 		app.endExam();
 	}
 
-	private void saveScreenshot(String menu) {
+	private void saveScreenshot(String title, StringBuilder settings) {
 		final int header = 78;
 		Canvas canvas = Canvas.createIfSupported();
 		final GGraphics2DW g2 = new GGraphics2DW(canvas);
@@ -87,7 +87,7 @@ public class ExitExamAction extends DefaultMenuAction<Void> {
 		g2.fillRect(0, 0, 500, header);
 		g2.setFont(new GFontW("SansSerif", GFont.PLAIN, 12));
 		g2.setColor(GColor.WHITE);
-		g2.drawString(menu, PADDING, PADDING);
+		g2.drawString(title, PADDING, PADDING);
 		g2.setFont(new GFontW("SansSerif", GFont.PLAIN, 16));
 		g2.drawString(ExamUtil.status(app), PADDING, PADDING + LINE_HEIGHT);
 		g2.setColor(GColor.BLACK);
@@ -117,7 +117,9 @@ public class ExitExamAction extends DefaultMenuAction<Void> {
 				}
 			}
 		};
-
+		if (settings != null) {
+			canvasLogBuilder.addLine(settings);
+		}
 		app.getExam().getLog(app.getLocalization(), app.getSettings(), canvasLogBuilder);
 		Browser.exportImage(canvas.toDataUrl(), "ExamLog.png");
 	}
@@ -127,8 +129,8 @@ public class ExitExamAction extends DefaultMenuAction<Void> {
 	 */
 	protected void exitAndResetExamOffline() {
 		app.getLAF().toggleFullscreen(false);
-		saveScreenshot(app.getLocalization().getMenu((app.getConfig()
-				.getAppName())));
+		saveScreenshot(app.getLocalization().getMenu(app.getConfig()
+				.getAppName()), null);
 		app.endExam();
 		app.fileNew();
 		app.clearSubAppCons();
