@@ -819,7 +819,7 @@ public class ToolbarPanel extends FlowPanel
 	 * @return the frame with casting.
 	 */
 	GeoGebraFrameFull getFrame() {
-		return (((AppWFull) app).getAppletFrame());
+		return ((AppWFull) app).getAppletFrame();
 	}
 
 	/**
