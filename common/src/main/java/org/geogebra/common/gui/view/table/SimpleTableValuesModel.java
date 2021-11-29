@@ -134,7 +134,7 @@ class SimpleTableValuesModel implements TableValuesModel {
 	 * Remove an evaluatable from the model.
 	 * @param evaluatable evaluatable
 	 */
-	void removeEvaluatable(GeoEvaluatable evaluatable) {
+	void removeEvaluatable(GeoEvaluatable evaluatable, boolean removedByUser) {
 		int index = getEvaluatableIndex(evaluatable);
 		if (index > -1) {
 			collector.startCollection(this);
@@ -418,5 +418,10 @@ class SimpleTableValuesModel implements TableValuesModel {
 		for (GeoList column : columnsToRemove) {
 			column.remove();
 		}
+	}
+
+	public boolean isEvaluatableEmptyList(int column) {
+		return  getEvaluatable(column).isGeoList()
+				&& ((GeoList) getEvaluatable(column)).isEmptyList();
 	}
 }

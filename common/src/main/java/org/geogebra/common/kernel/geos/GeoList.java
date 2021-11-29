@@ -3394,4 +3394,8 @@ public class GeoList extends GeoElement
 				|| getElementType() == GeoClass.DEFAULT
 				|| getElementType() == GeoClass.TEXT;
 	}
+
+	public boolean isEmptyList() {
+		return elements == null || elements.isEmpty();
+	}
 }
