@@ -6636,12 +6636,7 @@ public abstract class GeoElement extends ConstructionElement implements GeoEleme
 	// specific input protection
 	/////////////////////////////
 
-	/**
-	 * set this can (not) be removed when input of algo
-	 * 
-	 * @param flag
-	 *            flag
-	 */
+	@Override
 	public void setCanBeRemovedAsInput(boolean flag) {
 		canBeRemovedAsInput = flag;
 	}
