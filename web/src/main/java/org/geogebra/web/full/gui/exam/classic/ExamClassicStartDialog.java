@@ -12,8 +12,8 @@ import org.geogebra.web.html5.gui.util.ClickStartHandler;
 import org.geogebra.web.html5.gui.util.MathKeyboardListener;
 import org.geogebra.web.html5.main.AppW;
 import org.geogebra.web.resources.StyleInjector;
-import org.geogebra.web.shared.components.ComponentDialog;
-import org.geogebra.web.shared.components.DialogData;
+import org.geogebra.web.shared.components.dialog.ComponentDialog;
+import org.geogebra.web.shared.components.dialog.DialogData;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -38,11 +38,7 @@ public class ExamClassicStartDialog extends ComponentDialog {
 		addStyleName("classicExamStartDialog");
 		buildGUI();
 		setOnPositiveAction(() -> startExam(app));
-		setOnNegativeAction(() -> {
-			if (!app.getAppletParameters().getParamLockExam()) {
-				cancelExam();
-			}
-		});
+		setOnNegativeAction(() -> cancelExam());
 	}
 
 	private void buildGUI() {
@@ -73,7 +69,7 @@ public class ExamClassicStartDialog extends ComponentDialog {
 			});
 		}
 
-		if (!app.getAppletParameters().hasDataParamEnable3D()) {
+		if (!app.getSettings().getEuclidian(-1).isEnabledSet()) {
 			Label allow3DLbl = new Label(loc.getMenu("Perspective.3DGraphics"));
 			final ComponentCheckbox allow3D = new ComponentCheckbox(true, allow3DLbl, null);
 			app.getSettings().getEuclidian(-1).setEnabled(true);

@@ -155,8 +155,8 @@ import org.geogebra.web.html5.util.Dom;
 import org.geogebra.web.html5.util.GeoGebraElement;
 import org.geogebra.web.html5.util.Persistable;
 import org.geogebra.web.shared.GlobalHeader;
-import org.geogebra.web.shared.components.ComponentDialog;
-import org.geogebra.web.shared.components.DialogData;
+import org.geogebra.web.shared.components.dialog.ComponentDialog;
+import org.geogebra.web.shared.components.dialog.DialogData;
 import org.geogebra.web.shared.ggtapi.LoginOperationW;
 import org.geogebra.web.shared.ggtapi.models.MaterialCallback;
 import org.gwtproject.timer.client.Timer;
@@ -290,7 +290,7 @@ public class AppWFull extends AppW implements HasKeyboard, MenuViewListener {
 		if (showMenuBar()) {
 			setupSignInButton(header);
 		}
-		if (getConfig().getVersion() == GeoGebraConstants.Version.SUITE) {
+		if (isSuite()) {
 			suiteAppPickerButton = SuiteHeaderAppPicker.addSuiteAppPicker(this);
 		}
 	}
@@ -356,7 +356,9 @@ public class AppWFull extends AppW implements HasKeyboard, MenuViewListener {
 			activity = new EvaluatorActivity();
 			break;
 		case "suite":
-			activity = new SuiteActivity(GeoGebraConstants.GRAPHING_APPCODE);
+			String disableCAS = Window.Location.getParameter("disableCAS");
+			activity = new SuiteActivity(GeoGebraConstants.GRAPHING_APPCODE,
+					"".equals(disableCAS) || "true".equals(disableCAS));
 			break;
 		default:
 			activity = new ClassicActivity(new AppConfigDefault());
@@ -2035,7 +2037,8 @@ public class AppWFull extends AppW implements HasKeyboard, MenuViewListener {
 		if ("suite".equals(getAppletParameters().getDataParamAppName())) {
 			String appCode = getConfig().getSubAppCode();
 			if (appCode != null && !appCode.equals(subApp)) {
-				this.activity = new SuiteActivity(subApp);
+				this.activity = new SuiteActivity(subApp,
+						getSettings().getCasSettings().isEnabled());
 				setPerspective(p);
 				updateSidebarAndMenu(subApp);
 				setSuiteHeaderButton(subApp);
@@ -2284,7 +2287,7 @@ public class AppWFull extends AppW implements HasKeyboard, MenuViewListener {
 		getDialogManager().hideCalcChooser();
 		storeCurrentUndoHistory();
 		storeCurrentMaterial();
-		activity = new SuiteActivity(subAppCode);
+		activity = new SuiteActivity(subAppCode, getSettings().getCasSettings().isEnabled());
 		activity.start(this);
 
 		resetToolbarPanel();
