@@ -820,6 +820,14 @@ public class DefaultExportedApi implements ExportedApi {
 		ggbAPI.setEditorState(stateString, label);
 	}
 
+	public String getGeoState(String label) {
+		return ggbAPI.getGeoState(label);
+	}
+
+	public void setGeoState(String state, String label) {
+		ggbAPI.setGeoState(state, label);
+	}
+
 	public String exportCollada(Object xmin, Object xmax, Object ymin, Object ymax, Object zmin,
 			Object zmax, Object xyScale, Object xzScale, Object xTickDistance,
 			Object yTickDistance, Object zTickDistance) {
