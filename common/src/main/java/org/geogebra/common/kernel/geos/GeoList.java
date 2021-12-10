@@ -1324,11 +1324,7 @@ public class GeoList extends GeoElement
 				return false;
 			}
 			for (GeoElement geoij: ((GeoList) row).elements) {
-				if (!geoij.getGeoClassType().equals(GeoClass.NUMERIC)
-						&& !geoij.getGeoClassType()
-								.equals(GeoClass.FUNCTION)
-						&& !geoij.getGeoClassType()
-								.equals(GeoClass.FUNCTION_NVAR)) {
+				if (geoij.getGeoClassType().equals(GeoClass.LIST)) {
 					return false;
 				}
 			}
