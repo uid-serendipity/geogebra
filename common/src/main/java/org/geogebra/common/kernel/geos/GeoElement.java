@@ -3234,10 +3234,7 @@ public abstract class GeoElement extends ConstructionElement implements GeoEleme
 		if ((correspondingCasCell != null) && isIndependent()) {
 			updateAlgoUpdateSetWith(correspondingCasCell);
 		} else if (algoUpdateSet != null) {
-			// update all algorithms in the algorithm set of this GeoElement
-			cons.setAlgoSetCurrentlyUpdated(algoUpdateSet);
-			algoUpdateSet.updateAll();
-			cons.setAlgoSetCurrentlyUpdated(null);
+			cons.updateAllAlgosInSet(algoUpdateSet);
 		}
 	}
 

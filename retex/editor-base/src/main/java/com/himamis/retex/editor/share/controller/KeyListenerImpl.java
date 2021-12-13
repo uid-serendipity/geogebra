@@ -80,7 +80,6 @@ public class KeyListenerImpl {
 			return true;
 		case JavaKeyCodes.VK_LEFT:
 			boolean ret = CursorController.prevCharacter(editorState);
-
 			if (shiftPressed) {
 				editorState.extendSelection(true);
 			} else {

@@ -60,7 +60,6 @@ public class CursorController {
 	 *            current state
 	 * @return whether the cursor moved
 	 */
-
 	public static boolean prevCharacter(EditorState editorState) {
 		int currentOffset = editorState.getCurrentOffset();
 		MathSequence currentField = editorState.getCurrentField();
@@ -200,7 +199,6 @@ public class CursorController {
 	 *            current state
 	 * @return whether the cursor moved
 	 */
-
 	public static boolean prevField(EditorState editorState) {
 		return prevField(editorState, editorState.getCurrentField());
 	}
