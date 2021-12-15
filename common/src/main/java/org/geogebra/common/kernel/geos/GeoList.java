@@ -15,6 +15,7 @@ package org.geogebra.common.kernel.geos;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.TreeSet;
+import java.util.stream.Stream;
 
 import org.geogebra.common.awt.GColor;
 import org.geogebra.common.awt.GFont;
@@ -1316,11 +1317,7 @@ public class GeoList extends GeoElement
 				return false;
 			}
 			for (GeoElement geoij: ((GeoList) row).elements) {
-				if (!geoij.getGeoClassType().equals(GeoClass.NUMERIC)
-						&& !geoij.getGeoClassType()
-								.equals(GeoClass.FUNCTION)
-						&& !geoij.getGeoClassType()
-								.equals(GeoClass.FUNCTION_NVAR)) {
+				if (geoij.getGeoClassType().equals(GeoClass.LIST)) {
 					return false;
 				}
 			}
@@ -3336,8 +3333,8 @@ public class GeoList extends GeoElement
 	/**
 	 * @return new array with elements
 	 */
-	public ArrayList<GeoElement> elements() {
-		return elements;
+	public Stream<GeoElement> elements() {
+		return elements.stream();
 	}
 
 	@Override
