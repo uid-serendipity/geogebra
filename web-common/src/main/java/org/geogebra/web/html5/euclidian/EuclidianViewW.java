@@ -143,10 +143,6 @@ public class EuclidianViewW extends EuclidianView implements
 	private ReaderWidget screenReader;
 	private String currentAltText;
 
-	// needed to make sure outline doesn't get dashed
-	private final GBasicStroke outlineStroke = AwtFactory.getPrototype()
-			.newBasicStroke(3, GBasicStroke.CAP_BUTT, GBasicStroke.JOIN_BEVEL);
-
 	/**
 	 * cache state
 	 * true: currently using cache
@@ -1297,6 +1293,7 @@ public class EuclidianViewW extends EuclidianView implements
 			GGraphics2DW g2 = (GGraphics2DW) g2c;
 			g2.setColor(getBackgroundCommon());
 			String old = g2.getContext().getLineJoin();
+			GBasicStroke outlineStroke = createStringOutlineStroke(3);
 			g2.setStroke(outlineStroke);
 			g2.drawStringStroke(text, x, y);
 			g2.getContext().setLineJoin(old);
