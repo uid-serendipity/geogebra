@@ -1,7 +1,6 @@
 package org.geogebra.common.geogebra3D.kernel3D.geos;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import org.apache.commons.math3.linear.EigenDecomposition;
 import org.apache.commons.math3.linear.MatrixUtils;
@@ -450,9 +449,6 @@ public class GeoQuadric3D extends GeoQuadricND implements Functional2Var,
 		RealMatrix apacheMatrix = MatrixUtils.createRealMatrix(mat2d);
 		decomp = new EigenDecomposition(apacheMatrix);
 		eigenval = decomp.getRealEigenvalues();
-		if (eigenval.length == 3) {
-			eigenval = Arrays.copyOf(eigenval, 4);
-		}
 
 		for (int i = 0; i < 3; i++) {
 			eigenvectors[i] = decomp.getEigenvector(i).toArray();
