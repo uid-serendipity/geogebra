@@ -40,18 +40,20 @@ if(hasProperty("eclipse")){
 }
 
 dependencies {
-    compile project(path: ':carota-web'),
+    implementation project(path: ':carota-web'),
         project(':web:dev'),
         project(':web-common'),
         project(':editor-web'),
         project(':keyboard-web'),
         files(project(':carota-web').sourceSets.main.allSource.srcDirs),
+        files(project(':renderer-web').sourceSets.main.allSource.srcDirs),
+        files(project(':gwtutil').sourceSets.main.allSource.srcDirs),
         files(project(':web:dev').sourceSets.main.allSource.srcDirs),
         files(project(':web-common').sourceSets.main.allSource.srcDirs),
         files(project(':editor-web').sourceSets.main.allSource.srcDirs),
         files(project(':keyboard-web').sourceSets.main.allSource.srcDirs)
 
-    testCompile "junit:junit:$junitVersion",
+    testImplementation "junit:junit:$junitVersion",
         'com.google.gwt.gwtmockito:gwtmockito:1.1.10-SNAPSHOT',
         "com.google.gwt:gwt-user:$gwtCompilerVersion"
 }
@@ -119,6 +121,8 @@ task watchSass (type: CompileSass) {
     watch ()
 }
 
+def warDirRel = 'war'
+
 gwt {
     gwtVersion = gwtCompilerVersion
 
@@ -161,13 +165,18 @@ gwt {
         }
         // style = de.richsource.gradle.plugins.gwt.Style.PRETTY;    
     }
+
+    dev {
+        bindAddress = project.findProperty("gbind") ?: 'localhost'
+        superDevMode = true
+    }
 }
 
 tasks.withType(org.wisepersist.gradle.plugins.gwt.AbstractGwtActionTask) {
     jvmArgs '-Xss512M'
 }
 
-def warDirRel = 'war'
+
 def outputs = ['web', 'web3d', 'webSimple', 'solver', 'tablet3d','tabletWin']
 
 task cleanWar(type: Delete) {
@@ -292,7 +301,8 @@ def gwtGlobalCache = file('build/gwt/devModeCache')
 // As now this task doesn't finish until the java process exits.
 // This causes some problems as the IDE cannot run any other tasks.
 // https://issues.gradle.org/browse/GRADLE-1254
-task run(type: JavaExec, dependsOn: ['jar', 'copyDevHtml', 'createSolverHtml']) {
+task run(type: org.wisepersist.gradle.plugins.gwt.GwtDev, dependsOn: ['jar', 'copyDevHtml', 'createSolverHtml']) {
+    war = file(warDirRel)
     description 'Starts a codeserver, and a simple webserver for development'
     Process sassCompilation
     doFirst {
@@ -305,23 +315,6 @@ task run(type: JavaExec, dependsOn: ['jar', 'copyDevHtml', 'createSolverHtml']) 
                         : [file('../gradlew').absolutePath, 'watchSass'])
         sassCompilation = pb.start()
     }
-    main 'com.google.gwt.dev.DevMode'
-    maxHeapSize '4096m'
-    classpath ((configurations.compile as Set<String>) 
-        + (sourceSets.main.allSource.srcDirs as Set<String>) 
-        + (jar.archivePath as String))
-    workingDir file(warDirRel)
-    args '-logLevel', 'TRACE',
-        '-codeServerPort', '9997',
-        '-port', '8888',
-        '-style', 'PRETTY',
-        '-bindAddress', project.findProperty("gbind") ?: 'localhost',
-        '-superDevMode',
-        '-war', file(warDirRel),
-        '-generateJsInteropExports',
-        devModule
-    systemProperty 'gwt.persistentunitcachedir', '../build/gwt/devModeCache'
-    systemProperty 'java.io.tmpdir', gwtGlobalCache.getAbsolutePath()
     doLast {
         sassCompilation.destroy()
     }
