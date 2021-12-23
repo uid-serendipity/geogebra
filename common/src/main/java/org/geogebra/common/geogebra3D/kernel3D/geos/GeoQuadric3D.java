@@ -3470,7 +3470,7 @@ public class GeoQuadric3D extends GeoQuadricND implements Functional2Var,
 	protected void getXMLtagsMatrix(StringBuilder sb) {
 		sb.append("\t<matrix");
 		for (int i = 0; i < 10; i++) {
-			sb.append(" A" + i + "=\"" + matrix[i] + "\"");
+			sb.append(" A").append(i).append("=\"").append(matrix[i]).append("\"");
 		}
 		sb.append("/>\n");
 	}

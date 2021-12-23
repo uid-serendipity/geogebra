@@ -5,6 +5,7 @@
 package org.geogebra.common.io;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import com.himamis.retex.editor.share.util.Greek;
 import com.himamis.retex.editor.share.util.Unicode;
@@ -909,7 +910,7 @@ public class MathMLParser {
 				i++;
 			}
 
-			if ((startTag != endTag) && (i > blockEnd)) {
+			if (!Objects.equals(startTag, endTag) && (i > blockEnd)) {
 
 				// if sure to be at the end of the block hierarchy (inside),
 				// append block content to result

@@ -641,7 +641,8 @@ public abstract class GeoVec3D extends GeoElement
 
 	@Override
 	public void getXMLtagsMinimal(StringBuilder sb, StringTemplate tpl) {
-		sb.append(regrFormat(x) + " " + regrFormat(y) + " " + regrFormat(z));
+		sb.append(regrFormat(x)).append(" ").append(regrFormat(y))
+				.append(" ").append(regrFormat(z));
 	}
 
 	@Override

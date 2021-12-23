@@ -2071,7 +2071,7 @@ public class MyXMLHandler implements DocHandler {
 	 *            app
 	 * @param attrs
 	 *            settings tag attributes
-	 * @return
+	 * @return success
 	 */
 	private static boolean handleGuiSettings(App app,
 			LinkedHashMap<String, String> attrs) {
@@ -2185,7 +2185,7 @@ public class MyXMLHandler implements DocHandler {
 	 *            app
 	 * @param attrs
 	 *            window tag attributes
-	 * @return
+	 * @return success
 	 */
 	private static boolean handleWindowSize(App app,
 			LinkedHashMap<String, String> attrs) {
@@ -2305,7 +2305,7 @@ public class MyXMLHandler implements DocHandler {
 	 * 
 	 * @param attrs
 	 *            perspective attributes
-	 * @return
+	 * @return success
 	 */
 	private boolean handlePerspective(LinkedHashMap<String, String> attrs) {
 		try {
@@ -3454,7 +3454,7 @@ public class MyXMLHandler implements DocHandler {
 	 * 
 	 * @param attrs
 	 *            ttribute map
-	 * @return
+	 * @return success
 	 */
 	private static String[] getAttributeStrings(
 			LinkedHashMap<String, String> attrs) {

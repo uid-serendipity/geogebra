@@ -1006,7 +1006,7 @@ public class CASInputHandler {
 		}
 
 		if (parantheses && !noParentheses) {
-			sb.append("(" + reference + ")");
+			sb.append("(").append(reference).append(")");
 		} else {
 			sb.append(reference);
 		}

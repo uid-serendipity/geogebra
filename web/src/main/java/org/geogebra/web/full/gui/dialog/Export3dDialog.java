@@ -10,6 +10,7 @@ import org.geogebra.common.kernel.validator.exception.NumberValueOutOfBoundsExce
 import org.geogebra.common.main.Localization;
 import org.geogebra.common.util.DoubleUtil;
 import org.geogebra.common.util.NumberFormatAdapter;
+import org.geogebra.common.util.StringUtil;
 import org.geogebra.web.full.gui.components.ComponentInputField;
 import org.geogebra.web.html5.gui.HasKeyboardPopup;
 import org.geogebra.web.html5.main.AppW;
@@ -87,7 +88,7 @@ public class Export3dDialog extends ComponentDialog
 		 */
 		public boolean parse(boolean showError, boolean canBeEqual,
 				boolean canBeEmpty) {
-			if (canBeEmpty && getText().trim().length() == 0) {
+			if (canBeEmpty && StringUtil.emptyTrim(getText())) {
 				parsedValue = 0;
 				return true;
 			}
@@ -318,8 +319,7 @@ public class Export3dDialog extends ComponentDialog
 				lineThicknessValue.setInputText("");
 			} else {
 				String current = lineThicknessValue.getText();
-				if (oldLineThicknessValue != null && current == null
-						|| current.trim().length() == 0) {
+				if (oldLineThicknessValue != null && StringUtil.emptyTrim(current)) {
 					lineThicknessValue
 							.setInputText(oldLineThicknessValue);
 				}

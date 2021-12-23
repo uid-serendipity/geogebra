@@ -91,7 +91,7 @@ import jsinterop.base.Js;
 public class MathFieldW implements MathField, IsWidget, MathFieldAsync, BlurHandler {
 
 	public static final int SCROLL_THRESHOLD = 14;
-	protected static MetaModel sMetaModel = new MetaModel();
+	private static final MetaModel sMetaModel = new MetaModel();
 	private MetaModel metaModel;
 
 	private final MathFieldInternal mathFieldInternal;
