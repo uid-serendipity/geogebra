@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id "com.github.spotbugs" version "4.8.0"
+    id "com.github.spotbugs" version "5.0.4"
 }
 description 'Platform independent supplementary files for graphics support'
 
