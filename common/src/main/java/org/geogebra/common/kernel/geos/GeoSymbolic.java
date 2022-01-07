@@ -263,7 +263,7 @@ public class GeoSymbolic extends GeoElement
 			ExpressionValue arg = command.getArgument(0).unwrap();
 			if (arg instanceof GeoSymbolic) {
 				GeoElementND twinGeo = ((GeoSymbolic) arg).getTwinGeo();
-				return twinGeo.isGeoConic();
+				return twinGeo != null && twinGeo.isGeoConic();
 			}
 		}
 		return false;
