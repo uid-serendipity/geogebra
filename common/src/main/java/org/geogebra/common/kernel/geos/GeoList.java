@@ -3354,23 +3354,6 @@ public class GeoList extends GeoElement
 		corner.setUndefined();
 	}
 
-	/**
-	 * @return replace all entries with undefined numbers
-	 */
-	public ExpressionValue makeEntriesUndefined() {
-		MyList list = new MyList(kernel);
-		for (int i = 0; i < size(); i++) {
-			GeoElement geo = get(i);
-			if (geo.isGeoList()) {
-				((GeoList) geo).makeEntriesUndefined();
-				((GeoList) geo).resetDefinition();
-			} else {
-				elements.set(i, new GeoNumeric(cons, Double.NaN));
-			}
-		}
-		return list;
-	}
-
 	@Override
 	public int getTableColumn() {
 		return tableColumn;
@@ -3405,5 +3388,22 @@ public class GeoList extends GeoElement
 
 	public boolean isEmptyList() {
 		return elements == null || elements.isEmpty();
+	}
+
+	/**
+	 * @return replace all entries with undefined numbers
+	 */
+	public ExpressionValue makeEntriesUndefined() {
+		MyList list = new MyList(kernel);
+		for (int i = 0; i < size(); i++) {
+			GeoElement geo = get(i);
+			if (geo.isGeoList()) {
+				((GeoList) geo).makeEntriesUndefined();
+				((GeoList) geo).resetDefinition();
+			} else {
+				elements.set(i, new GeoNumeric(cons, Double.NaN));
+			}
+		}
+		return list;
 	}
 }
