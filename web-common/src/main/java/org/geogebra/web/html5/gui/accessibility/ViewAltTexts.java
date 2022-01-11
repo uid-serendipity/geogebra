@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 
 import org.geogebra.common.kernel.Kernel;
 import org.geogebra.common.kernel.geos.GeoElement;
-import org.geogebra.common.kernel.geos.GeoNumeric;
 import org.geogebra.common.kernel.geos.GeoText;
 import org.geogebra.common.main.App;
 
@@ -36,7 +35,6 @@ public class ViewAltTexts {
 	private final App app;
 
 	/**
-	 *
 	 * @param app the application
 	 */
 	public ViewAltTexts(App app) {
@@ -50,7 +48,6 @@ public class ViewAltTexts {
 	}
 
 	/**
-	 *
 	 * @return the number of views that have altText and visible;
 	 */
 	public int activeAltTextCount() {
@@ -63,9 +60,9 @@ public class ViewAltTexts {
 	}
 
 	/**
+	 * @param viewIndex the index of the euclidian view.
 	 * @return the geo element containing the alt text for the view
 	 * specified by viewIndex.
-	 * @param viewIndex the index of the euclidian view.
 	 */
 	public GeoElement getAltGeo(int viewIndex) {
 		GeoElement geoElement = kernel.lookupLabel(get(viewIndex));
@@ -79,35 +76,18 @@ public class ViewAltTexts {
 	}
 
 	/**
-	 *
 	 * @param altText to check
 	 * @return if there is a view for the altText
 	 */
 	public boolean isValid(GeoText altText) {
 		updateVisibleViews();
 		String label = altText.getLabelSimple();
-		for (Integer viewId: visibleViews) {
+		for (Integer viewId : visibleViews) {
 			if (altTextsPerView.get(viewId).equals(label)) {
 				return true;
 			}
 		}
 
 		return false;
-	}
-
-	/**
-	 *
-	 * @param geo to check
-	 * @return if this geo is independent for all altText of views or not.
-	 */
-	public boolean isIndependent(GeoNumeric geo) {
-		updateVisibleViews();
-		for (int i = 0; i < viewCount(); i++) {
-			GeoElement altText = getAltGeo(i);
-			if (altText != null && geo.algoUpdateSetContains(altText.getParentAlgorithm())) {
-				return false;
-			}
-		}
-		return true;
 	}
 }

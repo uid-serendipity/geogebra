@@ -82,23 +82,10 @@ public interface AccessibilityManagerInterface {
 
 	void setTabOverGeos();
 
+	void readSliderUpdate(GeoNumeric geo);
+
 	/**
-	 * Append an altText of a view to read.
-	 * @param altText of a view.
+	 * @param altText to append
 	 */
 	void appendAltText(GeoText altText);
-
-	/**
-	 *
-	 * @param geo to check
-	 * @return if geo is a dependency of the Alt Text of a view.
-	 */
-	boolean isIndependentFromAltTexts(GeoNumeric geo);
-
-	/**
-	 * Add geo as alt text dependency, so its value can be read
-	 * along with the alt text
-	 * @param geo to add.
-	 */
-	void addAsAltTextDependency(GeoNumeric geo);
 }

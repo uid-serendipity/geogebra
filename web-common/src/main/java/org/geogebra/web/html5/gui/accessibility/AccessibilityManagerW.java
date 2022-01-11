@@ -208,12 +208,7 @@ public class AccessibilityManagerW implements AccessibilityManagerInterface {
 	}
 
 	@Override
-	public boolean isIndependentFromAltTexts(GeoNumeric geo) {
-		return altTextCollector.isIndependent(geo);
-	}
-
-	@Override
-	public void addAsAltTextDependency(GeoNumeric geo) {
-		altTextCollector.addDependency(geo);
+	public void readSliderUpdate(GeoNumeric geo) {
+		altTextCollector.readSliderUpdate(geo);
 	}
 }

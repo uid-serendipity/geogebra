@@ -78,12 +78,8 @@ public final class AccessibilityManagerNoGui
 	}
 
 	@Override
-	public boolean isIndependentFromAltTexts(GeoNumeric geo) {
-		return true;
-	}
-
-	@Override
-	public void addAsAltTextDependency(GeoNumeric geo) {
+	public void readSliderUpdate(GeoNumeric geo) {
 		// not used
 	}
+
 }
