@@ -1,7 +1,6 @@
 package org.geogebra.common.util;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -186,46 +185,16 @@ public class LowerCaseDictionary extends HashMap<String, String>
 		}
 
 		try {
-			findCompletions(prefixLowerCase, completions);
+			SortedSet<String> tailSet = treeSet.tailSet(prefixLowerCase);
+			for (String comp : tailSet) {
+				if (!comp.startsWith(prefixLowerCase)) {
+					break;
+				}
+				completions.add(get(comp));
+			}
 			return prefixLowerCase;
 		} catch (Exception e) {
 			return "";
-		}
-	}
-
-	private void findCompletions(final String prefix, ArrayList<String> completions) {
-		SortedSet<String> tailSet = treeSet.tailSet(prefix);
-		for (String comp : tailSet) {
-			if (!comp.startsWith(prefix)) {
-				break;
-			}
-			completions.add(get(comp));
-		}
-	}
-
-	/**
-	 * Return list of all elements matching this prefix. Return empty list if none exists
-	 *
-	 * @param prefix
-	 *            The string to use as the base for the lookup
-	 * @return matching elements
-	 */
-	public List<String> collectMatchesWithPrefix(final String prefix) {
-		if (prefix == null) {
-			return Collections.emptyList();
-		}
-
-		String normalizedPrefix = normalizer.transform(prefix);
-		if ("".equals(normalizedPrefix)) {
-			return Collections.emptyList();
-		}
-
-		ArrayList<String> matches = new ArrayList<>();
-		try {
-			findCompletions(normalizedPrefix, matches);
-			return matches;
-		} catch (Exception e) {
-			return Collections.emptyList();
 		}
 	}
 
