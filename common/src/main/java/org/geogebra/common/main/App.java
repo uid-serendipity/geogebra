@@ -3973,7 +3973,6 @@ public abstract class App implements UpdateSelection, AppInterface, EuclidianHos
 				if (d != null) {
 					((DrawDropDownList) d).toggleOptions();
 				}
-
 			} else if (geo.isGeoNumeric()) {
 
 				// <Space> -> toggle slider animation off/on
