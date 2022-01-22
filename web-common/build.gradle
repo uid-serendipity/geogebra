@@ -36,7 +36,7 @@ dependencies {
             "com.google.gwt:gwt-dev:$gwtCompilerVersion"
 
     annotationProcessor project(":gwtutil"),
-        'org.gwtproject.resources:gwt-resources-processor:HEAD-SNAPSHOT'
+        'org.gwtproject.resources:gwt-resources-processor:1.0-SNAPSHOT'
 }
 
 compileJava.options.sourcepath = files(processResources.destinationDir).builtBy(processResources)

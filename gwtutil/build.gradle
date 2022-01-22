@@ -18,7 +18,7 @@ dependencies {
     compile group: 'com.google.elemental2', name: 'elemental2-webgl', version: '1.2.0'
 
     compile group: 'org.gwtproject.resources', name: 'gwt-resources-api', version: 'HEAD-SNAPSHOT'
-    compile group: 'org.gwtproject.resources', name: 'gwt-resources-processor', version: 'HEAD-SNAPSHOT'
+    compile group: 'org.gwtproject.resources', name: 'gwt-resources-processor', version: '1.0-SNAPSHOT'
     compile 'org.gwtproject.timer:gwt-timer:1.0.0-RC1'
 
 // https://mvnrepository.com/artifact/com.google.auto.service/auto-service
