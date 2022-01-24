@@ -39,7 +39,6 @@ import org.geogebra.common.euclidian.EuclidianConstants;
 import org.geogebra.common.euclidian.EuclidianView;
 import org.geogebra.common.euclidian.EuclidianViewInterfaceSlim;
 import org.geogebra.common.euclidian.draw.CanvasDrawable;
-import org.geogebra.common.factories.FormatFactory;
 import org.geogebra.common.factories.LaTeXFactory;
 import org.geogebra.common.gui.dialog.options.model.AxisModel.IAxisModelListener;
 import org.geogebra.common.gui.view.algebra.AlgebraView.SortMode;
@@ -109,7 +108,6 @@ import org.geogebra.common.util.ExtendedBoolean;
 import org.geogebra.common.util.IndexHTMLBuilder;
 import org.geogebra.common.util.LaTeXCache;
 import org.geogebra.common.util.MyMath;
-import org.geogebra.common.util.NumberFormatAdapter;
 import org.geogebra.common.util.SpreadsheetTraceSettings;
 import org.geogebra.common.util.StringUtil;
 import org.geogebra.common.util.debug.GeoGebraProfiler;
@@ -316,7 +314,6 @@ public abstract class GeoElement extends ConstructionElement implements GeoEleme
 
 	private List<Integer> viewFlags = null;
 
-	private NumberFormatAdapter numberFormatter6;
 	private static volatile TreeSet<AlgoElement> tempSet;
 
 	private boolean descriptionNeedsUpdateInAV;
