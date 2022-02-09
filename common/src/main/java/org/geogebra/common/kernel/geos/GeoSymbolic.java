@@ -880,6 +880,7 @@ public class GeoSymbolic extends GeoElement
 
 	@Override
 	public void update(boolean drag) {
+		asFunction = null;
 		if (twinGeo != null) {
 			twinGeo.setVisualStyle(this);
 		}
