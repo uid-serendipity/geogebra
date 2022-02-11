@@ -10,13 +10,13 @@ import org.geogebra.common.kernel.validator.exception.NumberValueOutOfBoundsExce
 import org.geogebra.common.main.Localization;
 import org.geogebra.common.util.DoubleUtil;
 import org.geogebra.common.util.NumberFormatAdapter;
+import org.geogebra.web.full.gui.components.ComponentCheckbox;
 import org.geogebra.web.full.gui.components.ComponentInputField;
 import org.geogebra.web.html5.gui.HasKeyboardPopup;
 import org.geogebra.web.html5.main.AppW;
 import org.geogebra.web.shared.components.dialog.ComponentDialog;
 import org.geogebra.web.shared.components.dialog.DialogData;
 
-import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 
@@ -30,7 +30,7 @@ public class Export3dDialog extends ComponentDialog
 	private Runnable onExportButtonPressed;
 	private ParsableComponentInputField lineThicknessValue;
 	private String oldLineThicknessValue;
-	private CheckBox filledSolid;
+	private ComponentCheckbox filledSolid;
 	private double lastUpdatedScale;
 	private double lastUpdatedThickness;
 
@@ -310,23 +310,25 @@ public class Export3dDialog extends ComponentDialog
 		thicknessPanel.setStyleName("panelRow");
 		lineThicknessValue = addTextField("STL.Thickness", "mm",
 				thicknessPanel);
-		filledSolid = new CheckBox(app.getLocalization()
-				.getMenuDefault("STL.FilledSolid", "Filled Solid"));
-		filledSolid.addClickHandler(event -> {
-			if (filledSolid.getValue()) {
-				oldLineThicknessValue = lineThicknessValue.getText();
-				lineThicknessValue.setInputText("");
-			} else {
-				String current = lineThicknessValue.getText();
-				if (oldLineThicknessValue != null && current == null
-						|| current.trim().length() == 0) {
-					lineThicknessValue
-							.setInputText(oldLineThicknessValue);
-				}
-			}
-		});
+
+		filledSolid = new ComponentCheckbox(app.getLocalization(), false,
+				"STL.FilledSolid", this::onFilledSolidAction);
 		thicknessPanel.add(filledSolid);
 		root.add(thicknessPanel);
+	}
+
+	private void onFilledSolidAction() {
+		if (filledSolid.isSelected()) {
+			oldLineThicknessValue = lineThicknessValue.getText();
+			lineThicknessValue.setInputText("");
+		} else {
+			String current = lineThicknessValue.getText();
+			if (oldLineThicknessValue != null && current == null
+					|| current.trim().isEmpty()) {
+				lineThicknessValue
+						.setInputText(oldLineThicknessValue);
+			}
+		}
 	}
 
 	private ParsableComponentInputField addTextField(String labelText,
@@ -410,7 +412,7 @@ public class Export3dDialog extends ComponentDialog
 
 	@Override
 	public boolean wantsFilledSolids() {
-		return filledSolid.getValue()
+		return filledSolid.isSelected()
 				|| DoubleUtil.isZero(getCurrentThickness());
 	}
 }

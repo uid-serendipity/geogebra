@@ -13,24 +13,24 @@
 	}
 
 	.checkboxPanel {
-		display: flex;
+		display: inline-flex;
 		width: fit-content;
 		cursor: pointer;
+
+		.checkboxLbl {
+			height: 20px;
+			line-height: 20px;
+			margin-left: 16px;
+			color: colors.$text-primary;
+			font-size: 100%;
+		}
 	}
 
-    @mixin checkboxBg($color) {
-    	.background {
-    		border-color: $color;
-    		background-color: $color;
-    	}
-    }
-
-    .checkbox {
-        width: 18px;
-        height: 18px;
-        padding: 3px;
-        position: relative;
-        cursor: pointer;
+	.checkbox {
+		width: 18px;
+		height: 18px;
+		position: relative;
+		cursor: pointer;
 
 		.background {
 			width: 18px;
@@ -45,8 +45,8 @@
 
 		 .checkmark {
 			 position: absolute;
-			 left: 5px;
-			 top: 5px;
+			 left: 2px;
+			 top: 2px;
 		 }
 
 		&.selected {
