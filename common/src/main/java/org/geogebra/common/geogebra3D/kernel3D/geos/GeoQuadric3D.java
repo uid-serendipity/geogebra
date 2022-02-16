@@ -73,8 +73,6 @@ public class GeoQuadric3D extends GeoQuadricND implements Functional2Var,
 	protected double[] tmpDouble2 = new double[2];
 	private double detS;
 
-	private CoordMatrix tmpMatrix3x3;
-
 	private GeoPlane3D[] planes;
 
 	private GeoLine3D line;
