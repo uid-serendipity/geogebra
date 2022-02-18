@@ -29,6 +29,7 @@ import org.geogebra.common.main.SpreadsheetTableModelSimple;
 import org.geogebra.common.main.settings.SpreadsheetSettings;
 import org.geogebra.common.plugin.EventType;
 import org.geogebra.common.plugin.GeoClass;
+import org.geogebra.common.util.MyMath;
 import org.geogebra.ggbjdk.java.awt.geom.Rectangle;
 import org.geogebra.web.html5.Browser;
 import org.geogebra.web.html5.gui.inputfield.AutoCompleteTextFieldW;
@@ -938,7 +939,7 @@ public class MyTableW implements /* FocusListener, */MyTable {
 		if (autoScrolls) {
 			GRectangle cellRect = getCellRect(rowIndex, columnIndex, false);
 			if (cellRect != null) {
-				scroller.scrollRectToVisible(cellRect);
+				scroller.scrollRectToVisible(columnIndex, rowIndex);
 			}
 		}
 	}
@@ -959,7 +960,7 @@ public class MyTableW implements /* FocusListener, */MyTable {
 
 		setSelectAll(true);
 		setAutoscrolls(true);
-		scrollRectToVisible(getCellRect(0, 0, true));
+		scrollRectToVisible(0, 0);
 
 		// setRowSelectionInterval(0, getRowCount()-1);
 		// getColumnModel().getSelectionModel().setSelectionInterval(0,
@@ -973,8 +974,8 @@ public class MyTableW implements /* FocusListener, */MyTable {
 		this.autoScrolls = autoScrolls;
 	}
 
-	protected void scrollRectToVisible(GRectangle contentRect) {
-		scroller.scrollRectToVisible(contentRect);
+	protected void scrollRectToVisible(int x, int y) {
+		scroller.scrollRectToVisible(x, y);
 	}
 
 	/**
@@ -1123,8 +1124,6 @@ public class MyTableW implements /* FocusListener, */MyTable {
 		}
 
 		updateCopiableSelection();
-		// Log.debug("------------------");
-		// for (CellRange cr: selectedCellRanges)cr.debug();
 	}
 
 	/**
@@ -1281,8 +1280,7 @@ public class MyTableW implements /* FocusListener, */MyTable {
 
 				// scroll to upper left corner of rectangle
 				setAutoscrolls(true);
-				scrollRectToVisible(getCellRect(cr.getMinRow(),
-				        cr.getMinColumn(), true));
+				scrollRectToVisible(cr.getMinColumn(), cr.getMinRow());
 				repaint();
 			}
 		} catch (Exception e) {
@@ -1488,13 +1486,12 @@ public class MyTableW implements /* FocusListener, */MyTable {
 	}
 
 	protected GPoint getPixelRelative(int column, int row) {
-		Element wt = ssGrid.getCellFormatter().getElement(Math.min(row, getRowCount() - 1),
-				Math.min(column, getColumnCount() - 1));
-		int offx = ssGrid.getAbsoluteLeft() - (column == getColumnCount()
-				? wt.getOffsetWidth() : 0);
-		int offy = ssGrid.getAbsoluteTop() - (row == getRowCount()
-				? wt.getOffsetHeight() : 0);
-		return new GPoint(wt.getAbsoluteLeft() - offx, wt.getAbsoluteTop() - offy);
+		Element wt = ssGrid.getCellFormatter().getElement(
+				(int) MyMath.clamp(row, 0, getRowCount() - 1),
+				(int) MyMath.clamp(column, 0, getColumnCount() - 1));
+		int offx = column == getColumnCount() ? wt.getOffsetWidth() : 0;
+		int offy = row == getRowCount() ? wt.getOffsetHeight() : 0;
+		return new GPoint(wt.getOffsetLeft() + offx, wt.getOffsetTop() + offy);
 	}
 
 	protected GPoint getMinSelectionPixel() {
@@ -1553,6 +1550,51 @@ public class MyTableW implements /* FocusListener, */MyTable {
 			return null;
 		}
 		return new GPoint(indexX, indexY);
+	}
+
+	/**
+	 * @param x x-offset with respect to the whole grid
+	 * @return cell x-coordinate or -1 if not found
+	 */
+	public int getIndexFromPixelRelativeX(int x) {
+		if (x < 0) {
+			return -1;
+		}
+
+		int rowFrom = 0;
+
+		int indexX = -1;
+		for (int i = 0; i < getColumnCount(); ++i) {
+			Element point = ssGrid.getCellFormatter().getElement(rowFrom, i);
+			if (x <= point.getOffsetLeft()) {
+				indexX = i;
+				break;
+			}
+		}
+		return indexX;
+	}
+
+	/**
+	 * @param y y-offset with respect to the whole grid
+	 * @return cell y-coordinates or -1 if not found
+	 */
+	public int getIndexFromPixelRelativeY(int y) {
+		if (y < 0) {
+			return -1;
+		}
+
+		int columnFrom = 0;
+
+		int indexY = -1;
+
+		for (int i = 0; i < getRowCount(); ++i) {
+			Element point = ssGrid.getCellFormatter().getElement(i, columnFrom);
+			if (y <= point.getOffsetTop()) {
+				indexY = i;
+				break;
+			}
+		}
+		return indexY;
 	}
 
 	public GRectangle getCellRect(int row, int column, boolean spacing) {
@@ -1681,8 +1723,7 @@ public class MyTableW implements /* FocusListener, */MyTable {
 					} else {
 						app.showKeyboard(textField, true);
 					}
-					final GRectangle rect = getCellRect(row, col, true);
-					Scheduler.get().scheduleDeferred(() -> scrollRectToVisible(rect));
+					Scheduler.get().scheduleDeferred(() -> scrollRectToVisible(col, row));
 
 					if (Browser.isTabletBrowser()) {
 						textField.setEnabled(false);
