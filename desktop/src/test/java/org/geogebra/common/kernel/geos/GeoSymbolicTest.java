@@ -1069,9 +1069,11 @@ public class GeoSymbolicTest extends BaseSymbolicTest {
 	}
 
 	@Test
-	public void testIfArgumentFiltered() {
-		GeoSymbolic element = add("If(x>5, x^2, x<5, x)");
-		assertThat(element.getTwinGeo(), is(nullValue()));
+	public void testIfIntegral() {
+		add("a(x)=If(0<x<=1,x,1<x<=2,2-x)");
+		GeoSymbolic element = add("Integral(a)");
+		assertThat(element.toString(StringTemplate.defaultTemplate),
+				equalTo("f(x) = If(0 < x ≤ 1,1 / 2 x²,1 < x ≤ 2,-1 / 2 x² + 2x) + c_{1}"));
 	}
 
 	@Test
