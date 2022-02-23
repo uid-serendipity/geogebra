@@ -1,5 +1,7 @@
 package org.geogebra.web.full.cas.view;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import org.geogebra.common.main.Localization;
@@ -15,7 +17,9 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 
 public class CASSubstituteDialogW extends ComponentDialog {
-	/**
+	private List<InputPanelW> substFields = new ArrayList<>();
+	private List<InputPanelW> withFields = new ArrayList<>();
+
 	/**
 	 * base dialog constructor
 	 * @param app - see {@link AppW}
@@ -48,12 +52,20 @@ public class CASSubstituteDialogW extends ComponentDialog {
 		block.addStyleName("flexGroup");
 
 		InputPanelW subst = new InputPanelW(data.get(idx).get(0), app, 1, -1, false);
-		subst.addTextComponentKeyUpHandler(event -> data.get(idx).set(0, subst.getText()));
+		subst.addTextComponentKeyUpHandler(event -> {
+			int substIdx = substFields.indexOf(subst);
+			if (substIdx > -1) {
+				data.get(substIdx).set(0, subst.getText());
+			}
+		});
 		InputPanelW with = new InputPanelW(data.get(idx).get(1), app, 1, -1, false);
 		with.getTextComponent().addStyleName("with");
 		with.addTextComponentKeyUpHandler(event -> {
 			setPosBtnDisabled(false);
-			data.get(idx).set(1, with.getText());
+			int withIdx =  withFields.indexOf(with);
+			if (withIdx > -1) {
+				data.get(withIdx).set(1, with.getText());
+			}
 		});
 		block.add(subst);
 		block.add(with);
@@ -78,6 +90,8 @@ public class CASSubstituteDialogW extends ComponentDialog {
 			}
 		});
 
+		substFields.add(subst);
+		withFields.add(with);
 		addDialogContent(block);
 	}
 
@@ -86,6 +100,8 @@ public class CASSubstituteDialogW extends ComponentDialog {
 		if (inputField.getText().isEmpty() && idx != data.size()
 				&& data.get(idx).get(vectElem).isEmpty() && idx != data.size() - 1) {
 			data.remove(idx);
+			substFields.remove(idx);
+			withFields.remove(idx);
 			parenPanel.removeFromParent();
 		}
 
