@@ -589,8 +589,4 @@ public class FormulaEditor extends View implements MathField {
         mMathFieldInternal.parse(text);
     }
 
-    @Override
-    public void setPlainText(String text) {
-        mMathFieldInternal.setPlainText(text);
-    }
 }
