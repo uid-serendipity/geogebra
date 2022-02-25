@@ -274,5 +274,4 @@ public interface EuclidianViewInterfaceSlim extends LayerView {
 	default double getMaxCanvasCoordinate() {
 		return Double.MAX_VALUE;
 	}
-
 }
