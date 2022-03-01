@@ -316,7 +316,6 @@ public class MathFieldInternal
 		}
 		if (arrow && !handled && unhandledArrowListener != null) {
 			unhandledArrowListener.onArrow(keyEvent.getKeyCode());
-			return true;
 		}
 
 		return handled;
