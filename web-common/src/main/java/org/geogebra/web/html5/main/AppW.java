@@ -230,7 +230,7 @@ public abstract class AppW extends App implements SetLabels, HasLanguage {
 	HashMap<String, String> revTranslateCommandTable = new HashMap<>();
 	private Runnable closeBroserCallback;
 	private Runnable insertImageCallback;
-	private ArrayList<RequiresResize> euclidianHandlers = new ArrayList<>();
+	private final ArrayList<RequiresResize> euclidianHandlers = new ArrayList<>();
 	private ViewW viewW;
 	private ZoomPanel zoomPanel;
 	private final PopupRegistry popupRegistry = new PopupRegistry();
