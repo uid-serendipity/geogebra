@@ -588,5 +588,4 @@ public class FormulaEditor extends View implements MathField {
     public void parse(String text) {
         mMathFieldInternal.parse(text);
     }
-
 }
