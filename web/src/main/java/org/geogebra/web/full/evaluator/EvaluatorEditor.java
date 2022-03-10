@@ -149,7 +149,7 @@ public class EvaluatorEditor implements IsWidget, MathFieldListener, BlurHandler
 	/**
 	 * @param type image type -- only SVG supported
 	 * @param callback called with {svg: base64 encoded SVG,
-	 * 		baseline: relative baseline position} or error
+	 *     baseline: relative baseline position} or error
 	 */
 	public void exportImage(String type, boolean transparent,
 			EvaluatorExportedApi.EquationExportImageConsumer callback) {

@@ -48,8 +48,7 @@ public class KeyboardManager
 	/**
 	 * Constructor
 	 *
-	 * @param appWFull
-	 * 			the application
+	 * @param appWFull the application
 	 */
 	public KeyboardManager(AppW appWFull) {
 		this.app = appWFull;
