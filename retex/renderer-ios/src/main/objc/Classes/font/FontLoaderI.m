@@ -9,7 +9,7 @@
     self = [super init];
     if (self) {
         NSString* bundlePath = [NSBundle resourcesPath];
-        NSString* rendererBundlePath = [bundlePath stringByAppendingPathComponent:@"ReTeX/Renderer/Assets"];
+        NSString* rendererBundlePath = [bundlePath stringByAppendingPathComponent:@"Contents/Resources/ReTeX/Renderer/Assets"];
         _bundle = [NSBundle bundleWithPath:rendererBundlePath];
     }
     return self;
