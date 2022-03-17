@@ -11,6 +11,7 @@ import org.geogebra.common.kernel.geos.GeoElement;
 import org.geogebra.common.kernel.geos.GeoSymbolic;
 import org.geogebra.common.kernel.kernelND.GeoCurveCartesianND;
 import org.geogebra.common.kernel.kernelND.GeoSurfaceCartesianND;
+import org.geogebra.common.main.MyError;
 import org.geogebra.common.plugin.Operation;
 import org.geogebra.common.util.debug.Log;
 
@@ -207,42 +208,7 @@ public class FunctionExpander implements Traversing {
 
 				}
 				if (fv != null) {
-					ExpressionValue argument = en.getRight().wrap()
-							.getCopy(en.getKernel()).traverse(this).unwrap();
-					ExpressionValue ithArg = argument;
-					VariableReplacer vr = VariableReplacer.getReplacer(en
-							.getKernel());
-
-					// variables have to be replaced with one traversing
-					// or else replacing f(x,y) with f(y,x)
-					// will result in f(x, x)
-					for (int i = 0; i < fv.length; i++) {
-						if (en.getOperation() == Operation.FUNCTION_NVAR || surfaceNoComplex) {
-							if (argument instanceof MyList) {
-								ithArg = ((MyList) argument).getListElement(i);
-							} else {
-								MyVecNDNode vec = (MyVecNDNode) argument;
-								switch (i) {
-								default:
-									ithArg = null;
-									Log.debug("problem in FunctionExpander " + i);
-									break;
-								case 0:
-									ithArg = vec.getX();
-									break;
-								case 1:
-									ithArg = vec.getY();
-									break;
-								case 2:
-									ithArg = vec.getZ();
-									break;
-								}
-							}
-						}
-						VariableReplacer.addVars(fv[i].getSetVarString(), ithArg);
-					}
-					en2 = en2.traverse(vr).wrap();
-					return en2;
+					return replaceFunctionVariablesWithArguments(fv, en, en2, surfaceNoComplex);
 				}
 			} else if (en.getOperation() == Operation.DERIVATIVE) {
 				// should not get there
@@ -305,6 +271,54 @@ public class FunctionExpander implements Traversing {
 		}
 
 		return ev;
+	}
+
+	private ExpressionValue replaceFunctionVariablesWithArguments(FunctionVariable[] fv, ExpressionNode en,
+			ExpressionNode en2, boolean surfaceNoComplex) {
+		ExpressionValue argument = en.getRight().wrap()
+				.getCopy(en.getKernel()).traverse(this).unwrap();
+		ExpressionValue ithArg = argument;
+		// variables have to be replaced with one traversing
+		// or else replacing f(x,y) with f(y,x)
+		// will result in f(x, x)
+		for (int i = 0; i < fv.length; i++) {
+			if (en.getOperation() == Operation.FUNCTION_NVAR || surfaceNoComplex) {
+				if (argument instanceof MyList && ((MyList) argument).size() == fv.length) {
+					ithArg = ((MyList) argument).getListElement(i);
+				} else {
+					MyVecNDNode vec = null;
+					if (argument instanceof MyVecNDNode) {
+						vec = (MyVecNDNode) argument;
+					} else if (argument instanceof MyList) {
+						MyList list = (MyList) argument;
+						if (list.getListElement(0).unwrap() instanceof MyVecNDNode) {
+							vec = (MyVecNDNode)list.getListElement(0).unwrap();
+						} else {
+							throw new Error("Invalid internal state");
+						}
+					}
+					switch (i) {
+					default:
+						ithArg = null;
+						Log.debug("problem in FunctionExpander " + i);
+						break;
+					case 0:
+						ithArg = vec.getX();
+						break;
+					case 1:
+						ithArg = vec.getY();
+						break;
+					case 2:
+						ithArg = vec.getZ();
+						break;
+					}
+				}
+			}
+			VariableReplacer.addVars(fv[i].getSetVarString(), ithArg);
+		}
+		VariableReplacer vr = VariableReplacer.getReplacer(en.getKernel());
+		en2 = en2.traverse(vr).wrap();
+		return en2;
 	}
 
 	private boolean hasLowerConstructionIndex(GeoElement element) {
