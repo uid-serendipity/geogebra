@@ -115,7 +115,7 @@ public class DrawLabel3D {
 	 * @param yOffset0
 	 *            abs offset in y
 	 * @param zOffset0
-	 * 	 *        abs offset in z
+	 *            abs offset in z
 	 */
 	public void update(CaptionText caption, GFont font0, Coords v,
 			float xOffset0, float yOffset0, float zOffset0) {
