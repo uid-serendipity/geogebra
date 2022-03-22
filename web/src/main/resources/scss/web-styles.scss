@@ -2615,4 +2615,8 @@
 	.panelRow .optionsSlider input[type=range] {
 		display: inline-block;
 	}
+
+	.mk-spinner-wrap.spinnerForLogo {
+		position:static;
+	}
 }
