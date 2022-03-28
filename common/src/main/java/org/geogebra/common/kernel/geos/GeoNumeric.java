@@ -1848,7 +1848,8 @@ public class GeoNumeric extends GeoElement
 		ExpressionNode definition = getDefinition();
 		boolean symbolicMode =
 				(definition == null)
-						|| (!definition.isSimpleFraction() && definition.isFractionNoPi());
+						|| (!definition.isSimpleFraction() && definition.isFractionNoPi())
+						|| (definition.isSimplifiableSurd());
 		setSymbolicMode(symbolicMode, false);
 	}
 
