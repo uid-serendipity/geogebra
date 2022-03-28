@@ -393,10 +393,10 @@ public class MathFieldInternal
 	 * @param key key name
 	 */
 	public void notifyAndUpdate(String key) {
-		update();
 		if (listener != null) {
 			listener.onKeyTyped(key);
 		}
+		update();
 	}
 
 	@Override
