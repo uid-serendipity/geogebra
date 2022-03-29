@@ -949,4 +949,22 @@ public class MathFieldInternal
 
 		return -1;
 	}
+
+	/**
+	 * @return syntax hint for current cursor position
+	 */
+	public SyntaxHint getSyntaxHint() {
+		if (editorState.getCurrentField().getParent() instanceof MathFunction
+				&& editorState.getCurrentField().getParentIndex() == 1) {
+			MathFunction fn = (MathFunction) editorState.getCurrentField().getParent();
+			if (fn.getName() == Tag.APPLY && !fn.getPlaceholders().isEmpty()) {
+				int commas = editorState.countCommasBeforeCurrent();
+				if (commas < fn.getPlaceholders().size()) {
+					return new SyntaxHint(GeoGebraSerializer.serialize(fn.getArgument(0)),
+							fn.getPlaceholders(), commas);
+				}
+			}
+		}
+		return null;
+	}
 }
