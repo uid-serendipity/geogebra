@@ -1727,6 +1727,7 @@ public class EuclidianStyleBarW extends StyleBarW2
 				} else {
 					((GeoSegment) geo).setEndStyle(style);
 				}
+				geo.updateVisualStyleRepaint(GProperty.COMBINED);
 				changed = true;
 			}
 		}
