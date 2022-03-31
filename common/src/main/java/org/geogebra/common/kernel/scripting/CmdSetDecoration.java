@@ -76,7 +76,7 @@ public class CmdSetDecoration extends CmdScripting {
 				arg[0].setFillType(types[style]);
 			}
 
-			arg[0].updateRepaint();
+			arg[0].updateVisualStyleRepaint(GProperty.DECORATION);
 
 			return arg;
 		case 3:
