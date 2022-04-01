@@ -2,7 +2,6 @@ package org.geogebra.common.kernel.interval;
 
 import static org.junit.Assert.assertEquals;
 
-import org.geogebra.common.util.debug.Log;
 import org.junit.Test;
 
 public class PowerEquivalenceTest extends SamplerTest {
@@ -18,6 +17,21 @@ public class PowerEquivalenceTest extends SamplerTest {
 	}
 
 	@Test
+	public void nrootOfXInverseAndXOnPowMinus1ShouldBeEqual() {
+		shouldBeEquivalent("nroot(1/x, 9))^2", "nroot(x^-1, 9))^2");
+	}
+
+	@Test
+	public void nrootAndPowFractionShouldBeEqual() {
+		shouldBeEquivalent("nroot(x, 9)", "x^(1/9)");
+	}
+
+	@Test
+	public void nrootOfXInverseAndPowFractionShouldBeEqual() {
+		shouldBeEquivalent("nroot(1/x, 9)", "(1/x)^(1/9)");
+	}
+
+	@Test
 	public void xInverseAndXPOWMinus1ShouldBeEqual() {
 		shouldBeEquivalent("x^-1", "1/x");
 	}
@@ -30,7 +44,6 @@ public class PowerEquivalenceTest extends SamplerTest {
 	private void shouldBeEquivalent(String description1, String description2) {
 		IntervalTupleList samples = samplesOf(description1);
 		samples.removeAll(samplesOf(description2));
-		samples.forEach(Log::debug);
 		assertEquals(0, samples.count());
 	}
 
