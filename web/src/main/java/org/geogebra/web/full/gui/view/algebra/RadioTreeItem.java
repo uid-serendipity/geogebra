@@ -43,6 +43,7 @@ import org.geogebra.common.util.AsyncOperation;
 import org.geogebra.common.util.IndexHTMLBuilder;
 import org.geogebra.common.util.StringUtil;
 import org.geogebra.common.util.SyntaxAdapterImpl;
+import org.geogebra.common.util.debug.Log;
 import org.geogebra.gwtutil.NavigatorUtil;
 import org.geogebra.web.editor.MathFieldProcessing;
 import org.geogebra.web.full.gui.inputbar.AlgebraInputW;
@@ -1756,7 +1757,7 @@ public class RadioTreeItem extends AVTreeItem implements MathKeyboardListener,
 		onCursorMove();
 		if (mf != null) {
 			updateEditorAriaLabel(getText());
-			showHint(mf.getInternal().getSyntaxHint());
+			logHint(mf.getInternal().getSyntaxHint());
 		}
 	}
 
@@ -1809,14 +1810,14 @@ public class RadioTreeItem extends AVTreeItem implements MathKeyboardListener,
 	public void insertString(String text) {
 		new MathFieldProcessing(mf).autocomplete(
 				app.getParserFunctions().toEditorAutocomplete(text, loc));
-		showHint(mf.getInternal().getSyntaxHint());
+		logHint(mf.getInternal().getSyntaxHint());
 	}
 
-	private void showHint(SyntaxHint sh) {
+	private void logHint(SyntaxHint sh) {
 		if (sh != null) {
 			String hintHtml = sh.getPrefix() + "<strong>"
 					+ sh.getActive() + "</strong>" + sh.getSuffix();
-			ToolTipManagerW.sharedInstance().showBottomMessage(hintHtml, app);
+			Log.debug(hintHtml);
 		}
 	}
 

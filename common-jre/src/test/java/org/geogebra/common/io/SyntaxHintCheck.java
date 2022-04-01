@@ -1,6 +1,7 @@
 package org.geogebra.common.io;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -48,5 +49,14 @@ public class SyntaxHintCheck {
 		assertEquals("FitPoly(Points, ", hint.getPrefix());
 		assertEquals("Degree", hint.getActive());
 		assertEquals(")", hint.getSuffix());
+	}
+
+	@Test
+	public void nonCommandInput() {
+		KeyboardInputAdapter.onKeyboardInput(mfc.getInternal(), "\"Hello, there!\"");
+		EditorTyper typer = new EditorTyper(mfc);
+		typer.type("{(1,1)},");
+		SyntaxHint hint = mfc.getInternal().getSyntaxHint();
+		assertNull(hint);
 	}
 }

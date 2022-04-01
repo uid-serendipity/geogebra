@@ -99,6 +99,8 @@ public class MathFieldInternal
 
 	private boolean selectionMode = false;
 
+	private SyntaxHintModel syntaxHintModel;
+
 	private static final ArrayList<Integer> LOCKED_CARET_PATH
 			= new ArrayList<>(Arrays.asList(0, 0, 0));
 
@@ -113,6 +115,7 @@ public class MathFieldInternal
 		mathFormula = MathFormula.newFormula(mathField.getMetaModel());
 		mathFieldController = new MathFieldController(mathField);
 		inputController.setMathField(mathField);
+		syntaxHintModel = new SyntaxHintModel();
 		setupMathField();
 	}
 
@@ -201,6 +204,8 @@ public class MathFieldInternal
 		editorState.setCurrentField(formula.getRootComponent());
 		editorState.setCurrentOffset(editorState.getCurrentField().size());
 		mathFieldController.update(formula, editorState, false);
+		syntaxHintModel.update(editorState);
+
 	}
 
 	public void setLockedCaretPath() {
@@ -219,6 +224,7 @@ public class MathFieldInternal
 		editorState.setRootComponent(formula.getRootComponent());
 		CursorController.setPath(path, getEditorState());
 		mathFieldController.update(mathFormula, editorState, false);
+		syntaxHintModel.update(editorState);
 	}
 
 	/**
@@ -954,17 +960,6 @@ public class MathFieldInternal
 	 * @return syntax hint for current cursor position
 	 */
 	public SyntaxHint getSyntaxHint() {
-		if (editorState.getCurrentField().getParent() instanceof MathFunction
-				&& editorState.getCurrentField().getParentIndex() == 1) {
-			MathFunction fn = (MathFunction) editorState.getCurrentField().getParent();
-			if (fn.getName() == Tag.APPLY && !fn.getPlaceholders().isEmpty()) {
-				int commas = editorState.countCommasBeforeCurrent();
-				if (commas < fn.getPlaceholders().size()) {
-					return new SyntaxHint(GeoGebraSerializer.serialize(fn.getArgument(0)),
-							fn.getPlaceholders(), commas);
-				}
-			}
-		}
-		return null;
+		return syntaxHintModel.getHint();
 	}
 }
