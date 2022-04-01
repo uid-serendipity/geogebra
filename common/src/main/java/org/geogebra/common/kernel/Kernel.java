@@ -4213,9 +4213,12 @@ public class Kernel implements SpecialPointsListener, ConstructionStepper {
 		if (previewElementsCollector != null) {
 			previewElementsCollector.removeAll();
 		}
+		app.getEventDispatcher().disableListeners();
+		notifyReset();
 		getApplication().getActiveEuclidianView().getEuclidianController()
 				.clearSelections();
 		notifyReset();
+		app.getEventDispatcher().enableListeners();
 		app.getCompanion().recallViewCreators();
 		app.batchUpdateEnd();
 		app.setUnAutoSaved();
