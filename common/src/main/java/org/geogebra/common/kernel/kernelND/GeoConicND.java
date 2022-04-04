@@ -147,9 +147,6 @@ public abstract class GeoConicND extends GeoQuadricND
 	/** error DetS */
 	public double errDetS = Kernel.STANDARD_PRECISION;
 
-	private boolean isShape = false;
-	private double[] tmpDouble4;
-
 	private double[] coeffs = new double[6];
 
 	private boolean eigenvectorsSetOnLoad = false;
