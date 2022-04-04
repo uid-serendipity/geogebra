@@ -61,7 +61,6 @@ public class SyntaxHint {
 	}
 
 	public boolean isEmpty() {
-		return "".equals(command) && Collections.emptyList().equals(placeholders)
-				;
+		return "".equals(command) && Collections.emptyList().equals(placeholders);
 	}
 }
