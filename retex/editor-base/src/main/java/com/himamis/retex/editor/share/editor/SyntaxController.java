@@ -3,36 +3,41 @@ package com.himamis.retex.editor.share.editor;
 import com.himamis.retex.editor.share.controller.EditorState;
 import com.himamis.retex.editor.share.meta.Tag;
 import com.himamis.retex.editor.share.model.MathFunction;
+import com.himamis.retex.editor.share.model.MathSequence;
 import com.himamis.retex.editor.share.serializer.GeoGebraSerializer;
 
-public class SyntaxHintModel {
-	private EditorState editorState = null;
+public class SyntaxController {
+	private MathSequence fnArgument;
+	private SyntaxHint hint = new SyntaxHint();
+	private EditorState editorState;
+
+	public SyntaxHint getHint() {
+		return hint;
+	}
 
 	public void update(EditorState editorState) {
 		this.editorState = editorState;
-	}
-
-	public SyntaxHint getHint() {
+		hint.clear();
 		if (!isAccepted()) {
-			return null;
+			return;
 		}
 
 		MathFunction fn = getMathFunction();
 		if (fn.getName() == Tag.APPLY && !fn.getPlaceholders().isEmpty()) {
 			int commas = editorState.countCommasBeforeCurrent();
 			if (commas < fn.getPlaceholders().size()) {
-				return new SyntaxHint(GeoGebraSerializer.serialize(fn.getArgument(0)),
+				fnArgument = fn.getArgument(0);
+				hint.update(GeoGebraSerializer.serialize(fnArgument),
 						fn.getPlaceholders(), commas);
 			}
 		}
-		return null;
 	}
 
 	private boolean isAccepted() {
-		return isMathFunction() && isSingleParent();
+		return isMathFunction() && isFunctionArgument();
 	}
 
-	private boolean isSingleParent() {
+	private boolean isFunctionArgument() {
 		return editorState.getCurrentField().getParentIndex() == 1;
 	}
 

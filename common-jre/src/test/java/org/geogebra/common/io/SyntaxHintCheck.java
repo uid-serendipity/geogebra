@@ -1,7 +1,7 @@
 package org.geogebra.common.io;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -10,6 +10,7 @@ import org.junit.Test;
 import com.himamis.retex.editor.share.editor.SyntaxHint;
 import com.himamis.retex.editor.share.input.KeyboardInputAdapter;
 import com.himamis.retex.editor.share.meta.MetaModel;
+import com.himamis.retex.editor.share.util.JavaKeyCodes;
 import com.himamis.retex.renderer.share.platform.FactoryProvider;
 
 public class SyntaxHintCheck {
@@ -57,6 +58,21 @@ public class SyntaxHintCheck {
 		EditorTyper typer = new EditorTyper(mfc);
 		typer.type("{(1,1)},");
 		SyntaxHint hint = mfc.getInternal().getSyntaxHint();
-		assertNull(hint);
+		assertTrue(hint.isEmpty());
 	}
+
+	@Test
+	public void changeFunctionName() {
+		String input = "FitPoly(<Points>, <Degree>)";
+		KeyboardInputAdapter.onKeyboardInput(mfc.getInternal(), input);
+		SyntaxHint hint = mfc.getInternal().getSyntaxHint();
+		assertEquals("FitPoly(", hint.getPrefix());
+		assertEquals("Points", hint.getActive());
+		assertEquals(", Degree)", hint.getSuffix());
+		EditorTyper typer = new EditorTyper(mfc);
+		typer.repeatKey(JavaKeyCodes.VK_LEFT, input.length() - 3);
+		typer.typeKey(JavaKeyCodes.VK_DELETE);
+		assertTrue(mfc.getInternal().getSyntaxHint().isEmpty());
+	}
+
 }

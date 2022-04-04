@@ -99,7 +99,7 @@ public class MathFieldInternal
 
 	private boolean selectionMode = false;
 
-	private SyntaxHintModel syntaxHintModel;
+	private SyntaxController syntaxController;
 
 	private static final ArrayList<Integer> LOCKED_CARET_PATH
 			= new ArrayList<>(Arrays.asList(0, 0, 0));
@@ -115,7 +115,7 @@ public class MathFieldInternal
 		mathFormula = MathFormula.newFormula(mathField.getMetaModel());
 		mathFieldController = new MathFieldController(mathField);
 		inputController.setMathField(mathField);
-		syntaxHintModel = new SyntaxHintModel();
+		syntaxController = new SyntaxController();
 		setupMathField();
 	}
 
@@ -204,7 +204,7 @@ public class MathFieldInternal
 		editorState.setCurrentField(formula.getRootComponent());
 		editorState.setCurrentOffset(editorState.getCurrentField().size());
 		mathFieldController.update(formula, editorState, false);
-		syntaxHintModel.update(editorState);
+		syntaxController.update(editorState);
 
 	}
 
@@ -224,7 +224,7 @@ public class MathFieldInternal
 		editorState.setRootComponent(formula.getRootComponent());
 		CursorController.setPath(path, getEditorState());
 		mathFieldController.update(mathFormula, editorState, false);
-		syntaxHintModel.update(editorState);
+		syntaxController.update(editorState);
 	}
 
 	/**
@@ -267,6 +267,7 @@ public class MathFieldInternal
 
 	private void update(boolean focusEvent) {
 		mathFieldController.update(mathFormula, editorState, focusEvent);
+		syntaxController.update(editorState);
 	}
 
 	/**
@@ -960,6 +961,6 @@ public class MathFieldInternal
 	 * @return syntax hint for current cursor position
 	 */
 	public SyntaxHint getSyntaxHint() {
-		return syntaxHintModel.getHint();
+		return syntaxController.getHint();
 	}
 }

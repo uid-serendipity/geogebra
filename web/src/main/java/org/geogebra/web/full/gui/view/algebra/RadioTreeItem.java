@@ -43,7 +43,6 @@ import org.geogebra.common.util.AsyncOperation;
 import org.geogebra.common.util.IndexHTMLBuilder;
 import org.geogebra.common.util.StringUtil;
 import org.geogebra.common.util.SyntaxAdapterImpl;
-import org.geogebra.common.util.debug.Log;
 import org.geogebra.gwtutil.NavigatorUtil;
 import org.geogebra.web.editor.MathFieldProcessing;
 import org.geogebra.web.full.gui.inputbar.AlgebraInputW;
@@ -81,7 +80,6 @@ import com.google.gwt.user.client.ui.RequiresResize;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.UIObject;
 import com.google.gwt.user.client.ui.Widget;
-import com.himamis.retex.editor.share.editor.SyntaxHint;
 import com.himamis.retex.editor.share.serializer.TeXSerializer;
 import com.himamis.retex.editor.share.util.Unicode;
 import com.himamis.retex.editor.web.MathFieldW;
@@ -1757,7 +1755,6 @@ public class RadioTreeItem extends AVTreeItem implements MathKeyboardListener,
 		onCursorMove();
 		if (mf != null) {
 			updateEditorAriaLabel(getText());
-			logHint(mf.getInternal().getSyntaxHint());
 		}
 	}
 
@@ -1810,15 +1807,6 @@ public class RadioTreeItem extends AVTreeItem implements MathKeyboardListener,
 	public void insertString(String text) {
 		new MathFieldProcessing(mf).autocomplete(
 				app.getParserFunctions().toEditorAutocomplete(text, loc));
-		logHint(mf.getInternal().getSyntaxHint());
-	}
-
-	private void logHint(SyntaxHint sh) {
-		if (sh != null) {
-			String hintHtml = sh.getPrefix() + "<strong>"
-					+ sh.getActive() + "</strong>" + sh.getSuffix();
-			Log.debug(hintHtml);
-		}
 	}
 
 	/**
