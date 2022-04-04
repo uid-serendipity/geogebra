@@ -52,14 +52,21 @@ public class SyntaxHint {
 	/**
 	 * @return active placeholder
 	 */
-	public String getActive() {
+	public String getActivePlacehorder() {
 		return placeholders.isEmpty() ? "" : placeholders.get(index);
 	}
 
+	/**
+	 * clear hint.
+	 */
 	public void clear() {
 		update("", Collections.emptyList(), -1);
 	}
 
+	/**
+	 *
+	 * @return if hint is empty.
+	 */
 	public boolean isEmpty() {
 		return "".equals(command) && Collections.emptyList().equals(placeholders)
 				;

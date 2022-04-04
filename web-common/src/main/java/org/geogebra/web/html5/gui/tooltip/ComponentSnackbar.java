@@ -5,9 +5,7 @@ import org.geogebra.web.html5.main.AppW;
 
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.Widget;
 
 public class ComponentSnackbar extends FlowPanel {
 
@@ -58,12 +56,7 @@ public class ComponentSnackbar extends FlowPanel {
 
 		String[] textLines = title.split("\\n");
 		for (String line : textLines) {
-			Widget textLbl;
-			if (line.contains("</")) {
-				textLbl = new HTML(line);
-			} else {
-				textLbl = new Label(line);
-			}
+			Label textLbl = new Label(line);
 			textLbl.addStyleName("title");
 			textContainer.add(textLbl);
 		}

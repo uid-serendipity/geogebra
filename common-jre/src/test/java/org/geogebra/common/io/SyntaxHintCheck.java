@@ -37,7 +37,7 @@ public class SyntaxHintCheck {
 		KeyboardInputAdapter.onKeyboardInput(mfc.getInternal(), "FitPoly(<Points>, <Degree>)");
 		SyntaxHint hint = mfc.getInternal().getSyntaxHint();
 		assertEquals("FitPoly(", hint.getPrefix());
-		assertEquals("Points", hint.getActive());
+		assertEquals("Points", hint.getActivePlacehorder());
 		assertEquals(", Degree)", hint.getSuffix());
 	}
 
@@ -48,7 +48,7 @@ public class SyntaxHintCheck {
 		typer.type("{(1,1)},");
 		SyntaxHint hint = mfc.getInternal().getSyntaxHint();
 		assertEquals("FitPoly(Points, ", hint.getPrefix());
-		assertEquals("Degree", hint.getActive());
+		assertEquals("Degree", hint.getActivePlacehorder());
 		assertEquals(")", hint.getSuffix());
 	}
 
@@ -67,7 +67,7 @@ public class SyntaxHintCheck {
 		KeyboardInputAdapter.onKeyboardInput(mfc.getInternal(), input);
 		SyntaxHint hint = mfc.getInternal().getSyntaxHint();
 		assertEquals("FitPoly(", hint.getPrefix());
-		assertEquals("Points", hint.getActive());
+		assertEquals("Points", hint.getActivePlacehorder());
 		assertEquals(", Degree)", hint.getSuffix());
 		EditorTyper typer = new EditorTyper(mfc);
 		typer.repeatKey(JavaKeyCodes.VK_LEFT, input.length() - 3);

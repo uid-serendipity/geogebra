@@ -15,6 +15,11 @@ public class SyntaxController {
 		return hint;
 	}
 
+	/**
+	 * Updates hint.
+	 *
+	 * @param editorState the state
+	 */
 	public void update(EditorState editorState) {
 		this.editorState = editorState;
 		hint.clear();
