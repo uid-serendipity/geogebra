@@ -302,7 +302,9 @@ public class MathFieldInternal
 			arrow = true;
 			if (listener != null
 					&& listener.onArrowKeyPressed(keyEvent.getKeyCode())) {
+				syntaxController.update(editorState);
 				return true;
+
 			}
 		}
 		if (keyEvent.getKeyCode() == JavaKeyCodes.VK_CONTROL) {

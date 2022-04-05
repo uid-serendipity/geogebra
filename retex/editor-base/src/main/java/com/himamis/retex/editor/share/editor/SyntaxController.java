@@ -31,7 +31,11 @@ public class SyntaxController {
 		if (fn.getName() == Tag.APPLY && !fn.getPlaceholders().isEmpty()) {
 			int commas = editorState.countCommasBeforeCurrent();
 			if (commas < fn.getPlaceholders().size()) {
-				fnArgument = fn.getArgument(0);
+				MathSequence argument0 = fn.getArgument(0);
+				if (!argument0.equals(fnArgument)) {
+					hint.clear();
+				}
+				fnArgument = argument0;
 				hint.update(GeoGebraSerializer.serialize(fnArgument),
 						fn.getPlaceholders(), commas);
 			}
