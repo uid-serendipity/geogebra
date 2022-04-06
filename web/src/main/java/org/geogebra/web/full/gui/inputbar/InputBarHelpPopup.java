@@ -3,8 +3,7 @@ package org.geogebra.web.full.gui.inputbar;
 import org.geogebra.web.html5.gui.GPopupPanel;
 import org.geogebra.web.html5.gui.HasKeyboardPopup;
 import org.geogebra.web.html5.gui.inputfield.AutoCompleteW;
-import org.geogebra.web.html5.gui.util.GToggleButton;
-import org.geogebra.web.html5.gui.view.button.MyToggleButton;
+import org.geogebra.web.html5.gui.util.ToggleButton;
 import org.geogebra.web.html5.main.AppW;
 
 import com.google.gwt.event.logical.shared.CloseEvent;
@@ -17,7 +16,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class InputBarHelpPopup extends GPopupPanel implements HasKeyboardPopup {
 
-	private MyToggleButton toggleButton;
+	private ToggleButton toggleButton;
 
 	/**
 	 * @param app
@@ -63,7 +62,7 @@ public class InputBarHelpPopup extends GPopupPanel implements HasKeyboardPopup {
 	 */
 	private void setButtonValue(boolean value) {
 		if (this.toggleButton != null) {
-			this.toggleButton.setValue(value);
+			this.toggleButton.setSelected(value);
 		}
 	}
 
@@ -72,9 +71,9 @@ public class InputBarHelpPopup extends GPopupPanel implements HasKeyboardPopup {
 	 * shown or hidden.
 	 *
 	 * @param btnHelpToggle
-	 *            {@link GToggleButton}
+	 *            {@link ToggleButton}
 	 */
-	public void setBtnHelpToggle(MyToggleButton btnHelpToggle) {
+	public void setBtnHelpToggle(ToggleButton btnHelpToggle) {
 		this.toggleButton = btnHelpToggle;
 	}
 }

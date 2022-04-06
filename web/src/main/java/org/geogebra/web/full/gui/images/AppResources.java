@@ -33,9 +33,6 @@ public interface AppResources extends ClientBundle {
 	@Source("org/geogebra/common/icons/png/web/general/empty.gif")
 	ImageResource empty();
 
-	@Source("org/geogebra/common/icons/png/web/general/export.png")
-	ImageResource export();
-
 	@Source("org/geogebra/common/icons/png/web/general/geogebra.png")
 	ImageResource geogebra();
 
