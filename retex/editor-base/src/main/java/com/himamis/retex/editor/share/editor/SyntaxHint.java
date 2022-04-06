@@ -2,17 +2,15 @@ package com.himamis.retex.editor.share.editor;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class SyntaxHint {
 
-	private String command;
+	private String command = null;
 	private List<String> placeholders;
 	private int index;
 
-	public SyntaxHint() {
-		clear();
-	}
 
 	/**
 	 * @param command command name
@@ -60,7 +58,9 @@ public class SyntaxHint {
 	 * clear hint.
 	 */
 	public void clear() {
-		update("", Collections.emptyList(), -1);
+		command = "";
+		placeholders = Collections.emptyList();
+		index = -1;
 	}
 
 	/**
@@ -70,5 +70,32 @@ public class SyntaxHint {
 	public boolean isEmpty() {
 		return "".equals(command) && Collections.emptyList().equals(placeholders)
 				;
+	}
+
+	@Override
+	public String toString() {
+		return "SyntaxHint{" +
+				"command='" + command + '\'' +
+				", placeholders=" + placeholders +
+				", index=" + index +
+				'}';
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		SyntaxHint that = (SyntaxHint) o;
+		return Objects.equals(command, that.command)
+				&& Objects.equals(placeholders, that.placeholders);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(command, placeholders);
+	}
+
+	public void invalidate() {
+		placeholders = Collections.emptyList();
 	}
 }

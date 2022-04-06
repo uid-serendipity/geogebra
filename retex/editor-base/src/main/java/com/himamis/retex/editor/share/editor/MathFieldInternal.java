@@ -204,7 +204,7 @@ public class MathFieldInternal
 		editorState.setCurrentField(formula.getRootComponent());
 		editorState.setCurrentOffset(editorState.getCurrentField().size());
 		mathFieldController.update(formula, editorState, false);
-		syntaxController.update(editorState);
+		updateSyntax();
 
 	}
 
@@ -224,7 +224,7 @@ public class MathFieldInternal
 		editorState.setRootComponent(formula.getRootComponent());
 		CursorController.setPath(path, getEditorState());
 		mathFieldController.update(mathFormula, editorState, false);
-		syntaxController.update(editorState);
+		updateSyntax();
 	}
 
 	/**
@@ -267,6 +267,10 @@ public class MathFieldInternal
 
 	private void update(boolean focusEvent) {
 		mathFieldController.update(mathFormula, editorState, focusEvent);
+		updateSyntax();
+	}
+
+	private void updateSyntax() {
 		syntaxController.update(editorState);
 	}
 
@@ -302,10 +306,10 @@ public class MathFieldInternal
 			arrow = true;
 			if (listener != null
 					&& listener.onArrowKeyPressed(keyEvent.getKeyCode())) {
-				syntaxController.update(editorState);
 				return true;
-
 			}
+
+			updateSyntax();
 		}
 		if (keyEvent.getKeyCode() == JavaKeyCodes.VK_CONTROL) {
 			return false;
@@ -964,5 +968,9 @@ public class MathFieldInternal
 	 */
 	public SyntaxHint getSyntaxHint() {
 		return syntaxController.getHint();
+	}
+
+	public void setCommandForSyntax(String command) {
+		syntaxController.setCommand(command);
 	}
 }

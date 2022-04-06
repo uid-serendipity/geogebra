@@ -84,10 +84,28 @@ public class SyntaxHintCheck {
 		assertEquals("Points", hint.getActivePlacehorder());
 		assertEquals(", Degree)", hint.getSuffix());
 		EditorTyper typer = new EditorTyper(mfc);
-		typer.repeatKey(JavaKeyCodes.VK_LEFT, 1);
+		typer.typeKey(JavaKeyCodes.VK_LEFT);
 		typer.type("XY");
-		typer.repeatKey(JavaKeyCodes.VK_RIGHT, 1);
-		assertTrue(mfc.getInternal().getSyntaxHint().isEmpty());
+		typer.typeKey(JavaKeyCodes.VK_RIGHT);
+		SyntaxHint syntaxHint = mfc.getInternal().getSyntaxHint();
+		assertTrue(syntaxHint.toString(), syntaxHint.isEmpty());
+	}
+
+	@Test
+	public void steppingOutAndIn() {
+		String input = "FitPoly(<Points>, <Degree>)";
+		KeyboardInputAdapter.onKeyboardInput(mfc.getInternal(), input);
+		SyntaxHint hint = mfc.getInternal().getSyntaxHint();
+		assertEquals("FitPoly(", hint.getPrefix());
+		assertEquals("Points", hint.getActivePlacehorder());
+		assertEquals(", Degree)", hint.getSuffix());
+		EditorTyper typer = new EditorTyper(mfc);
+		typer.typeKey(JavaKeyCodes.VK_LEFT);
+		assertTrue(hint.isEmpty());
+		typer.typeKey(JavaKeyCodes.VK_RIGHT);
+		assertEquals("FitPoly(", hint.getPrefix());
+		assertEquals("Points", hint.getActivePlacehorder());
+		assertEquals(", Degree)", hint.getSuffix());
 	}
 
 }

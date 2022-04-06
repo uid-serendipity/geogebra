@@ -3,13 +3,12 @@ package com.himamis.retex.editor.share.editor;
 import com.himamis.retex.editor.share.controller.EditorState;
 import com.himamis.retex.editor.share.meta.Tag;
 import com.himamis.retex.editor.share.model.MathFunction;
-import com.himamis.retex.editor.share.model.MathSequence;
 import com.himamis.retex.editor.share.serializer.GeoGebraSerializer;
 
 public class SyntaxController {
-	private MathSequence fnArgument;
 	private SyntaxHint hint = new SyntaxHint();
 	private EditorState editorState;
+	private String command="";
 
 	public SyntaxHint getHint() {
 		return hint;
@@ -31,12 +30,12 @@ public class SyntaxController {
 		if (fn.getName() == Tag.APPLY && !fn.getPlaceholders().isEmpty()) {
 			int commas = editorState.countCommasBeforeCurrent();
 			if (commas < fn.getPlaceholders().size()) {
-				MathSequence argument0 = fn.getArgument(0);
-				if (!argument0.equals(fnArgument)) {
+				String serializedCommand = GeoGebraSerializer.serialize(fn.getArgument(0));
+				if (!command.equals(serializedCommand)) {
 					hint.clear();
+					return;
 				}
-				fnArgument = argument0;
-				hint.update(GeoGebraSerializer.serialize(fnArgument),
+				hint.update(serializedCommand,
 						fn.getPlaceholders(), commas);
 			}
 		}
@@ -56,5 +55,9 @@ public class SyntaxController {
 
 	private boolean isMathFunction() {
 		return editorState.getCurrentField().getParent() instanceof MathFunction;
+	}
+
+	public void setCommand(String command) {
+		this.command = command;
 	}
 }

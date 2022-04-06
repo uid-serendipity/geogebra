@@ -135,7 +135,9 @@ public class KeyboardInputAdapter {
 			public void commit(MathFieldInternal mfi, String commandString) {
 				List<String> splitCommand = CommandParser.parseCommand(commandString);
 
-				type(mfi, splitCommand.get(0));
+				String input = splitCommand.get(0);
+				mfi.setCommandForSyntax(input);
+				type(mfi, input);
 				mfi.getInputController().newBraces(mfi.getEditorState(), '(');
 				mfi.notifyAndUpdate("(");
 
