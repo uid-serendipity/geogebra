@@ -2,7 +2,6 @@ package com.himamis.retex.editor.share.editor;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class SyntaxHint {
@@ -10,7 +9,6 @@ public class SyntaxHint {
 	private String command = null;
 	private List<String> placeholders;
 	private int index;
-
 
 	/**
 	 * @param command command name
@@ -74,25 +72,12 @@ public class SyntaxHint {
 
 	@Override
 	public String toString() {
-		return "SyntaxHint{" +
-				"command='" + command + '\'' +
-				", placeholders=" + placeholders +
-				", index=" + index +
-				'}';
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		SyntaxHint that = (SyntaxHint) o;
-		return Objects.equals(command, that.command)
-				&& Objects.equals(placeholders, that.placeholders);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(command, placeholders);
+		return "SyntaxHint{"
+				+ "command='" + command + '\''
+				+ ", placeholders=" + placeholders
+				+ ", index="
+				+ index
+				+ '}';
 	}
 
 	public void invalidate() {

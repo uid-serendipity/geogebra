@@ -8,7 +8,7 @@ import com.himamis.retex.editor.share.serializer.GeoGebraSerializer;
 public class SyntaxController {
 	private SyntaxHint hint = new SyntaxHint();
 	private EditorState editorState;
-	private String command="";
+	private String command = "";
 
 	public SyntaxHint getHint() {
 		return hint;
