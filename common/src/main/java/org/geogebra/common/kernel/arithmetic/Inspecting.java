@@ -231,10 +231,7 @@ public interface Inspecting {
 				type = 8;
 				return false;
 			} else if (v instanceof Variable || v instanceof GeoDummyVariable) {
-				if (v.toString(StringTemplate.defaultTemplate).equals("x")) {
-					return false;
-				}
-				return true;
+				return !v.toString(StringTemplate.defaultTemplate).equals("x");
 			} else if (v instanceof ExpressionNode) {
 				type = 11;
 				return false;
