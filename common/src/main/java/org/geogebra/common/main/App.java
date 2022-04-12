@@ -1723,7 +1723,7 @@ public abstract class App implements UpdateSelection, AppInterface, EuclidianHos
 	 * @param e exception
 	 */
 	public final void showGenericError(Exception e) {
-		e.printStackTrace();
+		Log.debug(e);
 		showError(getLocalization().getInvalidInputError());
 	}
 
@@ -2001,7 +2001,7 @@ public abstract class App implements UpdateSelection, AppInterface, EuclidianHos
 			getGuiManager().updateToolbar();
 			updateKeyboard();
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 	}
 
@@ -3629,11 +3629,11 @@ public abstract class App implements UpdateSelection, AppInterface, EuclidianHos
 							+ "\">" + xml + "</geogebra>",
 					false, true);
 		} catch (MyError err) {
-			err.printStackTrace();
+			Log.debug(err);
 			showError(err);
 			ok = false;
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 			ok = false;
 			showError(Errors.LoadFileFailed);
 		}
@@ -4203,7 +4203,7 @@ public abstract class App implements UpdateSelection, AppInterface, EuclidianHos
 			return true;
 		} catch (Exception err) {
 			resetCurrentFile();
-			err.printStackTrace();
+			Log.debug(err);
 			return false;
 		}
 	}

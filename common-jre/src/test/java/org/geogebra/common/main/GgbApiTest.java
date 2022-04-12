@@ -32,6 +32,7 @@ import org.geogebra.common.plugin.EventType;
 import org.geogebra.common.plugin.GgbAPI;
 import org.geogebra.common.plugin.JsObjectWrapper;
 import org.geogebra.common.plugin.ScriptManager;
+import org.geogebra.common.util.debug.Log;
 import org.geogebra.test.EventAcumulator;
 import org.geogebra.test.TestEvent;
 import org.junit.Before;
@@ -414,7 +415,7 @@ public class GgbApiTest {
 			try {
 				((JSONObject) nativeObject).put(property, value);
 			} catch (JSONException e) {
-				e.printStackTrace();
+				Log.debug(e);
 			}
 		}
 
@@ -423,7 +424,7 @@ public class GgbApiTest {
 			try {
 				((JSONObject) nativeObject).put(property, value);
 			} catch (JSONException e) {
-				e.printStackTrace();
+				Log.debug(e);
 			}
 		}
 
