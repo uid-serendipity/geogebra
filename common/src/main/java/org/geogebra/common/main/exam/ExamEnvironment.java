@@ -19,10 +19,6 @@ import org.geogebra.common.main.Translation;
 import org.geogebra.common.main.exam.event.CheatingEvent;
 import org.geogebra.common.main.exam.event.CheatingEvents;
 import org.geogebra.common.main.localization.CommandErrorMessageBuilder;
-import org.geogebra.common.main.restriction.ExamRestrictionModel;
-import org.geogebra.common.main.restriction.ExamRestrictionParser;
-import org.geogebra.common.main.restriction.RestrictExam;
-import org.geogebra.common.main.restriction.RestrictExamImpl;
 import org.geogebra.common.main.settings.CASSettings;
 import org.geogebra.common.main.settings.Settings;
 import org.geogebra.common.util.CopyPaste;
@@ -64,7 +60,6 @@ public class ExamEnvironment {
 	private Boolean wasCasEnabled;
 
 	private TempStorage tempStorage;
-	private RestrictExam restrictions;
 
 	/**
 	 * @param localization localization
@@ -73,14 +68,8 @@ public class ExamEnvironment {
 		this.localization = localization;
 		cheatingEvents = new CheatingEvents();
 		tempStorage = new TempStorage();
-		restrictions = createRestrictions(localization);
 	}
 
-	private RestrictExamImpl createRestrictions(Localization localization) {
-		ExamRestrictionParser parser = new ExamRestrictionParser(localization);
-		ExamRestrictionModel model = new ExamRestrictionModel(parser);
-		return new RestrictExamImpl(model);
-	}
 
 	public void setCommandDispatcher(CommandDispatcher commandDispatcher) {
 		this.commandDispatcher = commandDispatcher;
@@ -708,10 +697,5 @@ public class ExamEnvironment {
 
 	public TempStorage getTempStorage() {
 		return tempStorage;
-	}
-
-
-	public boolean isSubAppRestricted(String appCode) {
-		return restrictions.hasSubApp(appCode);
 	}
 }

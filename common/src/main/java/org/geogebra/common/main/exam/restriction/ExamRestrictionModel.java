@@ -1,4 +1,4 @@
-package org.geogebra.common.main.restriction;
+package org.geogebra.common.main.exam.restriction;
 
 import java.util.ArrayList;
 import java.util.List;
