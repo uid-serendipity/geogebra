@@ -94,15 +94,19 @@ public class AppSwitcherPopup extends GPopupPanel implements Restrictable {
 		rowPanel.add(label);
 		rowPanel.setStyleName("appPickerRow");
 		rowPanel.addDomHandler(event -> {
-			hide();
-			appPickerButton.setIconAndLabel(subAppCode);
-			GlobalHeader.onResize();
-			app.hideMenu();
-			((AppWFull) app).switchToSubapp(subAppCode);
-			Analytics.logEvent(Analytics.Event.APP_SWITCHED, Analytics.Param.SUB_APP,
-					Analytics.Param.convertToSubAppParam(subAppCode));
+			switchToSubApp(subAppCode);
 		}, ClickEvent.getType());
 		contentPanel.add(rowPanel);
+	}
+
+	private void switchToSubApp(String subAppCode) {
+		hide();
+		appPickerButton.setIconAndLabel(subAppCode);
+		GlobalHeader.onResize();
+		app.hideMenu();
+		((AppWFull) app).switchToSubapp(subAppCode);
+		Analytics.logEvent(Analytics.Event.APP_SWITCHED, Analytics.Param.SUB_APP,
+				Analytics.Param.convertToSubAppParam(subAppCode));
 	}
 
 	private boolean hasRestrictions() {
@@ -124,6 +128,9 @@ public class AppSwitcherPopup extends GPopupPanel implements Restrictable {
 	public void restrict(ExamRestrictionModel model) {
 		restrictionModel = model;
 		updateGUI();
+		if (model.isAppRestricted(app.getConfig().getSubAppCode())) {
+			switchToSubApp(model.getDefaultAppCode());
+		}
 	}
 
 	@Override

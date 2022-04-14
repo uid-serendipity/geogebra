@@ -102,10 +102,8 @@ import org.geogebra.common.main.MyError.Errors;
 import org.geogebra.common.main.error.ErrorHandler;
 import org.geogebra.common.main.error.ErrorHelper;
 import org.geogebra.common.main.exam.ExamEnvironment;
-import org.geogebra.common.main.exam.restriction.ExamRestrictionModel;
-import org.geogebra.common.main.exam.restriction.ExamRestrictionParser;
+import org.geogebra.common.main.exam.restriction.ExamRestrictionFactory;
 import org.geogebra.common.main.exam.restriction.RestrictExam;
-import org.geogebra.common.main.exam.restriction.RestrictExamImpl;
 import org.geogebra.common.main.exam.restriction.Restrictable;
 import org.geogebra.common.main.settings.AbstractSettings;
 import org.geogebra.common.main.settings.ConstructionProtocolSettings;
@@ -5176,16 +5174,9 @@ public abstract class App implements UpdateSelection, AppInterface, EuclidianHos
 
 	public void registerRestrictable(Restrictable restrictable) {
 		if (restrictions == null) {
-			restrictions = createRestrictions(getLocalization());
+			restrictions = ExamRestrictionFactory.create(getLocalization());
 		}
 
 		restrictions.register(restrictable);
 	}
-
-	private RestrictExamImpl createRestrictions(Localization localization) {
-		ExamRestrictionParser parser = new ExamRestrictionParser(localization);
-		ExamRestrictionModel model = new ExamRestrictionModel(parser);
-		return new RestrictExamImpl(model);
-	}
-
 }
