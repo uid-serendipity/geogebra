@@ -8,6 +8,7 @@ import org.geogebra.common.kernel.Kernel;
 import org.geogebra.common.kernel.StringTemplate;
 import org.geogebra.common.kernel.arithmetic.Command;
 import org.geogebra.common.kernel.commands.AlgebraProcessor;
+import org.geogebra.common.kernel.geos.GeoList;
 import org.geogebra.common.kernel.kernelND.GeoElementND;
 import org.geogebra.common.kernel.kernelND.GeoEvaluatable;
 import org.geogebra.common.kernel.statistics.Stat;
@@ -52,14 +53,21 @@ public class StatsBuilder {
 	 */
 	public List<StatisticGroup> getStatistics2Var(String varName, String varName2) {
 		List<StatisticGroup> stats = new ArrayList<>();
-		// use command strings, not algos, to make sure code splitting works in Web
-		addStats(stats, ONE_VAR_STATS, varName, lists[0]);
-		addStats(stats, ONE_VAR_STATS, varName2, lists[1]);
-		addStats(stats, TWO_VAR_STATS, varName + varName2, lists);
-		addStats(stats, Arrays.asList(Stat.LENGTH), varName, lists[0]);
-		addStats(stats, MIN_MAX, varName, lists[0]);
-		addStats(stats, MIN_MAX, varName2, lists[1]);
+		if (isValidList(lists[0]) && isValidList(lists[1])) {
+			// use command strings, not algos, to make sure code splitting works in Web
+			addStats(stats, ONE_VAR_STATS, varName, lists[0]);
+			addStats(stats, ONE_VAR_STATS, varName2, lists[1]);
+			addStats(stats, TWO_VAR_STATS, varName + varName2, lists);
+			addStats(stats, Arrays.asList(Stat.LENGTH), varName, lists[0]);
+			addStats(stats, MIN_MAX, varName, lists[0]);
+			addStats(stats, MIN_MAX, varName2, lists[1]);
+		}
 		return stats;
+	}
+
+	private boolean isValidList(GeoEvaluatable geo) {
+		return geo instanceof GeoList && ((GeoList) geo).size() >= 2 &&
+				((GeoList) geo).get(0).isDefined() && ((GeoList) geo).get(1).isDefined();
 	}
 
 	private void addStats(List<StatisticGroup> stats, List<Stat> statAlgos, String varName,
