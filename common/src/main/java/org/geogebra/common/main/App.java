@@ -5172,6 +5172,11 @@ public abstract class App implements UpdateSelection, AppInterface, EuclidianHos
 		return null;
 	}
 
+	/**
+	 * Register a component to be restriced during exam
+	 *
+	 * @param restrictable the component to restrict.
+	 */
 	public void registerRestrictable(Restrictable restrictable) {
 		if (restrictions == null) {
 			restrictions = ExamRestrictionFactory.create(getLocalization());

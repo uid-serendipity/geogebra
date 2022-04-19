@@ -70,7 +70,6 @@ public class ExamEnvironment {
 		tempStorage = new TempStorage();
 	}
 
-
 	public void setCommandDispatcher(CommandDispatcher commandDispatcher) {
 		this.commandDispatcher = commandDispatcher;
 	}

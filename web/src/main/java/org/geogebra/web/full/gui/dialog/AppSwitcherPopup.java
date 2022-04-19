@@ -125,16 +125,25 @@ public class AppSwitcherPopup extends GPopupPanel implements Restrictable {
 	}
 
 	@Override
-	public void restrict(ExamRestrictionModel model) {
+	public boolean isExamRestrictionModelAccepted(ExamRestrictionModel model) {
+		return model.hasSubApps();
+	}
+
+	@Override
+	public void setExamRestrictionModel(ExamRestrictionModel model) {
 		restrictionModel = model;
+	}
+
+	@Override
+	public void applyExamRestrictions() {
 		updateGUI();
-		if (model.isAppRestricted(app.getConfig().getSubAppCode())) {
-			switchToSubApp(model.getDefaultAppCode());
+		if (restrictionModel.isAppRestricted(app.getConfig().getSubAppCode())) {
+			switchToSubApp(restrictionModel.getDefaultAppCode());
 		}
 	}
 
 	@Override
-	public void permit() {
+	public void cancelExamRestrictions() {
 		restrictionModel = null;
 		updateGUI();
 	}

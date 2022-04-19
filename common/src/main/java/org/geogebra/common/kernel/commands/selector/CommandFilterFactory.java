@@ -196,10 +196,4 @@ public final class CommandFilterFactory {
 		commandNameFilter.addCommands(Commands.PieChart);
 		return commandNameFilter;
 	}
-
-	public static CommandFilter createFilter(String... commands) {
-		CommandNameFilterSet commandNameFilter = new CommandNameFilterSet(true);
-		commandNameFilter.addCommandsByName(commands);
-		return commandNameFilter;
-	}
 }
