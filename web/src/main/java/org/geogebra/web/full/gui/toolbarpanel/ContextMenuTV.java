@@ -153,7 +153,8 @@ public class ContextMenuTV {
 
 	private void addStats(String transKey, Function<Integer, List<StatisticGroup>> statFunction,
 			DialogData data) {
-		addCommand(() -> showStats(statFunction, data), transKey, transKey.toLowerCase(Locale.US));
+		addCommand(() -> showStats(statFunction, data), transKey,
+					transKey.toLowerCase(Locale.US));
 	}
 
 	private void showRegression(DialogData data, int rows) {
@@ -162,18 +163,18 @@ public class ContextMenuTV {
 		if (!hasError) {
 			dialog.show();
 		} else {
-			showErrorDialog(data);
+			showErrorDialog(data, "StatsDialog.NoDataMsgRegression");
 		}
 	}
 
-	private void showErrorDialog(DialogData dialogData) {
+	private void showErrorDialog(DialogData dialogData, String msgKey) {
 		DialogData errorDialogData = new DialogData(dialogData.getTitleTransKey(),
 				dialogData.getSubTitleTransKey(), "Close", null);
 		ComponentDialog dialog = new ComponentDialog(app, errorDialogData, true, true);
 		dialog.addStyleName("statistics error");
 		InfoErrorData errorData = new InfoErrorData(app.getLocalization()
 				.getMenu("StatsDialog.NoData"), app.getLocalization()
-				.getMenu("StatsDialog.NoDataMsg"), null);
+				.getMenu(msgKey), null);
 		ComponentInfoErrorPanel infoPanel = new ComponentInfoErrorPanel(app.getLocalization(),
 				errorData, MaterialDesignResources.INSTANCE.bar_chart_black(), null);
 		dialog.addDialogContent(infoPanel);
@@ -182,8 +183,12 @@ public class ContextMenuTV {
 
 	private void showStats(Function<Integer, List<StatisticGroup>> statFunction,
 			DialogData data) {
-		StatsDialogTV dialog = new StatsDialogTV(app, view, getColumnIdx(), data);
-		dialog.updateContent(statFunction);
+		if (!statFunction.apply(getColumnIdx()).isEmpty()) {
+			StatsDialogTV dialog = new StatsDialogTV(app, view, getColumnIdx(), data);
+			dialog.updateContent(statFunction);
+		} else {
+			showErrorDialog(data, "StatsDialog.NoDataMsg2VarStats");
+		}
 	}
 
 	private void addShowHidePoints() {

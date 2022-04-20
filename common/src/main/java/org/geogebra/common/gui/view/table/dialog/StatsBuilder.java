@@ -8,10 +8,12 @@ import org.geogebra.common.kernel.Kernel;
 import org.geogebra.common.kernel.StringTemplate;
 import org.geogebra.common.kernel.arithmetic.Command;
 import org.geogebra.common.kernel.commands.AlgebraProcessor;
+import org.geogebra.common.kernel.commands.CommandNotLoadedError;
 import org.geogebra.common.kernel.geos.GeoList;
 import org.geogebra.common.kernel.kernelND.GeoElementND;
 import org.geogebra.common.kernel.kernelND.GeoEvaluatable;
 import org.geogebra.common.kernel.statistics.Stat;
+import org.geogebra.common.main.MyError;
 import org.geogebra.common.util.debug.Log;
 
 public class StatsBuilder {
@@ -84,8 +86,11 @@ public class StatsBuilder {
 				String lhs = cmd.getLHS(kernel.getLocalization(), varName);
 				stats.add(StatisticGroup.withLaTeX(heading,
 						lhs + " = " + result.toValueString(StringTemplate.defaultTemplate)));
-			} catch (Exception e) {
+			} catch (Exception | MyError | CommandNotLoadedError e) {
 				Log.debug(e);
+				if (!stats.isEmpty()) {
+					stats.remove(stats.size() - 1);
+				}
 			}
 		}
 	}
