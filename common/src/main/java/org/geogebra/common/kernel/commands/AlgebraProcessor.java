@@ -599,6 +599,7 @@ public class AlgebraProcessor {
 						app.getEventDispatcher().enableListeners();
 						if (listeners && obj.length > 0) {
 							app.getEventDispatcher().notifyListenersUpdateCascade(obj[0]);
+							app.dispatchEvent(new Event(EventType.REDEFINE, obj[0].toGeoElement()));
 						}
 						app.getCompanion().recallViewCreators();
 						if (storeUndoInfo) {
