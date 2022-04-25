@@ -604,7 +604,7 @@ public class DrawInputBox extends CanvasDrawable {
 		hideTextField();
 		view.attachSymbolicEditor(geoInputBox, textRenderer.measureBounds(
 				view.getGraphicsForPen(), geoInputBox,  textFont, labelDesc));
-		geoInputBox.update();
+		update();
 		view.repaintView();
 	}
 
