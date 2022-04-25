@@ -4028,12 +4028,19 @@ public abstract class App implements UpdateSelection, AppInterface, EuclidianHos
 	 */
 	public void setNewExam() {
 		ExamEnvironment examEnvironment = newExamEnvironment();
+		initRestrictions();
 		setExam(examEnvironment);
 		examEnvironment.setAppNameWith(getConfig());
 		CommandDispatcher commandDispatcher =
 				getKernel().getAlgebraProcessor().getCommandDispatcher();
 		examEnvironment.setCommandDispatcher(commandDispatcher);
 		updateExam(examEnvironment);
+	}
+
+	private void initRestrictions() {
+		if (restrictions == null) {
+			restrictions = ExamRestrictionFactory.create(getLocalization());
+		}
 	}
 
 	protected ExamEnvironment newExamEnvironment() {
@@ -4048,6 +4055,7 @@ public abstract class App implements UpdateSelection, AppInterface, EuclidianHos
 		getExam().setStart((new Date()).getTime());
 		restrictions.enable();
 	}
+
 
 	private void setupExamEnvironment() {
 		getExam().setupExamEnvironment();
@@ -5178,10 +5186,7 @@ public abstract class App implements UpdateSelection, AppInterface, EuclidianHos
 	 * @param restrictable the component to restrict.
 	 */
 	public void registerRestrictable(Restrictable restrictable) {
-		if (restrictions == null) {
-			restrictions = ExamRestrictionFactory.create(getLocalization());
-		}
-
+		initRestrictions();
 		restrictions.register(restrictable);
 	}
 }
