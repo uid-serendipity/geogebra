@@ -271,10 +271,7 @@ public class MathFieldInternal
 		updateSyntax();
 	}
 
-	/**
-	 * update syntax and call tooltip updater callback
-	 */
-	public void updateSyntax() {
+	private void updateSyntax() {
 		syntaxController.update(editorState);
 		if (syntaxTooltipUpdater != null) {
 			syntaxTooltipUpdater.run();
