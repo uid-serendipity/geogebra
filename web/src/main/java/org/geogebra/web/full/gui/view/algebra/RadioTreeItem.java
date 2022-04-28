@@ -1775,7 +1775,6 @@ public class RadioTreeItem extends AVTreeItem implements MathKeyboardListener,
 	 */
 	public void onCursorMove() {
 		getMathField().scrollParentHorizontally(latexItem);
-		showHint(getMathField().getInternal().getSyntaxHint());
 	}
 
 	/**
@@ -1820,27 +1819,24 @@ public class RadioTreeItem extends AVTreeItem implements MathKeyboardListener,
 	public void insertString(String text) {
 		new MathFieldProcessing(mf).autocomplete(
 				app.getParserFunctions().toEditorAutocomplete(text, loc));
-		showHint(getMathField().getInternal().getSyntaxHint());
 	}
 
 	private void showHint(SyntaxHint sh) {
-		if (sh != null) {
-			String hintHtml = sh.getPrefix() + "<strong>"
-					+ sh.getActivePlacehorder() + "</strong>" + sh.getSuffix();
-			if (!sh.getActivePlacehorder().isEmpty()) {
-				if (toast == null) {
-					toast = new ComponentToast(app, hintHtml);
-					toast.show();
-				} else {
-					toast.updateContent(hintHtml);
-					if (!toast.isShowing()) {
-						toast.show();
-					}
-				}
+		String hintHtml = sh.getPrefix() + "<strong>"
+				+ sh.getActivePlacehorder() + "</strong>" + sh.getSuffix();
+		if (!sh.isEmpty()) {
+			if (toast == null) {
+				toast = new ComponentToast(app, hintHtml);
+				toast.show();
 			} else {
-				if (toast != null) {
-					toast.hide();
+				toast.updateContent(hintHtml);
+				if (!toast.isShowing()) {
+					toast.show();
 				}
+			}
+		} else {
+			if (toast != null) {
+				toast.hide();
 			}
 		}
 	}
