@@ -296,10 +296,6 @@ public class StandardButton extends FocusWidget implements HasResource {
 		});
 	}
 
-	public NoDragImage getImage() {
-		return btnImage;
-	}
-
 	/**
 	 * @param mouseOverHandler - mouse over handler
 	 */
@@ -316,4 +312,7 @@ public class StandardButton extends FocusWidget implements HasResource {
 				mouseOutHandler.run());
 	}
 
+	public NoDragImage getImage() {
+		return btnImage;
+	}
 }
