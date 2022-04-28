@@ -375,8 +375,6 @@ public class EditorState {
 	 * @return number of comma symbols before cursor
 	 */
 	public int countCommasBeforeCurrent() {
-		FactoryProvider.getInstance()
-				.debug("CURRENT OFFSET: " + currentOffset);
 		int commas = 0;
 		for (int i = 0; i < currentOffset; i++) {
 			if (currentField.isComma(i)) {
