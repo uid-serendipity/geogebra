@@ -4,7 +4,6 @@ import com.himamis.retex.editor.share.controller.EditorState;
 import com.himamis.retex.editor.share.meta.Tag;
 import com.himamis.retex.editor.share.model.MathFunction;
 import com.himamis.retex.editor.share.serializer.GeoGebraSerializer;
-import com.himamis.retex.renderer.share.platform.FactoryProvider;
 
 public class SyntaxController {
 	private SyntaxHint hint = new SyntaxHint();
@@ -30,8 +29,6 @@ public class SyntaxController {
 		MathFunction fn = getMathFunction();
 		if (fn.getName() == Tag.APPLY && !fn.getPlaceholders().isEmpty()) {
 			int commas = editorState.countCommasBeforeCurrent();
-			FactoryProvider.getInstance()
-					.debug("NR OF COMMAS: " + commas);
 			if (commas < fn.getPlaceholders().size()) {
 				String serializedCommand = GeoGebraSerializer.serialize(fn.getArgument(0));
 				if (!command.equals(serializedCommand)) {

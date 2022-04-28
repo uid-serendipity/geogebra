@@ -43,7 +43,6 @@ import org.geogebra.common.util.AsyncOperation;
 import org.geogebra.common.util.IndexHTMLBuilder;
 import org.geogebra.common.util.StringUtil;
 import org.geogebra.common.util.SyntaxAdapterImpl;
-import org.geogebra.common.util.debug.Log;
 import org.geogebra.gwtutil.NavigatorUtil;
 import org.geogebra.web.editor.MathFieldProcessing;
 import org.geogebra.web.full.gui.components.ComponentToast;
@@ -1623,6 +1622,8 @@ public class RadioTreeItem extends AVTreeItem implements MathKeyboardListener,
 		mf.setPixelRatio(app.getPixelRatio());
 		mf.setScale(app.getGeoGebraElement().getScaleX());
 		mf.setOnBlur(getLatexController());
+		mf.getInternal().setSyntaxTooltipUpdater(() ->
+				showHint(getMathField().getInternal().getSyntaxHint()));
 		mf.setOnFocus(focusEvent -> {
 			setFocusedStyle(true);
 			showHint(mf.getInternal().getSyntaxHint());
@@ -1824,10 +1825,8 @@ public class RadioTreeItem extends AVTreeItem implements MathKeyboardListener,
 
 	private void showHint(SyntaxHint sh) {
 		if (sh != null) {
-			getMathField().getInternal().updateSyntax();
 			String hintHtml = sh.getPrefix() + "<strong>"
 					+ sh.getActivePlacehorder() + "</strong>" + sh.getSuffix();
-			Log.debug("TEXT HINT: " + hintHtml);
 			if (!sh.getActivePlacehorder().isEmpty()) {
 				if (toast == null) {
 					toast = new ComponentToast(app, hintHtml);
@@ -1843,8 +1842,6 @@ public class RadioTreeItem extends AVTreeItem implements MathKeyboardListener,
 					toast.hide();
 				}
 			}
-		} else {
-			Log.debug("SYNTAX HINT IS NULL");
 		}
 	}
 
