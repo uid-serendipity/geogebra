@@ -1822,9 +1822,9 @@ public class RadioTreeItem extends AVTreeItem implements MathKeyboardListener,
 	}
 
 	private void showHint(SyntaxHint sh) {
-		String hintHtml = sh.getPrefix() + "<strong>"
-				+ sh.getActivePlacehorder() + "</strong>" + sh.getSuffix();
 		if (!sh.isEmpty()) {
+			String hintHtml = sh.getPrefix() + "<strong>"
+					+ sh.getActivePlacehorder() + "</strong>" + sh.getSuffix();
 			if (toast == null) {
 				toast = new ComponentToast(app, hintHtml);
 				toast.show();
