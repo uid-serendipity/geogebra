@@ -43,6 +43,7 @@ import org.geogebra.common.util.AsyncOperation;
 import org.geogebra.common.util.IndexHTMLBuilder;
 import org.geogebra.common.util.StringUtil;
 import org.geogebra.common.util.SyntaxAdapterImpl;
+import org.geogebra.common.util.debug.Log;
 import org.geogebra.gwtutil.NavigatorUtil;
 import org.geogebra.web.editor.MathFieldProcessing;
 import org.geogebra.web.full.gui.components.ComponentToast;
@@ -81,6 +82,7 @@ import com.google.gwt.user.client.ui.RequiresResize;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.UIObject;
 import com.google.gwt.user.client.ui.Widget;
+import com.himamis.retex.editor.share.editor.SyntaxHint;
 import com.himamis.retex.editor.share.serializer.TeXSerializer;
 import com.himamis.retex.editor.share.util.Unicode;
 import com.himamis.retex.editor.web.MathFieldW;
@@ -1621,7 +1623,10 @@ public class RadioTreeItem extends AVTreeItem implements MathKeyboardListener,
 		mf.setPixelRatio(app.getPixelRatio());
 		mf.setScale(app.getGeoGebraElement().getScaleX());
 		mf.setOnBlur(getLatexController());
-		mf.setOnFocus(focusEvent -> setFocusedStyle(true));
+		mf.setOnFocus(focusEvent -> {
+			setFocusedStyle(true);
+			showHint(mf.getInternal().getSyntaxHint());
+		});
 	}
 
 	private void updateEditorAriaLabel(String text) {
@@ -1652,11 +1657,14 @@ public class RadioTreeItem extends AVTreeItem implements MathKeyboardListener,
 				MinMaxPanel.closeMinMaxPanel();
 				getAV().restoreWidth(true);
 				setFocusedStyle(true);
+				showHint(mf.getInternal().getSyntaxHint());
 			}
 		} else {
 			if (isInputTreeItem()) {
 				setItemWidth(getAV().getFullWidth());
-				toast.hide();
+				if (toast != null) {
+					toast.hide();
+				}
 			} else {
 				content.removeStyleName("scrollableTextBox");
 			}
@@ -1755,18 +1763,6 @@ public class RadioTreeItem extends AVTreeItem implements MathKeyboardListener,
 		inputControl.ensureInputMoreMenu();
 		updatePreview();
 		popupSuggestions();
-		String hint = "Solve( List of Parametric Equations, List of Variables, Some more text ,"
-				+ "List of Parametric Equations, List of Variables, Some more text ,"
-				+ "List of Parametric Equations, List of Variables, Some more text )";
-		if (toast == null) {
-			toast = new ComponentToast(app, hint);
-			toast.show();
-		} else {
-			toast.updateContent(hint);
-			if (!toast.isShowing()) {
-				toast.show();
-			}
-		}
 		onCursorMove();
 		if (mf != null) {
 			updateEditorAriaLabel(getText());
@@ -1778,6 +1774,7 @@ public class RadioTreeItem extends AVTreeItem implements MathKeyboardListener,
 	 */
 	public void onCursorMove() {
 		getMathField().scrollParentHorizontally(latexItem);
+		showHint(getMathField().getInternal().getSyntaxHint());
 	}
 
 	/**
@@ -1822,6 +1819,33 @@ public class RadioTreeItem extends AVTreeItem implements MathKeyboardListener,
 	public void insertString(String text) {
 		new MathFieldProcessing(mf).autocomplete(
 				app.getParserFunctions().toEditorAutocomplete(text, loc));
+		showHint(getMathField().getInternal().getSyntaxHint());
+	}
+
+	private void showHint(SyntaxHint sh) {
+		if (sh != null) {
+			getMathField().getInternal().updateSyntax();
+			String hintHtml = sh.getPrefix() + "<strong>"
+					+ sh.getActivePlacehorder() + "</strong>" + sh.getSuffix();
+			Log.debug("TEXT HINT: " + hintHtml);
+			if (!sh.getActivePlacehorder().isEmpty()) {
+				if (toast == null) {
+					toast = new ComponentToast(app, hintHtml);
+					toast.show();
+				} else {
+					toast.updateContent(hintHtml);
+					if (!toast.isShowing()) {
+						toast.show();
+					}
+				}
+			} else {
+				if (toast != null) {
+					toast.hide();
+				}
+			}
+		} else {
+			Log.debug("SYNTAX HINT IS NULL");
+		}
 	}
 
 	/**

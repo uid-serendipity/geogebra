@@ -270,7 +270,7 @@ public class MathFieldInternal
 		updateSyntax();
 	}
 
-	private void updateSyntax() {
+	public void updateSyntax() {
 		syntaxController.update(editorState);
 	}
 
