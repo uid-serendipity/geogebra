@@ -1,9 +1,10 @@
 package com.himamis.retex.editor.web;
 
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TextArea;
+import org.gwtproject.user.client.ui.RootPanel;
+import org.gwtproject.user.client.ui.TextArea;
+
+import elemental2.dom.Element;
+import jsinterop.base.Js;
 
 public class MyTextArea extends TextArea {
 
@@ -12,7 +13,7 @@ public class MyTextArea extends TextArea {
 	 *            wrapped element
 	 */
 	public MyTextArea(Element element) {
-		super(element);
+		super(Js.uncheckedCast(element));
 	}
 
 	/**
@@ -24,7 +25,6 @@ public class MyTextArea extends TextArea {
 	 */
 	public static MyTextArea wrap(Element element) {
 		// Assert that the element is attached.
-		assert Document.get().getBody().isOrHasChild(element);
 
 		MyTextArea textArea = new MyTextArea(element);
 
@@ -40,10 +40,12 @@ public class MyTextArea extends TextArea {
 	 *            composition event handler
 	 */
 	public void addCompositionUpdateHandler(EditorCompositionHandler handler) {
-		addDomHandler(handler, CompositionUpdateEvent.getType());
+		elemental2.dom.Element el = Js.uncheckedCast(getElement());
+		el.addEventListener("compositionupdate", evt -> handler.onCompositionUpdate(evt));
 	}
 
 	public void addCompositionEndHandler(EditorCompositionHandler handler) {
-		addDomHandler(handler, CompositionEndEvent.getType());
+		elemental2.dom.Element el = Js.uncheckedCast(getElement());
+		el.addEventListener("compositionend", evt -> handler.onCompositionUpdate(evt));
 	}
 }

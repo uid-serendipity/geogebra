@@ -28,31 +28,26 @@ package com.himamis.retex.editor.web;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.function.Predicate;
 
-import org.geogebra.gwtutil.NavigatorUtil;
 import org.gwtproject.timer.client.Timer;
 
-import com.google.gwt.canvas.client.Canvas;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.NativeEvent;
-import com.google.gwt.dom.client.Style;
-import com.google.gwt.dom.client.Style.VerticalAlign;
-import com.google.gwt.event.dom.client.BlurEvent;
-import com.google.gwt.event.dom.client.BlurHandler;
-import com.google.gwt.event.dom.client.ChangeHandler;
-import com.google.gwt.event.dom.client.FocusHandler;
-import com.google.gwt.event.dom.client.KeyDownEvent;
-import com.google.gwt.event.dom.client.KeyPressEvent;
-import com.google.gwt.event.dom.client.KeyUpEvent;
-import com.google.gwt.event.dom.client.MouseDownEvent;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.IsWidget;
-import com.google.gwt.user.client.ui.Panel;
-import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.SimplePanel;
-import com.google.gwt.user.client.ui.Widget;
+import org.gwtproject.canvas.client.Canvas;
+import org.gwtproject.dom.client.NativeEvent;
+import org.gwtproject.event.dom.client.BlurEvent;
+import org.gwtproject.event.dom.client.BlurHandler;
+import org.gwtproject.event.dom.client.ChangeHandler;
+import org.gwtproject.event.dom.client.FocusHandler;
+import org.gwtproject.event.dom.client.KeyDownEvent;
+import org.gwtproject.event.dom.client.KeyPressEvent;
+import org.gwtproject.event.dom.client.KeyUpEvent;
+import org.gwtproject.event.dom.client.MouseDownEvent;
+import org.gwtproject.user.client.ui.FlowPanel;
+import org.gwtproject.user.client.ui.IsWidget;
+import org.gwtproject.user.client.ui.Panel;
+import org.gwtproject.user.client.ui.SimplePanel;
+import org.gwtproject.user.client.ui.Widget;
 import com.himamis.retex.editor.share.controller.CursorController;
 import com.himamis.retex.editor.share.controller.ExpressionReader;
 import com.himamis.retex.editor.share.editor.MathField;
@@ -85,6 +80,8 @@ import elemental2.dom.CSSProperties;
 import elemental2.dom.CanvasRenderingContext2D;
 import elemental2.dom.ClipboardEvent;
 import elemental2.dom.DomGlobal;
+import elemental2.dom.Element;
+import elemental2.dom.HTMLElement;
 import elemental2.dom.HTMLTextAreaElement;
 import elemental2.dom.KeyboardEvent;
 import jsinterop.base.Js;
@@ -232,11 +229,25 @@ public class MathFieldW implements MathField, IsWidget, MathFieldAsync, BlurHand
 		}
 	}
 
+	/**
+	 * @return whether app is running in a mobile browser
+	 */
+	public static boolean isMobile() {
+		String browsers = "android|webos|blackberry|iemobile|opera mini";
+		return doesUserAgentContainRegex(browsers) || isiOS();
+	}
+
+	private static boolean isiOS() {
+		return doesUserAgentContainRegex("iphone|ipad|ipod")
+				// only iPhones iPads and iPods support multitouch
+				|| ("MacIntel".equals(DomGlobal.navigator.platform) && getMaxPointTouch() > 1);
+	}
+
 	private Element getElementForAriaLabel() {
-		if (NavigatorUtil.isiOS() || NavigatorUtil.isMacOS()) {
+		if (isiOS() || isMacOS()) {
 			// mobile Safari: alttext is connected to parent so that screen
 			// reader doesn't read "dimmed" for the textarea
-			Element parentElement = parent.getElement();
+			Element parentElement = Js.uncheckedCast(parent.getElement());
 			if (!"textbox".equals(parentElement.getAttribute("role"))) {
 				parentElement.setAttribute("aria-live", "assertive");
 				parentElement.setAttribute("aria-atomic", "true");
@@ -246,9 +257,27 @@ public class MathFieldW implements MathField, IsWidget, MathFieldAsync, BlurHand
 			return parentElement;
 		}
 		if (inputTextArea != null) {
-			return inputTextArea.getElement();
+			return Js.uncheckedCast(inputTextArea.getElement());
 		}
 		return null;
+	}
+
+	private static boolean doesUserAgentContainRegex(String regex) {
+		String userAgent = DomGlobal.navigator.userAgent.toLowerCase(Locale.US);
+		return userAgent.matches(".*(" + regex + ").*");
+	}
+
+	private static int getMaxPointTouch() {
+		Object touchPoints =  Js.asPropertyMap(DomGlobal.navigator).get("maxTouchPoints");
+		return touchPoints == null ? 0 : Js.asInt(touchPoints);
+	}
+
+	/**
+	 * @return whether we're running in a Mac browser
+	 */
+	public static boolean isMacOS() {
+		return DomGlobal.navigator.userAgent.contains("Macintosh")
+				|| DomGlobal.navigator.userAgent.contains("Mac OS");
 	}
 
 	/**
@@ -314,7 +343,8 @@ public class MathFieldW implements MathField, IsWidget, MathFieldAsync, BlurHand
 		double value = computeWidth();
 		ctx.canvas.style.width = CSSProperties.WidthUnionType.of(value + "px");
 		parent.setHeight(height + "px");
-		parent.getElement().getStyle().setVerticalAlign(VerticalAlign.TOP);
+		HTMLElement parentEl = Js.uncheckedCast(parent.getElement());
+		parentEl.style.verticalAlign = "top";
 		repaintWeb();
 	}
 
@@ -361,7 +391,7 @@ public class MathFieldW implements MathField, IsWidget, MathFieldAsync, BlurHand
 
 		}, KeyPressEvent.getType());
 		html2.addDomHandler(event -> {
-			if (checkPowerKeyInput(html2.getElement())) {
+			if (checkPowerKeyInput(Js.uncheckedCast(html2.getElement()))) {
 				keyListener.onKeyTyped(new KeyEvent(0, 0, '^'));
 				onFocusTimer(); // refocus to remove the half-written letter
 				updateAltForKeyUp(event);
@@ -507,7 +537,7 @@ public class MathFieldW implements MathField, IsWidget, MathFieldAsync, BlurHand
 	}
 
 	protected int getModifiers(
-			com.google.gwt.event.dom.client.KeyEvent<?> event) {
+			org.gwtproject.event.dom.client.KeyEvent<?> event) {
 
 		// AltGr -> Ctrl+Alt
 		return (event.isShiftKeyDown() ? KeyEvent.SHIFT_MASK : 0)
@@ -522,8 +552,8 @@ public class MathFieldW implements MathField, IsWidget, MathFieldAsync, BlurHand
 	 *            browser keyboard event
 	 * @return MacOS: whether meta is down; other os: whether Ctrl is down
 	 */
-	boolean controlDown(com.google.gwt.event.dom.client.KeyEvent<?> event) {
-		return NavigatorUtil.isMacOS() ? event.isMetaKeyDown() : event.isControlKeyDown();
+	boolean controlDown(org.gwtproject.event.dom.client.KeyEvent<?> event) {
+		return isMacOS() ? event.isMetaKeyDown() : event.isControlKeyDown();
 	}
 
 	protected char getChar(NativeEvent nativeEvent) {
@@ -776,12 +806,12 @@ public class MathFieldW implements MathField, IsWidget, MathFieldAsync, BlurHand
 	}
 
 	private void focusTextArea() {
-		Element parentElement = html.getElement().getParentElement();
+		Element parentElement = Js.uncheckedCast(html.getElement().getParentElement());
 		if (parentElement != null) {
-			int scroll = parentElement.getScrollLeft();
+			double scroll = parentElement.scrollLeft;
 			inputTextArea.getElement().focus();
-			parentElement.setScrollLeft(scroll);
-			parentElement.setScrollTop(0);
+			parentElement.scrollLeft = scroll;
+			parentElement.scrollTop = 0;
 		} else {
 			inputTextArea.getElement().focus();
 		}
@@ -841,7 +871,7 @@ public class MathFieldW implements MathField, IsWidget, MathFieldAsync, BlurHand
 	private Element getHiddenTextArea() {
 		if (clip == null) {
 			clip = new SimplePanel();
-			Element el = getHiddenTextAreaNative(counter++, clip.getElement());
+			Element el = getHiddenTextAreaNative(counter++, Js.uncheckedCast(clip.getElement()));
 
 			inputTextArea = MyTextArea.wrap(el);
 
@@ -862,7 +892,7 @@ public class MathFieldW implements MathField, IsWidget, MathFieldAsync, BlurHand
 			parent.add(clip);
 		}
 
-		return inputTextArea.getElement();
+		return Js.uncheckedCast(inputTextArea.getElement());
 	}
 
 	public void clearState() {
@@ -916,31 +946,31 @@ public class MathFieldW implements MathField, IsWidget, MathFieldAsync, BlurHand
 	}
 
 	private static Element getHiddenTextAreaNative(int counter,
-			Element clipDiv) {
-		Element hiddenTextArea = DOM.getElementById("hiddenCopyPasteLatexArea"
-				+ counter);
+			HTMLElement clipDiv) {
+		HTMLElement hiddenTextArea = Js.uncheckedCast(DomGlobal.document.getElementById("hiddenCopyPasteLatexArea"
+				+ counter));
 		if (hiddenTextArea == null) {
-			hiddenTextArea = DOM.createTextArea();
-			hiddenTextArea.setId("hiddenCopyPasteLatexArea" + counter);
-			hiddenTextArea.getStyle().setOpacity(0);
-			clipDiv.getStyle().setZIndex(-32000);
+			hiddenTextArea = Js.uncheckedCast(DomGlobal.document.createElement("textarea"));
+			hiddenTextArea.id = "hiddenCopyPasteLatexArea" + counter;
+			hiddenTextArea.style.opacity = CSSProperties.OpacityUnionType.of(0);
+			clipDiv.style.zIndex = CSSProperties.ZIndexUnionType.of(-32000);
 			//* although clip is for absolute position, necessary! 
 			//* as it is deprecated, may cause CSS challenges later 
-			clipDiv.getStyle().setProperty("clip", "rect(1em 1em 1em 1em)");
+			clipDiv.style.setProperty("clip", "rect(1em 1em 1em 1em)");
 			//* top/left will be specified dynamically, depending on scrollbar
-			clipDiv.getStyle().setHeight(1, Style.Unit.PX);
-			clipDiv.getStyle().setWidth(1, Style.Unit.PX);
-			clipDiv.getStyle().setPosition(Style.Position.RELATIVE);
-			clipDiv.getStyle().setTop(-100, Style.Unit.PCT);
-			clipDiv.setClassName("textAreaClip");
-			hiddenTextArea.getStyle().setWidth(1, Style.Unit.PX);
-			hiddenTextArea.getStyle().setPadding(0, Style.Unit.PX);
-			hiddenTextArea.getStyle().setProperty("border", "0");
-			hiddenTextArea.getStyle().setProperty("minHeight", "0");
+			clipDiv.style.height = CSSProperties.HeightUnionType.of("1px");
+			clipDiv.style.width = CSSProperties.WidthUnionType.of("1px");
+			clipDiv.style.position = "relative";
+			clipDiv.style.top = "-100px";
+			clipDiv.className = "textAreaClip";
+			hiddenTextArea.style.width = CSSProperties.WidthUnionType.of("1px");
+			hiddenTextArea.style.padding = CSSProperties.PaddingUnionType.of("0");
+			hiddenTextArea.style.setProperty("border", "0");
+			hiddenTextArea.style.setProperty("minHeight", "0");
 			//prevent messed up scrolling in FF/IE
-			hiddenTextArea.getStyle().setHeight(1, Style.Unit.PX);
-			RootPanel.getBodyElement().appendChild(hiddenTextArea);
-			if (NavigatorUtil.isMobile()) {
+			hiddenTextArea.style.height = CSSProperties.HeightUnionType.of("1px");
+			DomGlobal.document.body.appendChild(hiddenTextArea);
+			if (isMobile()) {
 				hiddenTextArea.setAttribute("readonly", "true");
 			}
 		}

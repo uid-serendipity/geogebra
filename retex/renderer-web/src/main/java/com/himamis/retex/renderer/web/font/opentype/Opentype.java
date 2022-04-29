@@ -49,10 +49,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.geogebra.gwtutil.JavaScriptInjector;
 import org.gwtproject.resources.client.TextResource;
 
-import com.google.gwt.core.client.GWT;
 import com.himamis.retex.renderer.web.font.FontLoaderWrapper;
 import com.himamis.retex.renderer.web.font.FontW;
 import com.himamis.retex.renderer.web.resources.PreloadFontResources;
@@ -79,7 +77,7 @@ public class Opentype implements FontLoaderWrapper {
 
 	private List<OpentypeFontStatusListener> listeners;
 	private Map<String, FontContainer> fonts;
-	private String fontBaseUrl = GWT.getModuleBaseURL();
+	private String fontBaseUrl = "foo";
 
 	private Opentype() {
 		listeners = new ArrayList<>();

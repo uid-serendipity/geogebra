@@ -1,15 +1,11 @@
 package com.himamis.retex.editor.web;
 
-import com.google.gwt.event.dom.client.KeyCodeEvent;
-import com.google.gwt.event.dom.client.KeyDownEvent;
-import com.google.gwt.event.dom.client.KeyDownHandler;
-import com.google.gwt.event.dom.client.KeyUpEvent;
-import com.google.gwt.event.dom.client.KeyUpHandler;
-import com.google.gwt.event.shared.EventHandler;
 import com.himamis.retex.editor.share.event.KeyEvent;
 import com.himamis.retex.editor.share.model.Korean;
 import com.himamis.retex.editor.share.util.JavaKeyCodes;
 
+import elemental2.dom.Element;
+import elemental2.dom.Event;
 import jsinterop.base.Js;
 import jsinterop.base.JsPropertyMap;
 
@@ -18,8 +14,7 @@ import jsinterop.base.JsPropertyMap;
  * 
  * @author Zbynek
  */
-final class EditorCompositionHandler
-		implements CompositionHandler, CompositionEndHandler, KeyDownHandler, KeyUpHandler {
+final class EditorCompositionHandler {
 
 	private MathFieldW editor;
 	private boolean insertOnEnd = false;
@@ -35,14 +30,14 @@ final class EditorCompositionHandler
 	}
 
 	public void attachTo(MyTextArea inputTextArea) {
+		Element el = Js.uncheckedCast(inputTextArea.getElement());
 		inputTextArea.addCompositionUpdateHandler(this);
 		inputTextArea.addCompositionEndHandler(this);
-		inputTextArea.addKeyDownHandler(this);
-		inputTextArea.addKeyUpHandler(this);
+		el.addEventListener("keydown", this::onKeyDown);
+		el.addEventListener("keyup", this::onKeyUp);
 	}
 
-	@Override
-	public void onCompositionUpdate(CompositionUpdateEvent event) {
+	public void onCompositionUpdate(Event event) {
 		if (backspace) {
 			return;
 		}
@@ -55,7 +50,8 @@ final class EditorCompositionHandler
 		// in Chrome typing fast gives \u3137\uB450
 		// instead of \u3137\u315C
 		// so flatten the result and send just the last character
-		String data = Korean.flattenKorean(event.getData());
+		CompositionEvent compEvent = Js.uncheckedCast(event);
+		String data = Korean.flattenKorean(compEvent.data);
 		// ^: fix for swedish
 		if (!"^".equals(data) && data.length() > 0) {
 			char inputChar = data.charAt(data.length() - 1);
@@ -70,32 +66,30 @@ final class EditorCompositionHandler
 		}
 	}
 
-	@Override
-	public void onCompositionEnd(CompositionEndEvent event) {
+	public void onCompositionEnd(Event event) {
 		if (insertOnEnd) {
 			// inserted string should only depend on `compositionend`
 			// in Safari the data in `cmpositionupdate` is just Latin chars
-			editor.insertString(event.getData());
-			editor.getInternal().notifyAndUpdate(event.getData());
+			CompositionEvent compositionEvent = Js.uncheckedCast(event);
+			editor.insertString(compositionEvent.data);
+			editor.getInternal().notifyAndUpdate(compositionEvent.data);
 		}
 	}
 
-	private <T extends EventHandler> boolean composingBackspace(KeyCodeEvent<T> event) {
-		JsPropertyMap<Object> nativeEvent = Js.asPropertyMap(event.getNativeEvent());
+	private boolean composingBackspace(Event event) {
+		JsPropertyMap<Object> nativeEvent = Js.asPropertyMap(event);
 		return Js.isTruthy(nativeEvent.get("isComposing"))
 			&& "Backspace".equals(nativeEvent.get("code"));
 	}
 
-	@Override
-	public void onKeyDown(KeyDownEvent event) {
+	public void onKeyDown(Event event) {
 		if (composingBackspace(event)) {
 			editor.getKeyListener().onKeyPressed(new KeyEvent(JavaKeyCodes.VK_BACK_SPACE));
 			backspace = true;
 		}
 	}
 
-	@Override
-	public void onKeyUp(KeyUpEvent event) {
+	public void onKeyUp(Event event) {
 		if (composingBackspace(event)) {
 			editor.clearState();
 			backspace = false;
