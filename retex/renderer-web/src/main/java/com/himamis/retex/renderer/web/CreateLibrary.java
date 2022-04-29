@@ -43,21 +43,20 @@
  */
 package com.himamis.retex.renderer.web;
 
-import com.google.gwt.core.client.EntryPoint;
 import com.himamis.retex.renderer.share.platform.FactoryProvider;
 
 import elemental2.dom.DomGlobal;
 import jsinterop.base.Js;
 
-public class CreateLibrary implements EntryPoint {
+public class CreateLibrary /* implements EntryPoint */{
 
-	@Override
+	/*@Override
 	public void onModuleLoad() {
 		if (FactoryProvider.getInstance() == null) {
 			FactoryProvider.setInstance(new FactoryProviderGWT());
 		}
 		exportLibrary(new JlmApi(new JlmLib()));
-	}
+	}*/
 
 	public static void exportLibrary(JlmApi api) {
 		if (Js.isTruthy(JlmReference.jlmlib)) {

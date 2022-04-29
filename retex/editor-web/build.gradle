@@ -39,6 +39,7 @@ dependencies {
 	compile "com.google.gwt:gwt-dev:$gwtCompilerVersion"
 	compile "com.google.gwt:gwt-user:$gwtCompilerVersion"
 	testCompile "com.google.gwt:gwt-user:$gwtCompilerVersion"
+	implementation 'org.treblereel.gwt.gwtproject.widgets:gwt-widgets:202203291'
 }
 
 task runSuperDev(type: JavaExec, dependsOn: 'jar') {

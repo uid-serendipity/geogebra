@@ -44,16 +44,15 @@
 
 package com.himamis.retex.editor.web;
 
-import com.google.gwt.core.client.EntryPoint;
 import com.himamis.retex.renderer.share.platform.FactoryProvider;
 import com.himamis.retex.renderer.web.CreateLibrary;
 import com.himamis.retex.renderer.web.FactoryProviderGWT;
 
-public class EditorLibrary implements EntryPoint {
+public class EditorLibrary /*implements EntryPoint*/ {
 
 	private JlmEditorLib library;
 
-	@Override
+	/*@Override */
 	public void onModuleLoad() {
 		if (FactoryProvider.getInstance() == null) {
 			FactoryProvider.setInstance(new FactoryProviderGWT());
