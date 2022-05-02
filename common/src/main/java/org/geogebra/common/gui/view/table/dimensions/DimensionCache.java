@@ -39,6 +39,9 @@ class DimensionCache {
 	}
 
 	private int getExactWidth(int index) {
+		if (index >= widths.size()) {
+			resetCache();
+		}
 		Integer width = widths.get(index);
 		if (width == null) {
 			width = calculateExactWidth(index);
