@@ -10,9 +10,7 @@ import org.geogebra.common.util.debug.Log;
 import org.geogebra.ggbjdk.java.awt.geom.Dimension;
 import org.geogebra.web.html5.gui.tooltip.ToolTipManagerW;
 import org.geogebra.web.html5.main.AppW;
-
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.Window.Location;
+import org.gwtproject.user.window.client.Window;
 
 /**
  * File loader for Web
@@ -150,7 +148,7 @@ public class LoadFilePresenter {
 		}
 		if (perspective.length() == 0) {
 			// Location param may be null
-			perspective = Location.getParameter("GeoGebraPerspective");
+			perspective = Window.Location.getParameter("GeoGebraPerspective");
 			if (perspective == null) {
 				perspective = "";
 			}

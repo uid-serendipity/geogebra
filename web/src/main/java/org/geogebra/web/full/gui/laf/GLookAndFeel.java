@@ -15,9 +15,8 @@ import org.geogebra.web.html5.gui.laf.GLookAndFeelI;
 import org.geogebra.web.html5.gui.util.BrowserStorage;
 import org.geogebra.web.html5.main.AppW;
 import org.geogebra.web.shared.SignInController;
-
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.Window;
+import org.gwtproject.event.shared.HandlerRegistration;
+import org.gwtproject.user.window.client.Window;
 
 /**
  * Represents different designs/platforms of GeoGebra deployment
@@ -79,7 +78,7 @@ public class GLookAndFeel implements GLookAndFeelI {
 	}
 
 	/**
-	 * removes the {@link com.google.gwt.user.client.Window.ClosingHandler}
+	 * removes the {@link org.gwtproject.user.client.Window.ClosingHandler}
 	 * overridden for SMART and TOUCH - they don't use a windowClosingHandler
 	 */
 	@Override

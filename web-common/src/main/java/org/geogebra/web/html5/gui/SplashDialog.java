@@ -10,11 +10,11 @@ import org.geogebra.web.html5.util.AppletParameters;
 import org.geogebra.web.html5.util.GeoGebraElement;
 import org.gwtproject.timer.client.Timer;
 
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.Style;
-import com.google.gwt.dom.client.Style.Position;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.SimplePanel;
+import org.gwtproject.dom.client.Element;
+import org.gwtproject.dom.client.Style;
+import org.gwtproject.dom.client.Style.Position;
+import org.gwtproject.user.client.ui.FlowPanel;
+import org.gwtproject.user.client.ui.SimplePanel;
 
 import jsinterop.base.Js;
 

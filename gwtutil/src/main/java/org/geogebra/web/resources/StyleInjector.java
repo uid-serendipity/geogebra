@@ -19,8 +19,9 @@ package org.geogebra.web.resources;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.gwtproject.user.client.DOM;
+
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.DOM;
 
 import elemental2.dom.DomGlobal;
 import elemental2.dom.HTMLLinkElement;

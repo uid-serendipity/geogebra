@@ -56,9 +56,9 @@ import org.geogebra.web.html5.util.JsRunnable;
 import org.geogebra.web.html5.util.StringConsumer;
 import org.geogebra.web.html5.util.ViewW;
 
-import com.google.gwt.canvas.client.Canvas;
-import com.google.gwt.core.client.JsArrayString;
-import com.google.gwt.dom.client.Element;
+import org.gwtproject.canvas.client.Canvas;
+import org.gwtproject.core.client.JsArrayString;
+import org.gwtproject.dom.client.Element;
 
 import elemental2.core.Global;
 import elemental2.core.JsArray;

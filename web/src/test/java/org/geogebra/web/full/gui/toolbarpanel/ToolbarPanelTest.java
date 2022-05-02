@@ -21,7 +21,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.google.gwt.user.client.ui.ResizeComposite;
+import org.gwtproject.user.client.ui.ResizeComposite;
 import com.google.gwtmockito.WithClassesToStub;
 
 @RunWith(GgbMockitoTestRunner.class)

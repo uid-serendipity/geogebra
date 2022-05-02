@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module rename-to='html5'>
   <inherits name="org.gwtproject.resources.Resources" />
+  <inherits name="javax.validation.Validation"/>
+  <inherits name="org.gwtproject.user.Widgets" />
   <inherits name="com.google.gwt.http.HTTP"/>
   <inherits name='com.google.gwt.user.User'/> 
   <inherits name='org.geogebra.Common'/>

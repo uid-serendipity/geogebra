@@ -4,8 +4,8 @@ import org.geogebra.common.euclidian.draw.DrawVideo;
 import org.geogebra.common.kernel.geos.GeoVideo;
 import org.geogebra.common.main.App;
 
-import com.google.gwt.dom.client.Style;
-import com.google.gwt.user.client.ui.IsWidget;
+import org.gwtproject.dom.client.Style;
+import org.gwtproject.user.client.ui.IsWidget;
 
 public abstract class AbstractVideoPlayer implements IsWidget {
 

@@ -25,8 +25,8 @@ import org.geogebra.web.html5.gui.util.BrowserStorage;
 import org.geogebra.web.html5.main.AppW;
 import org.geogebra.web.html5.main.Clipboard;
 
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.dom.client.Element;
+import org.gwtproject.core.client.Scheduler;
+import org.gwtproject.dom.client.Element;
 import com.himamis.retex.editor.web.DocumentUtil;
 
 import elemental2.core.Global;

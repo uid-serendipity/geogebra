@@ -18,7 +18,7 @@ import org.geogebra.web.html5.event.PointerEvent;
 import org.geogebra.web.html5.gui.util.LongTouchManager;
 import org.geogebra.web.html5.main.AppW;
 
-import com.google.gwt.user.client.DOM;
+import org.gwtproject.user.client.DOM;
 
 import elemental2.dom.WheelEvent;
 

@@ -11,7 +11,7 @@ import org.geogebra.common.main.App;
 import org.geogebra.common.main.error.ErrorHandler;
 import org.geogebra.common.util.AsyncOperation;
 
-import com.google.gwt.core.client.Scheduler;
+import org.gwtproject.core.client.Scheduler;
 
 /**
  * Class to evaluate AV Input row.

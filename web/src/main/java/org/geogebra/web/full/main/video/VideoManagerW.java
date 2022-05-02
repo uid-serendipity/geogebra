@@ -19,7 +19,7 @@ import org.geogebra.web.html5.css.GuiResourcesSimple;
 import org.geogebra.web.html5.gui.util.Dom;
 import org.geogebra.web.html5.main.MyImageW;
 
-import com.google.gwt.dom.client.Element;
+import org.gwtproject.dom.client.Element;
 
 import elemental2.dom.HTMLImageElement;
 

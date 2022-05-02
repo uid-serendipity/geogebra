@@ -2,7 +2,7 @@ package org.geogebra.web.html5.main;
 
 import org.geogebra.web.html5.util.GlobalHandlerRegistry;
 
-import com.google.gwt.dom.client.Element;
+import org.gwtproject.dom.client.Element;
 
 import elemental2.dom.DataTransfer;
 import elemental2.dom.DragEvent;

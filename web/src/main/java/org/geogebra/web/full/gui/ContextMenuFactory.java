@@ -11,7 +11,7 @@ import org.geogebra.web.html5.gui.util.AriaMenuBar;
 import org.geogebra.web.html5.gui.util.AriaMenuItem;
 import org.geogebra.web.html5.main.AppW;
 
-import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import org.gwtproject.core.client.Scheduler.ScheduledCommand;
 
 /**
  * Factory to create popup menus.

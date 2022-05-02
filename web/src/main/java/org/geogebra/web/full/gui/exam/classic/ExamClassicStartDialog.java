@@ -15,8 +15,8 @@ import org.geogebra.web.resources.StyleInjector;
 import org.geogebra.web.shared.components.dialog.ComponentDialog;
 import org.geogebra.web.shared.components.dialog.DialogData;
 
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Label;
+import org.gwtproject.user.client.ui.FlowPanel;
+import org.gwtproject.user.client.ui.Label;
 
 import elemental2.dom.DomGlobal;
 import elemental2.dom.KeyboardEvent;

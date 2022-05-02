@@ -10,12 +10,12 @@ import org.geogebra.web.full.cas.view.InputPanel.InputPanelCanvas;
 import org.geogebra.web.full.cas.view.InputPanel.InputPanelLabel;
 import org.geogebra.web.html5.main.DrawEquationW;
 
-import com.google.gwt.canvas.client.Canvas;
-import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
+import org.gwtproject.canvas.client.Canvas;
+import org.gwtproject.dom.client.Style.Unit;
+import org.gwtproject.user.client.ui.FlowPanel;
+import org.gwtproject.user.client.ui.Label;
+import org.gwtproject.user.client.ui.VerticalPanel;
+import org.gwtproject.user.client.ui.Widget;
 
 /**
  * Graphical representation of CAS cells in Web

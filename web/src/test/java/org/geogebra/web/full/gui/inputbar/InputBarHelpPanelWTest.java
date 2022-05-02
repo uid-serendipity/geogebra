@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
-import com.google.gwt.dom.client.TextAreaElement;
+import org.gwtproject.dom.client.TextAreaElement;
 import com.google.gwtmockito.WithClassesToStub;
 
 @RunWith(GgbMockitoTestRunner.class)

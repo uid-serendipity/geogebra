@@ -12,8 +12,8 @@ import org.geogebra.web.full.gui.util.ComboBoxW;
 import org.geogebra.web.html5.gui.util.FormLabel;
 import org.geogebra.web.html5.main.AppW;
 
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Label;
+import org.gwtproject.user.client.ui.FlowPanel;
+import org.gwtproject.user.client.ui.Label;
 
 public abstract class ComboBoxPanel extends OptionPanel
 		implements ErrorHandler, GeoComboListener {

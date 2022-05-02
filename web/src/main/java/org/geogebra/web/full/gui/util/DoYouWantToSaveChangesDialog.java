@@ -13,11 +13,10 @@ import org.geogebra.web.html5.main.AppW;
 import org.geogebra.web.shared.DialogUtil;
 import org.geogebra.web.shared.components.dialog.ComponentDialog;
 import org.geogebra.web.shared.components.dialog.DialogData;
-
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.FlowPanel;
+import org.gwtproject.core.client.Scheduler;
+import org.gwtproject.i18n.client.DateTimeFormat;
+import org.gwtproject.user.client.ui.FlowPanel;
+import org.gwtproject.user.window.client.Window;
 
 public class DoYouWantToSaveChangesDialog extends ComponentDialog implements
 		SaveController.SaveListener, SaveDialogI {

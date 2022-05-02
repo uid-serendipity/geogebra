@@ -1,8 +1,8 @@
 package org.geogebra.web.full.gui.toolbarpanel.tableview;
 
-import com.google.gwt.safehtml.shared.SafeHtml;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.SimplePanel;
+import org.gwtproject.safehtml.shared.SafeHtml;
+import org.gwtproject.user.client.ui.FlowPanel;
+import org.gwtproject.user.client.ui.SimplePanel;
 
 public class TableCell extends FlowPanel {
 

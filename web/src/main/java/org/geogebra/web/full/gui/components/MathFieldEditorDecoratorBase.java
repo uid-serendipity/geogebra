@@ -3,7 +3,7 @@ package org.geogebra.web.full.gui.components;
 import org.geogebra.common.awt.GColor;
 import org.geogebra.common.util.StringUtil;
 
-import com.google.gwt.dom.client.Style;
+import org.gwtproject.dom.client.Style;
 import com.himamis.retex.editor.web.MathFieldW;
 
 public abstract class MathFieldEditorDecoratorBase {

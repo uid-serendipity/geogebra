@@ -44,9 +44,9 @@ import org.geogebra.web.html5.main.AppW;
 import org.geogebra.web.html5.util.CopyPasteW;
 import org.gwtproject.resources.client.ResourcePrototype;
 
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.user.client.Command;
+import org.gwtproject.core.client.Scheduler;
+import org.gwtproject.dom.client.Element;
+import org.gwtproject.user.client.Command;
 
 /**
  * @author gabor

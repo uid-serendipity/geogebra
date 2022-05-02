@@ -83,11 +83,11 @@ import org.geogebra.web.html5.util.tabpanel.MultiRowsTabBar;
 import org.geogebra.web.html5.util.tabpanel.MultiRowsTabPanel;
 import org.gwtproject.resources.client.ImageResource;
 
-import com.google.gwt.event.dom.client.BlurHandler;
-import com.google.gwt.user.client.ui.CheckBox;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ListBox;
+import org.gwtproject.event.dom.client.BlurHandler;
+import org.gwtproject.user.client.ui.CheckBox;
+import org.gwtproject.user.client.ui.FlowPanel;
+import org.gwtproject.user.client.ui.Label;
+import org.gwtproject.user.client.ui.ListBox;
 
 /**
  * options tab

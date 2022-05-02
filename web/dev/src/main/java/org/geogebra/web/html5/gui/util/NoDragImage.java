@@ -4,7 +4,7 @@ import org.geogebra.web.resources.SVGResource;
 import org.gwtproject.resources.client.ImageResource;
 import org.gwtproject.resources.client.ResourcePrototype;
 
-import com.google.gwt.user.client.ui.Image;
+import org.gwtproject.user.client.ui.Image;
 
 /**
  * Image that prevents dragging by default

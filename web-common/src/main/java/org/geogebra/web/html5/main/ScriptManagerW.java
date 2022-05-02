@@ -14,7 +14,7 @@ import org.geogebra.common.util.debug.Log;
 import org.geogebra.web.html5.bridge.GeoGebraJSNativeBridge;
 import org.geogebra.web.html5.util.JsRunnable;
 
-import com.google.gwt.core.client.JsArrayString;
+import org.gwtproject.core.client.JsArrayString;
 
 import elemental2.core.Function;
 import elemental2.dom.DomGlobal;

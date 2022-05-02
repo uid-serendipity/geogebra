@@ -12,10 +12,10 @@ import org.geogebra.web.html5.gui.util.NoDragImage;
 import org.geogebra.web.html5.main.UserPreferredLanguage;
 import org.geogebra.web.shared.GlobalHeader;
 
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Label;
+import org.gwtproject.dom.client.Element;
+import org.gwtproject.event.dom.client.ClickEvent;
+import org.gwtproject.user.client.ui.FlowPanel;
+import org.gwtproject.user.client.ui.Label;
 
 public class AppSwitcherPopup extends GPopupPanel {
 

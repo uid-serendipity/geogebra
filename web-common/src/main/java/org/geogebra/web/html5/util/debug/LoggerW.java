@@ -3,8 +3,7 @@ package org.geogebra.web.html5.util.debug;
 import org.geogebra.common.util.debug.Log;
 import org.geogebra.web.html5.Browser;
 import org.geogebra.web.html5.util.AppletParameters;
-
-import com.google.gwt.user.client.Window;
+import org.gwtproject.user.window.client.Window;
 
 import elemental2.dom.Console;
 import elemental2.dom.DomGlobal;

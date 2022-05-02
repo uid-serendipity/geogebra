@@ -9,9 +9,9 @@ import org.geogebra.web.html5.main.AppW;
 import org.geogebra.web.html5.util.PersistablePanel;
 import org.geogebra.web.html5.util.TestHarness;
 
-import com.google.gwt.event.dom.client.KeyDownEvent;
-import com.google.gwt.event.dom.client.KeyDownHandler;
-import com.google.gwt.user.client.ui.Widget;
+import org.gwtproject.event.dom.client.KeyDownEvent;
+import org.gwtproject.event.dom.client.KeyDownHandler;
+import org.gwtproject.user.client.ui.Widget;
 import com.himamis.retex.editor.share.util.GWTKeycodes;
 
 /**

@@ -24,12 +24,11 @@ import org.geogebra.web.shared.ShareLinkDialog;
 import org.geogebra.web.shared.SignInController;
 import org.geogebra.web.shared.components.dialog.DialogData;
 import org.geogebra.web.shared.ggtapi.LoginOperationW;
+import org.gwtproject.dom.client.Element;
+import org.gwtproject.http.client.URL;
+import org.gwtproject.user.client.ui.Panel;
+import org.gwtproject.user.window.client.Window;
 
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.http.client.URL;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.Window.Location;
-import com.google.gwt.user.client.ui.Panel;
 import com.himamis.retex.editor.web.MathFieldW;
 
 /**
@@ -75,7 +74,7 @@ public class AppWsolver extends AppW implements HasKeyboard {
 
 	private void addShareButton() {
 		GlobalHeader.INSTANCE.initShareButton(share -> {
-			String url = Location.getHref().replaceAll("\\?.*", "")
+			String url = Window.Location.getHref().replaceAll("\\?.*", "")
 					+ getRelativeURLforEqn(getMathField().getText());
 			DialogData data = new DialogData("Share", null, null);
 			ShareLinkDialog sd = new ShareLinkDialog(this, data, url,

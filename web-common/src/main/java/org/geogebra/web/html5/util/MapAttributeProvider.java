@@ -7,12 +7,12 @@ public class MapAttributeProvider implements AttributeProvider {
 	private HashMap<String, String> map = new HashMap<>();
 
 	@Override
-	public String getAttribute(String attribute) {
+	public String getAttr(String attribute) {
 		return map.get(attribute);
 	}
 
 	@Override
-	public boolean hasAttribute(String attribute) {
+	public boolean hasAttr(String attribute) {
 		return map.containsKey(attribute);
 	}
 

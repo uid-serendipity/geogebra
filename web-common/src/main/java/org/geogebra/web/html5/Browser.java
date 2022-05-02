@@ -8,12 +8,12 @@ import org.geogebra.common.util.debug.Log;
 import org.geogebra.gwtutil.NavigatorUtil;
 import org.geogebra.web.html5.bridge.GeoGebraJSNativeBridge;
 import org.geogebra.web.html5.gui.util.Dom;
+import org.gwtproject.canvas.client.Canvas;
+import org.gwtproject.dom.client.Element;
+import org.gwtproject.dom.client.NativeEvent;
+import org.gwtproject.dom.client.Style;
+import org.gwtproject.user.window.client.Window;
 
-import com.google.gwt.canvas.client.Canvas;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.NativeEvent;
-import com.google.gwt.dom.client.Style;
-import com.google.gwt.user.client.Window.Location;
 import com.himamis.retex.editor.share.util.GWTKeycodes;
 
 import elemental2.core.Function;
@@ -89,7 +89,7 @@ public class Browser {
 	 */
 	public static String normalizeURL(String thumb) {
 		if (thumb.startsWith("data:") || (thumb.startsWith("http://")
-				&& "http:".equals(Location.getProtocol()))) {
+				&& "http:".equals(Window.Location.getProtocol()))) {
 			return thumb;
 		}
 		String url;
@@ -145,7 +145,7 @@ public class Browser {
 	 * @return whether we are running on geogebra.org
 	 */
 	public static boolean isGeoGebraOrg() {
-		String host = Location.getHost();
+		String host = Window.Location.getHost();
 		return host != null && host.contains("geogebra.org");
 	}
 
@@ -154,7 +154,7 @@ public class Browser {
 	 * development hosts
 	 */
 	public static boolean isGraspableMathEnabled() {
-		String host = Location.getHost();
+		String host = Window.Location.getHost();
 		return host != null
 				&& (host.contains("geogebra.org")
 					|| host.contains("localhost")
@@ -362,10 +362,10 @@ public class Browser {
 	}
 
 	private static boolean isAppsServer() {
-		String host = Location.getHost();
+		String host = Window.Location.getHost();
 		return host != null
 				&& (host.contains("geogebra.org") || host.equals("localhost"))
-				&& !Location.getPath().contains(".html");
+				&& !Window.Location.getPath().contains(".html");
 	}
 
 	/**

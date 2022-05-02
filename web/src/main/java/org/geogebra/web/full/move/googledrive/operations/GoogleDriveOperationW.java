@@ -21,11 +21,10 @@ import org.geogebra.web.html5.util.JsRunnable;
 import org.geogebra.web.html5.util.StringConsumer;
 import org.geogebra.web.shared.components.dialog.ComponentDialog;
 import org.geogebra.web.shared.components.dialog.DialogData;
-
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.ScriptElement;
-import com.google.gwt.user.client.Window.Location;
-import com.google.gwt.user.client.ui.Label;
+import org.gwtproject.dom.client.Document;
+import org.gwtproject.dom.client.ScriptElement;
+import org.gwtproject.user.client.ui.Label;
+import org.gwtproject.user.window.client.Window;
 
 import elemental2.core.ArrayBuffer;
 import elemental2.core.Global;
@@ -347,7 +346,7 @@ public class GoogleDriveOperationW implements GoogleDriveOperation {
 	}
 
 	private void checkIfOpenedFromGoogleDrive() {
-		String state = Location.getParameter("state");
+		String state = Window.Location.getParameter("state");
 		if (state != null && !"".equals(state)) {
 			googleDriveURL = Js.uncheckedCast(Global.JSON.parse(state));
 			if (!this.loggedIn) {

@@ -33,16 +33,15 @@ import org.geogebra.web.html5.gui.GeoGebraFrameW;
 import org.geogebra.web.html5.main.AppW;
 import org.geogebra.web.html5.main.LocalizationW;
 import org.geogebra.web.resources.SVGResource;
+import org.gwtproject.event.logical.shared.ResizeEvent;
+import org.gwtproject.event.logical.shared.ResizeHandler;
 import org.gwtproject.resources.client.ImageResource;
 import org.gwtproject.resources.client.impl.ImageResourcePrototype;
 import org.gwtproject.safehtml.shared.UriUtils;
-
-import com.google.gwt.event.logical.shared.ResizeEvent;
-import com.google.gwt.event.logical.shared.ResizeHandler;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.SimplePanel;
-import com.google.gwt.user.client.ui.Widget;
+import org.gwtproject.user.client.ui.FlowPanel;
+import org.gwtproject.user.client.ui.SimplePanel;
+import org.gwtproject.user.client.ui.Widget;
+import org.gwtproject.user.window.client.Window;
 
 /**
  * Controller for the main menu in the apps.

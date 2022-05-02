@@ -2,7 +2,7 @@ package org.geogebra.web.full.gui.layout.animation;
 
 import org.geogebra.web.html5.gui.GeoGebraFrameW;
 
-import com.google.gwt.user.client.ui.Widget;
+import org.gwtproject.user.client.ui.Widget;
 
 /**
  * Adds two kinds of animations to the animatable Widget.

@@ -12,11 +12,11 @@ import org.geogebra.web.resources.SVGResource;
 import org.gwtproject.resources.client.ImageResource;
 import org.gwtproject.resources.client.ResourcePrototype;
 
-import com.google.gwt.aria.client.Roles;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.ui.FocusWidget;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.SimplePanel;
+import org.gwtproject.aria.client.Roles;
+import org.gwtproject.user.client.DOM;
+import org.gwtproject.user.client.ui.FocusWidget;
+import org.gwtproject.user.client.ui.Label;
+import org.gwtproject.user.client.ui.SimplePanel;
 
 public class StandardButton extends FocusWidget implements HasResource {
 	private ResourcePrototype icon;

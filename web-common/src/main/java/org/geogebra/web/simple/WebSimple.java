@@ -11,6 +11,8 @@ import org.geogebra.web.html5.util.SuperDevUncaughtExceptionHandler;
 
 import com.google.gwt.core.client.EntryPoint;
 
+import jsinterop.base.Js;
+
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
@@ -35,7 +37,7 @@ public class WebSimple implements EntryPoint {
 
 	private void exportGGBElementRenderer() {
 		GeoGebraGlobal.setRenderGGBElement((el, callback) -> {
-			GeoGebraFrameSimple.renderArticleElement(GeoGebraElement.as(el), callback,
+			GeoGebraFrameSimple.renderArticleElement(GeoGebraElement.as(Js.uncheckedCast(el)), callback,
 					new CASFactoryW());
 		});
 		GeoGebraFrameW.renderGGBElementReady();

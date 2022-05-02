@@ -6,7 +6,7 @@ import java.util.List;
 import org.geogebra.common.gui.SetLabels;
 import org.geogebra.common.main.Localization;
 
-import com.google.gwt.user.client.ui.FlowPanel;
+import org.gwtproject.user.client.ui.FlowPanel;
 
 public class RadioButtonPanel extends FlowPanel implements SetLabels {
 	private List<ComponentRadioButton> radioButtonList = new ArrayList<>();

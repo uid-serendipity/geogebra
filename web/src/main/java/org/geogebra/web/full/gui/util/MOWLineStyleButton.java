@@ -7,8 +7,8 @@ import org.geogebra.common.kernel.geos.GeoElement;
 import org.geogebra.web.full.euclidian.EuclidianLineStylePopup;
 import org.geogebra.web.html5.main.AppW;
 
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.VerticalPanel;
+import org.gwtproject.user.client.ui.Label;
+import org.gwtproject.user.client.ui.VerticalPanel;
 
 /**
  * Line style button with preview

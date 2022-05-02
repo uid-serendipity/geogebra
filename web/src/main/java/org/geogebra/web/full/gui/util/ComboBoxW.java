@@ -8,7 +8,7 @@ import org.geogebra.web.full.gui.advanced.client.ui.widget.combo.DropDownPositio
 import org.geogebra.web.html5.gui.inputfield.AutoCompleteTextFieldW;
 import org.geogebra.web.html5.main.AppW;
 
-import com.google.gwt.event.dom.client.KeyCodes;
+import org.gwtproject.event.dom.client.KeyCodes;
 
 /**
  * Combo box

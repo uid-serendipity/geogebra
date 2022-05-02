@@ -1,6 +1,6 @@
 package org.geogebra.web.html5.main;
 
-import com.google.gwt.core.client.JavaScriptObject;
+import org.gwtproject.core.client.JavaScriptObject;
 
 /**
  * Interface for GeoGebra applet frame

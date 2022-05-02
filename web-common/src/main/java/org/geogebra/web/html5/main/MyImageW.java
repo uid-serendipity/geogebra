@@ -4,7 +4,7 @@ import org.geogebra.common.awt.GGraphics2D;
 import org.geogebra.common.awt.MyImage;
 import org.geogebra.web.html5.awt.GGraphics2DW;
 
-import com.google.gwt.canvas.client.Canvas;
+import org.gwtproject.canvas.client.Canvas;
 
 import elemental2.dom.CSSProperties;
 import elemental2.dom.CanvasRenderingContext2D;

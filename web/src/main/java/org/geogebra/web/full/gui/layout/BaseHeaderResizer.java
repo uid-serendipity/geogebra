@@ -4,7 +4,7 @@ import org.geogebra.web.full.main.HeaderResizer;
 import org.geogebra.web.html5.gui.GeoGebraFrameW;
 import org.geogebra.web.html5.gui.util.Dom;
 
-import com.google.gwt.dom.client.Element;
+import org.gwtproject.dom.client.Element;
 
 public class BaseHeaderResizer implements HeaderResizer {
 

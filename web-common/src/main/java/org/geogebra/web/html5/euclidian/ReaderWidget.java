@@ -5,8 +5,8 @@ import org.geogebra.common.main.ScreenReader;
 import org.geogebra.web.html5.Browser;
 import org.gwtproject.timer.client.Timer;
 
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.user.client.ui.SimplePanel;
+import org.gwtproject.dom.client.Element;
+import org.gwtproject.user.client.ui.SimplePanel;
 
 import elemental2.dom.DomGlobal;
 import elemental2.dom.HTMLElement;

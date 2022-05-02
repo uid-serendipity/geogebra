@@ -3,13 +3,12 @@ package org.geogebra.web.html5.main;
 import org.geogebra.common.main.App;
 import org.geogebra.common.move.ggtapi.operations.LogInOperation;
 import org.geogebra.common.util.StringUtil;
+import org.geogebra.gwtutil.Cookies;
 import org.geogebra.web.html5.Browser;
 import org.geogebra.web.html5.gui.util.BrowserStorage;
-
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.Node;
-import com.google.gwt.user.client.Cookies;
-import com.google.gwt.user.client.Window.Location;
+import org.gwtproject.dom.client.Element;
+import org.gwtproject.dom.client.Node;
+import org.gwtproject.user.window.client.Window;
 
 import elemental2.dom.DomGlobal;
 
@@ -43,7 +42,7 @@ public class UserPreferredLanguage {
 		}
 
 		String urlLang = app.getAppletParameters().getDataParamApp()
-				? Location.getParameter("lang") : "";
+				? Window.Location.getParameter("lang") : "";
 
 		if (!StringUtil.empty(urlLang) && !loggedIn) {
 			return urlLang;

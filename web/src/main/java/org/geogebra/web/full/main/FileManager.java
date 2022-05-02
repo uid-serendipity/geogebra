@@ -17,8 +17,7 @@ import org.geogebra.web.html5.bridge.GeoGebraJSNativeBridge;
 import org.geogebra.web.html5.euclidian.EuclidianViewWInterface;
 import org.geogebra.web.html5.gui.tooltip.ToolTipManagerW;
 import org.geogebra.web.html5.main.AppW;
-
-import com.google.gwt.user.client.Window;
+import org.gwtproject.user.window.client.Window;
 
 /**
  * Manager for local file saving

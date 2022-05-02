@@ -16,12 +16,11 @@ import org.geogebra.web.html5.gui.view.button.StandardButton;
 import org.geogebra.web.html5.main.AppW;
 import org.geogebra.web.html5.util.GeoGebraElement;
 import org.geogebra.web.resources.StyleInjector;
+import org.gwtproject.dom.client.Element;
+import org.gwtproject.dom.client.Style.Position;
+import org.gwtproject.dom.client.Style.Unit;
 import org.gwtproject.timer.client.Timer;
-
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.Style.Position;
-import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.user.client.Window;
+import org.gwtproject.user.window.client.Window;
 
 import elemental2.dom.DomGlobal;
 import elemental2.dom.Event;

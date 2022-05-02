@@ -5,9 +5,9 @@ import org.geogebra.common.plugin.EventType;
 import org.geogebra.web.full.main.EmbedManagerW;
 import org.geogebra.web.html5.Browser;
 
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.user.client.ui.Widget;
+import org.gwtproject.core.client.JavaScriptObject;
+import org.gwtproject.dom.client.Style.Unit;
+import org.gwtproject.user.client.ui.Widget;
 
 import jsinterop.base.Js;
 import jsinterop.base.JsPropertyMap;

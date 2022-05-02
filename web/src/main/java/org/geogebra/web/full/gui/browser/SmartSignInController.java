@@ -2,9 +2,9 @@ package org.geogebra.web.full.gui.browser;
 
 import org.geogebra.common.main.App;
 import org.geogebra.web.shared.SignInController;
+import org.gwtproject.user.window.client.Window;
 
 import com.google.gwt.http.client.URL;
-import com.google.gwt.user.client.Window.Location;
 
 import elemental2.dom.DomGlobal;
 
@@ -26,7 +26,7 @@ public class SmartSignInController extends SignInController {
 		String url = "https://accounts.geogebra.org/user/signin"
 				+ "/caller/web/expiration/600/clientinfo/smart"
 				+ "/?lang=" + app.getLocalization().getLocaleStr() + "&url="
-				+ URL.encode(Location.getHref());
+				+ URL.encode(Window.Location.getHref());
 
 		DomGlobal.location.replace(url);
 	}

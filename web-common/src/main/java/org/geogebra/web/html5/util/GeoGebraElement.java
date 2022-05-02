@@ -10,9 +10,9 @@ import org.geogebra.regexp.shared.RegExp;
 import org.geogebra.web.html5.Browser;
 import org.geogebra.web.html5.gui.util.Dom;
 
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.user.client.DOM;
+import org.gwtproject.dom.client.Document;
+import org.gwtproject.dom.client.Element;
+import org.gwtproject.user.client.DOM;
 
 import elemental2.dom.CSSStyleDeclaration;
 import elemental2.dom.DomGlobal;
@@ -214,5 +214,15 @@ public final class GeoGebraElement extends Element implements AttributeProvider 
 	public void resetScale() {
 		setAttribute("data-scalex", "" + envScale("x"));
 		setAttribute("data-scaley", "" + envScale("y"));
+	}
+
+	@Override
+	public String getAttr(String attribute) {
+		return getAttribute(attribute);
+	}
+
+	@Override
+	public boolean hasAttr(String attribute) {
+		return hasAttribute(attribute);
 	}
 }

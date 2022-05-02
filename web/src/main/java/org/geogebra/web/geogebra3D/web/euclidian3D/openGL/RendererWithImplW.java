@@ -10,11 +10,10 @@ import org.geogebra.common.geogebra3D.euclidian3D.openGL.Textures;
 import org.geogebra.common.geogebra3D.euclidian3D.openGL.TexturesShaders;
 import org.geogebra.web.geogebra3D.web.euclidian3D.EuclidianView3DW;
 import org.geogebra.web.html5.gawt.GBufferedImageW;
+import org.gwtproject.canvas.client.Canvas;
+import org.gwtproject.dom.client.Element;
 import org.gwtproject.timer.client.Timer;
-
-import com.google.gwt.canvas.client.Canvas;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.user.client.Window;
+import org.gwtproject.user.window.client.Window;
 
 import elemental2.dom.HTMLCanvasElement;
 import elemental2.dom.HTMLImageElement;

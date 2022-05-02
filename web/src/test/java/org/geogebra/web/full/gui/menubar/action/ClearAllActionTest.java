@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.google.gwt.user.client.ui.ListBox;
+import org.gwtproject.user.client.ui.ListBox;
 
 /**
  * Tests for Undo with multiple slides

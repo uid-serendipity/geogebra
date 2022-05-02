@@ -3,8 +3,7 @@ package org.geogebra.web.full.gui.menubar.action;
 import org.geogebra.common.move.ggtapi.models.GeoGebraTubeUser;
 import org.geogebra.web.full.gui.menubar.DefaultMenuAction;
 import org.geogebra.web.full.main.AppWFull;
-
-import com.google.gwt.user.client.Window;
+import org.gwtproject.user.window.client.Window;
 
 /**
  * Opens profile page.

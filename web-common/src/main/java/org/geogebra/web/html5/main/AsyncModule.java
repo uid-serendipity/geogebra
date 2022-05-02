@@ -11,9 +11,9 @@ import org.geogebra.common.kernel.commands.CommandDispatcherStats;
 import org.geogebra.common.util.Prover;
 import org.geogebra.common.util.StringUtil;
 import org.geogebra.common.util.debug.Log;
+import org.gwtproject.user.window.client.Window;
 
 import com.google.gwt.core.client.prefetch.RunAsyncCode;
-import com.google.gwt.user.client.Window.Location;
 
 /**
  * Enumeration of all modules (fragments) that can be prefetched
@@ -45,7 +45,7 @@ public enum AsyncModule {
 	public void prefetch() {
 		// in dev mode split point is -1; avoid bogus network requests
 		if (!asyncCode.isLoaded() && asyncCode.getSplitPoint() > 0
-				&& Location.getProtocol().startsWith("http")) {
+				&& Window.Location.getProtocol().startsWith("http")) {
 			FragmentPrefetcher.prefetch(asyncCode.getSplitPoint());
 		}
 	}

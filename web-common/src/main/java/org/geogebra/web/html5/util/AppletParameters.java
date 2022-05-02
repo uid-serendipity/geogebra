@@ -7,8 +7,7 @@ import org.geogebra.common.main.App;
 import org.geogebra.common.main.App.InputPosition;
 import org.geogebra.common.util.StringUtil;
 import org.geogebra.common.util.debug.Log;
-
-import com.google.gwt.user.client.Window;
+import org.gwtproject.user.window.client.Window;
 
 /**
  *
@@ -35,11 +34,11 @@ public class AppletParameters {
 	}
 
 	private String getAttribute(String attribute) {
-		return attributeProvider.getAttribute("data-param-" + attribute);
+		return attributeProvider.getAttr("data-param-" + attribute);
 	}
 
 	private boolean hasAttribute(String attribute) {
-		return attributeProvider.hasAttribute("data-param-" + attribute);
+		return attributeProvider.hasAttr("data-param-" + attribute);
 	}
 
 	public void removeAttribute(String attribute) {

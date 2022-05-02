@@ -20,24 +20,24 @@ import org.geogebra.web.html5.main.AppW;
 import org.geogebra.web.resources.ImageResourceConverter;
 import org.geogebra.web.shared.SharedResources;
 
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.event.dom.client.DragEnterEvent;
-import com.google.gwt.event.dom.client.DragEnterHandler;
-import com.google.gwt.event.dom.client.DragLeaveEvent;
-import com.google.gwt.event.dom.client.DragLeaveHandler;
-import com.google.gwt.event.dom.client.DragOverEvent;
-import com.google.gwt.event.dom.client.DragOverHandler;
-import com.google.gwt.event.dom.client.DragStartEvent;
-import com.google.gwt.event.dom.client.DropEvent;
-import com.google.gwt.event.dom.client.DropHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.resources.client.ImageResource;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ScrollPanel;
-import com.google.gwt.user.client.ui.Tree;
-import com.google.gwt.user.client.ui.TreeItem;
+import org.gwtproject.dom.client.Element;
+import org.gwtproject.event.dom.client.DragEnterEvent;
+import org.gwtproject.event.dom.client.DragEnterHandler;
+import org.gwtproject.event.dom.client.DragLeaveEvent;
+import org.gwtproject.event.dom.client.DragLeaveHandler;
+import org.gwtproject.event.dom.client.DragOverEvent;
+import org.gwtproject.event.dom.client.DragOverHandler;
+import org.gwtproject.event.dom.client.DragStartEvent;
+import org.gwtproject.event.dom.client.DropEvent;
+import org.gwtproject.event.dom.client.DropHandler;
+import org.gwtproject.event.shared.HandlerRegistration;
+import org.gwtproject.resources.client.ImageResource;
+import org.gwtproject.user.client.ui.Button;
+import org.gwtproject.user.client.ui.FlowPanel;
+import org.gwtproject.user.client.ui.Label;
+import org.gwtproject.user.client.ui.ScrollPanel;
+import org.gwtproject.user.client.ui.Tree;
+import org.gwtproject.user.client.ui.TreeItem;
 
 /**
  * A GUI to customize the toolbar

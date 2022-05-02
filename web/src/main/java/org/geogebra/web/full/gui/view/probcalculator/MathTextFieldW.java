@@ -9,7 +9,7 @@ import org.geogebra.gwtutil.NavigatorUtil;
 import org.geogebra.web.full.gui.components.MathFieldEditor;
 import org.geogebra.web.html5.util.JsRunnable;
 
-import com.google.gwt.dom.client.Style;
+import org.gwtproject.dom.client.Style;
 import com.himamis.retex.editor.share.event.MathFieldListener;
 
 public class MathTextFieldW extends MathFieldEditor implements MathFieldListener, ErrorHandler {

@@ -25,11 +25,11 @@ import org.geogebra.web.html5.main.AppW;
 import org.geogebra.web.html5.util.ImageManagerW;
 import org.geogebra.web.resources.SVGResource;
 
-import com.google.gwt.event.dom.client.ChangeHandler;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ListBox;
+import org.gwtproject.event.dom.client.ChangeHandler;
+import org.gwtproject.user.client.ui.Button;
+import org.gwtproject.user.client.ui.FlowPanel;
+import org.gwtproject.user.client.ui.Label;
+import org.gwtproject.user.client.ui.ListBox;
 
 import elemental2.dom.File;
 import elemental2.dom.FileReader;

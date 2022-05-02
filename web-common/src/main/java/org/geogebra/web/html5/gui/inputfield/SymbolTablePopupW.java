@@ -5,13 +5,13 @@ import org.geogebra.common.main.Localization;
 import org.geogebra.web.html5.gui.GPopupPanel;
 import org.geogebra.web.html5.main.AppW;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.MouseDownEvent;
-import com.google.gwt.event.dom.client.MouseDownHandler;
-import com.google.gwt.user.client.ui.HTMLTable;
-import com.google.gwt.user.client.ui.HTMLTable.Cell;
-import com.google.gwt.user.client.ui.Widget;
+import org.gwtproject.event.dom.client.ClickEvent;
+import org.gwtproject.event.dom.client.ClickHandler;
+import org.gwtproject.event.dom.client.MouseDownEvent;
+import org.gwtproject.event.dom.client.MouseDownHandler;
+import org.gwtproject.user.client.ui.HTMLTable;
+import org.gwtproject.user.client.ui.HTMLTable.Cell;
+import org.gwtproject.user.client.ui.Widget;
 
 public class SymbolTablePopupW extends GPopupPanel implements ClickHandler {
 

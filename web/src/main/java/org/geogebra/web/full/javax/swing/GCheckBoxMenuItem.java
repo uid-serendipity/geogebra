@@ -4,12 +4,12 @@ import org.geogebra.common.main.App;
 import org.geogebra.web.html5.gui.util.AriaMenuBar;
 import org.geogebra.web.html5.gui.util.AriaMenuItem;
 
-import com.google.gwt.core.client.Scheduler.ScheduledCommand;
-import com.google.gwt.user.client.ui.CheckBox;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.Widget;
+import org.gwtproject.core.client.Scheduler.ScheduledCommand;
+import org.gwtproject.user.client.ui.CheckBox;
+import org.gwtproject.user.client.ui.HTML;
+import org.gwtproject.user.client.ui.HorizontalPanel;
+import org.gwtproject.user.client.ui.Label;
+import org.gwtproject.user.client.ui.Widget;
 
 /**
  * Menu item with a checkbox (for new UI use the checkmark version)

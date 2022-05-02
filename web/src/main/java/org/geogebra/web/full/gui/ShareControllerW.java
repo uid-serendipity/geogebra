@@ -13,7 +13,7 @@ import org.geogebra.web.shared.ShareDialogMow;
 import org.geogebra.web.shared.ShareLinkDialog;
 import org.geogebra.web.shared.components.dialog.DialogData;
 
-import com.google.gwt.user.client.ui.Widget;
+import org.gwtproject.user.client.ui.Widget;
 
 /**
  * If no existent material -> show save dialog and ask for title to save

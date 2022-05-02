@@ -3,12 +3,12 @@ package org.geogebra.web.full.gui.dialog;
 import org.geogebra.web.html5.gui.GPopupPanel;
 import org.geogebra.web.html5.main.AppW;
 
-import com.google.gwt.dom.client.Style;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.FileUpload;
-import com.google.gwt.user.client.ui.VerticalPanel;
+import org.gwtproject.dom.client.Style;
+import org.gwtproject.event.dom.client.ClickEvent;
+import org.gwtproject.event.dom.client.ClickHandler;
+import org.gwtproject.user.client.ui.Button;
+import org.gwtproject.user.client.ui.FileUpload;
+import org.gwtproject.user.client.ui.VerticalPanel;
 
 /**
  * Dialog for selecting files

@@ -2,7 +2,7 @@ package org.geogebra.web.full.gui.menubar;
 
 import org.geogebra.web.html5.main.AppW;
 
-import com.google.gwt.user.client.Command;
+import org.gwtproject.user.client.Command;
 
 /**
  * Command that also closes the menu

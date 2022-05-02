@@ -167,21 +167,21 @@ import org.geogebra.web.shared.components.dialog.ComponentDialog;
 import org.geogebra.web.shared.components.dialog.DialogData;
 import org.geogebra.web.shared.ggtapi.LoginOperationW;
 import org.geogebra.web.shared.ggtapi.models.MaterialCallback;
+import org.gwtproject.dom.client.Element;
+import org.gwtproject.dom.client.Style;
+import org.gwtproject.dom.client.Style.Position;
+import org.gwtproject.dom.style.shared.Overflow;
+import org.gwtproject.event.logical.shared.ResizeHandler;
 import org.gwtproject.timer.client.Timer;
+import org.gwtproject.user.client.DOM;
+import org.gwtproject.user.client.ui.FlowPanel;
+import org.gwtproject.user.client.ui.HorizontalPanel;
+import org.gwtproject.user.client.ui.Label;
+import org.gwtproject.user.client.ui.Panel;
+import org.gwtproject.user.client.ui.RootPanel;
+import org.gwtproject.user.client.ui.Widget;
+import org.gwtproject.user.window.client.Window;
 
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.Style;
-import com.google.gwt.dom.client.Style.Position;
-import com.google.gwt.event.logical.shared.ResizeHandler;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.Window.Location;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.Panel;
-import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.Widget;
 import com.himamis.retex.editor.web.MathFieldW;
 
 import elemental2.dom.File;
@@ -787,7 +787,7 @@ public class AppWFull extends AppW implements HasKeyboard, MenuViewListener {
 	@Override
 	protected final void initGoogleDriveEventFlow() {
 		googleDriveOperation = new GoogleDriveOperationW(this);
-		String state = Location.getParameter("state");
+		String state = Window.Location.getParameter("state");
 		if (getNetworkOperation().isOnline() && state != null
 				&& !"".equals(state)) {
 			googleDriveOperation.initGoogleDriveApi();
@@ -951,7 +951,7 @@ public class AppWFull extends AppW implements HasKeyboard, MenuViewListener {
 
 	@Override
 	public final void appSplashCanNowHide() {
-		String commands = Location.getParameter("command");
+		String commands = Window.Location.getParameter("command");
 		if (commands != null) {
 			executeCommands(commands);
 		}
@@ -1865,7 +1865,7 @@ public class AppWFull extends AppW implements HasKeyboard, MenuViewListener {
 			}
 			getGuiManager().refreshDraggingViews();
 			oldSplitLayoutPanel.getElement().getStyle()
-					.setOverflow(Style.Overflow.HIDDEN);
+					.setOverflow(Overflow.HIDDEN);
 			frame.getMenuBar(this).getMenubar().dispatchOpenEvent();
 		} else {
 			if (menuViewController != null) {

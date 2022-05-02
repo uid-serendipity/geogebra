@@ -4,7 +4,7 @@ import org.geogebra.common.gui.view.algebra.AlgebraItem;
 import org.geogebra.common.kernel.geos.GeoElement;
 import org.geogebra.common.kernel.geos.GeoText;
 
-import com.google.gwt.user.client.ui.TreeItem;
+import org.gwtproject.user.client.ui.TreeItem;
 
 /**
  * ReTeX based implementation of AV Text

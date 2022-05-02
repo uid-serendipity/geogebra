@@ -20,9 +20,9 @@ import org.geogebra.web.html5.gui.inputfield.AutoCompleteTextFieldW;
 import org.geogebra.web.html5.main.AppW;
 import org.geogebra.web.shared.components.dialog.DialogData;
 
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.RadioButton;
+import org.gwtproject.user.client.DOM;
+import org.gwtproject.user.client.ui.FlowPanel;
+import org.gwtproject.user.client.ui.RadioButton;
 import com.himamis.retex.editor.share.util.Unicode;
 
 public class AngleInputDialogW extends ComponentInputDialog {

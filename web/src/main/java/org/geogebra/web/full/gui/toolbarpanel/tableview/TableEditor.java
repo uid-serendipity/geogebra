@@ -8,8 +8,8 @@ import org.geogebra.web.html5.gui.util.ClickStartHandler;
 import org.geogebra.web.html5.gui.util.MathKeyboardListener;
 import org.geogebra.web.html5.main.AppW;
 
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.user.client.DOM;
+import org.gwtproject.dom.client.Element;
+import org.gwtproject.user.client.DOM;
 import com.himamis.retex.editor.share.editor.UnhandledArrowListener;
 import com.himamis.retex.editor.share.util.JavaKeyCodes;
 

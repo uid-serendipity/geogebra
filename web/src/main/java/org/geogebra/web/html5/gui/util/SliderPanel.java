@@ -1,14 +1,14 @@
 package org.geogebra.web.html5.gui.util;
 
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.event.dom.client.ChangeHandler;
-import com.google.gwt.event.dom.client.DomEvent;
-import com.google.gwt.event.dom.client.HasChangeHandlers;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HasValue;
-import com.google.gwt.user.client.ui.Label;
+import org.gwtproject.dom.client.Document;
+import org.gwtproject.event.dom.client.ChangeHandler;
+import org.gwtproject.event.dom.client.DomEvent;
+import org.gwtproject.event.dom.client.HasChangeHandlers;
+import org.gwtproject.event.logical.shared.ValueChangeHandler;
+import org.gwtproject.event.shared.HandlerRegistration;
+import org.gwtproject.user.client.ui.FlowPanel;
+import org.gwtproject.user.client.ui.HasValue;
+import org.gwtproject.user.client.ui.Label;
 
 public class SliderPanel extends FlowPanel implements HasChangeHandlers,
 		HasValue<Integer>, SliderInputHandler {

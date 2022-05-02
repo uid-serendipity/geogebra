@@ -1,6 +1,6 @@
 package org.geogebra.web.richtext.impl;
 
-import com.google.gwt.core.client.JavaScriptObject;
+import org.gwtproject.core.client.JavaScriptObject;
 
 import elemental2.dom.CanvasRenderingContext2D;
 import jsinterop.annotations.JsOverlay;

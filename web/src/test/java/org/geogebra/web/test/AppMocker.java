@@ -17,9 +17,9 @@ import org.geogebra.web.html5.main.AppWsimple;
 import org.geogebra.web.html5.util.AppletParameters;
 import org.geogebra.web.html5.util.GeoGebraElement;
 
-import com.google.gwt.core.client.impl.SchedulerImpl;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.user.client.ui.impl.PopupImpl;
+import org.gwtproject.core.client.impl.SchedulerImpl;
+import org.gwtproject.dom.client.Element;
+import org.gwtproject.user.client.ui.impl.PopupImpl;
 import com.google.gwtmockito.GwtMockito;
 import com.himamis.retex.renderer.share.platform.FactoryProvider;
 import com.himamis.retex.renderer.web.FactoryProviderGWT;

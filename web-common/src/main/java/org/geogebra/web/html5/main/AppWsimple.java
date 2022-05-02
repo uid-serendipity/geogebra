@@ -13,9 +13,9 @@ import org.geogebra.web.html5.gui.zoompanel.ZoomPanel;
 import org.geogebra.web.html5.util.AppletParameters;
 import org.geogebra.web.html5.util.GeoGebraElement;
 
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.user.client.ui.Panel;
-import com.google.gwt.user.client.ui.Widget;
+import org.gwtproject.dom.client.Element;
+import org.gwtproject.user.client.ui.Panel;
+import org.gwtproject.user.client.ui.Widget;
 
 /**
  * Simple app, may only have one EV

@@ -1,9 +1,9 @@
 package com.himamis.retex.editor.web;
 
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TextArea;
+import org.gwtproject.dom.client.Document;
+import org.gwtproject.dom.client.Element;
+import org.gwtproject.user.client.ui.RootPanel;
+import org.gwtproject.user.client.ui.TextArea;
 
 public class MyTextArea extends TextArea {
 

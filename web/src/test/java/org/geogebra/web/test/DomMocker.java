@@ -13,10 +13,10 @@ import org.mockito.Matchers;
 import org.mockito.Mockito;
 import org.mockito.stubbing.Answer;
 
-import com.google.gwt.dom.client.Style;
-import com.google.gwt.user.client.Element;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.Widget;
+import org.gwtproject.dom.client.Style;
+import org.gwtproject.user.client.Element;
+import org.gwtproject.user.client.ui.Label;
+import org.gwtproject.user.client.ui.Widget;
 
 public class DomMocker {
 

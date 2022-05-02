@@ -16,8 +16,8 @@
 
 package org.geogebra.web.full.gui.advanced.client.ui.widget;
 
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.PopupPanel;
+import org.gwtproject.user.client.ui.PopupPanel;
+import org.gwtproject.user.window.client.Window;
 
 /**
  * This is a panel that appears when one of components like to lock the screen.

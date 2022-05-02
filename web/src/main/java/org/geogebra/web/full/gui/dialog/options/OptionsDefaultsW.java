@@ -2,7 +2,7 @@ package org.geogebra.web.full.gui.dialog.options;
 
 import org.geogebra.web.html5.util.tabpanel.MultiRowsTabPanel;
 
-import com.google.gwt.user.client.ui.Widget;
+import org.gwtproject.user.client.ui.Widget;
 
 public class OptionsDefaultsW implements OptionPanelW {
 

@@ -19,8 +19,7 @@ import org.geogebra.web.html5.gui.tooltip.ToolTipManagerW;
 import org.geogebra.web.html5.gui.util.LongTouchManager;
 import org.geogebra.web.html5.gui.util.LongTouchTimer.LongTouchHandler;
 import org.geogebra.web.html5.main.AppW;
-
-import com.google.gwt.user.client.Window;
+import org.gwtproject.user.window.client.Window;
 
 import elemental2.dom.WheelEvent;
 

@@ -3,11 +3,11 @@ package org.geogebra.gwtutil;
 import org.geogebra.web.resources.StyleInjector;
 import org.gwtproject.resources.client.TextResource;
 
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.HeadElement;
-import com.google.gwt.dom.client.ScriptElement;
-import com.google.gwt.user.client.DOM;
+import org.gwtproject.dom.client.Document;
+import org.gwtproject.dom.client.Element;
+import org.gwtproject.dom.client.HeadElement;
+import org.gwtproject.dom.client.ScriptElement;
+import org.gwtproject.user.client.DOM;
 
 /**
  * Injects scripts into parent document

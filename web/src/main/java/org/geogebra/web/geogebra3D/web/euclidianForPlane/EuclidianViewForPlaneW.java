@@ -11,7 +11,7 @@ import org.geogebra.web.geogebra3D.web.gui.layout.panels.EuclidianDockPanelForPl
 import org.geogebra.web.html5.euclidian.EuclidianPanelWAbstract;
 import org.geogebra.web.html5.euclidian.EuclidianViewW;
 
-import com.google.gwt.user.client.ui.Widget;
+import org.gwtproject.user.client.ui.Widget;
 
 /**
  * 2D view for plane.

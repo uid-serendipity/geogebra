@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.geogebra.common.kernel.geos.GeoElement;
 
-import com.google.gwt.user.client.ui.Widget;
+import org.gwtproject.user.client.ui.Widget;
 
 /**
  * Accessibility adapter for a construction element or settings.

@@ -4,7 +4,7 @@ import org.geogebra.common.awt.GColor;
 import org.geogebra.web.resources.SVGResource;
 import org.gwtproject.resources.client.ImageResource;
 
-import com.google.gwt.user.client.ui.Label;
+import org.gwtproject.user.client.ui.Label;
 
 /**
  * image or text holder

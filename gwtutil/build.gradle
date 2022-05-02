@@ -20,6 +20,7 @@ dependencies {
     compile group: 'org.gwtproject.resources', name: 'gwt-resources-api', version: 'HEAD-SNAPSHOT'
     compile group: 'org.gwtproject.resources', name: 'gwt-resources-processor', version: 'HEAD-SNAPSHOT'
     compile 'org.gwtproject.timer:gwt-timer:1.0.0-RC1'
+    compile 'org.treblereel.gwt.gwtproject.widgets:gwt-widgets:202203291'
 
 // https://mvnrepository.com/artifact/com.google.auto.service/auto-service
     implementation group: 'com.google.auto.service', name: 'auto-service', version: '1.0.1'

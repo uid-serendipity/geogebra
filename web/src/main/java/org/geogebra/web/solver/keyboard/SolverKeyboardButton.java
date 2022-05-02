@@ -5,7 +5,7 @@ import org.geogebra.keyboard.web.KeyboardResources;
 import org.geogebra.web.html5.gui.util.ClickStartHandler;
 import org.geogebra.web.html5.gui.util.NoDragImage;
 
-import com.google.gwt.user.client.ui.SimplePanel;
+import org.gwtproject.user.client.ui.SimplePanel;
 
 public class SolverKeyboardButton extends SimplePanel {
 

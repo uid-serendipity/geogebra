@@ -25,9 +25,9 @@ import org.geogebra.web.html5.main.AppW;
 import org.geogebra.web.html5.util.sliderPanel.SliderW;
 import org.gwtproject.timer.client.Timer;
 
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Widget;
+import org.gwtproject.dom.client.Element;
+import org.gwtproject.user.client.ui.FlowPanel;
+import org.gwtproject.user.client.ui.Widget;
 
 import elemental2.dom.DomGlobal;
 

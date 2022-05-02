@@ -2,12 +2,12 @@ package org.geogebra.web.html5.gui;
 
 import org.geogebra.common.main.App;
 
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.ui.DecoratorPanel;
-import com.google.gwt.user.client.ui.SimplePanel;
-import com.google.gwt.user.client.ui.UIObject;
-import com.google.gwt.user.client.ui.Widget;
+import org.gwtproject.dom.client.Element;
+import org.gwtproject.user.client.DOM;
+import org.gwtproject.user.client.ui.DecoratorPanel;
+import org.gwtproject.user.client.ui.SimplePanel;
+import org.gwtproject.user.client.ui.UIObject;
+import org.gwtproject.user.client.ui.Widget;
 
 /*
  * Copyright 2008 Google Inc.
@@ -210,8 +210,8 @@ public class GDecoratorPanel extends SimplePanel {
 
 	@SuppressWarnings("deprecation")
 	@Override
-	protected com.google.gwt.user.client.Element getContainerElement() {
-		return DOM.asOld(containerElem);
+	protected org.gwtproject.dom.client.Element getContainerElement() {
+		return containerElem;
 	}
 
 	@Override

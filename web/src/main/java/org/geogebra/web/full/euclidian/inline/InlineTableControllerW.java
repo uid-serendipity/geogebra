@@ -1,7 +1,7 @@
 package org.geogebra.web.full.euclidian.inline;
 
-import static com.google.gwt.dom.client.Style.Visibility.HIDDEN;
-import static com.google.gwt.dom.client.Style.Visibility.VISIBLE;
+import static org.gwtproject.dom.client.Style.Visibility.HIDDEN;
+import static org.gwtproject.dom.client.Style.Visibility.VISIBLE;
 
 import org.geogebra.common.awt.GAffineTransform;
 import org.geogebra.common.awt.GColor;
@@ -28,9 +28,9 @@ import org.geogebra.web.richtext.impl.CarotaTable;
 import org.geogebra.web.richtext.impl.CarotaUtil;
 import org.geogebra.web.richtext.impl.EventThrottle;
 
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.Style;
-import com.google.gwt.user.client.DOM;
+import org.gwtproject.dom.client.Element;
+import org.gwtproject.dom.client.Style;
+import org.gwtproject.user.client.DOM;
 
 import elemental2.core.Global;
 import jsinterop.base.Js;

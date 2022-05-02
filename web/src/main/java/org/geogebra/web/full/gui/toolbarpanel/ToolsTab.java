@@ -12,7 +12,7 @@ import org.geogebra.web.html5.gui.view.button.StandardButton;
 import org.geogebra.web.html5.main.AppW;
 import org.geogebra.web.html5.util.CustomScrollbar;
 
-import com.google.gwt.user.client.ui.ScrollPanel;
+import org.gwtproject.user.client.ui.ScrollPanel;
 
 /**
  * tab of tools

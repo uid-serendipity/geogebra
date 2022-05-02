@@ -18,8 +18,8 @@ import org.geogebra.common.kernel.kernelND.GeoSegmentND;
 import org.geogebra.common.main.DialogManager;
 import org.geogebra.common.main.OptionType;
 import org.geogebra.common.util.AsyncOperation;
+import org.gwtproject.user.window.client.Window;
 
-import com.google.gwt.user.client.Window;
 
 /**
  * Dialog manager for solver

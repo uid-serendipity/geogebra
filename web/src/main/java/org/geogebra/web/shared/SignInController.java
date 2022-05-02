@@ -9,7 +9,7 @@ import org.geogebra.web.html5.gui.laf.SignInControllerI;
 import org.geogebra.web.shared.ggtapi.StaticFileUrls;
 import org.gwtproject.timer.client.Timer;
 
-import com.google.gwt.user.client.ui.Button;
+import org.gwtproject.user.client.ui.Button;
 
 /**
  * Default sign in button: opens GGB signin in a popup.

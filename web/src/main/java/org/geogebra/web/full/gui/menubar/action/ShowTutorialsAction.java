@@ -2,8 +2,8 @@ package org.geogebra.web.full.gui.menubar.action;
 
 import org.geogebra.web.full.gui.menubar.DefaultMenuAction;
 import org.geogebra.web.full.main.AppWFull;
+import org.gwtproject.user.window.client.Window;
 
-import com.google.gwt.user.client.Window;
 
 /**
  * Shows the tutorial.

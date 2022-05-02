@@ -5,7 +5,7 @@ import org.geogebra.web.html5.gui.ToolBarInterface;
 import org.geogebra.web.html5.gui.util.MathKeyboardListener;
 import org.geogebra.web.html5.main.HasAppletProperties;
 
-import com.google.gwt.dom.client.Element;
+import org.gwtproject.dom.client.Element;
 
 /**
  * Interface for app frame

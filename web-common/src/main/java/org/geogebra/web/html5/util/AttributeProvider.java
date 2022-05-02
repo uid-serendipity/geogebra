@@ -2,9 +2,9 @@ package org.geogebra.web.html5.util;
 
 public interface AttributeProvider {
 
-	String getAttribute(String attribute);
+	String getAttr(String attribute);
 
-	boolean hasAttribute(String attribute);
+	boolean hasAttr(String attribute);
 
 	void removeAttribute(String attribute);
 

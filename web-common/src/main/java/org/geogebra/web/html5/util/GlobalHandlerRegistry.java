@@ -2,8 +2,8 @@ package org.geogebra.web.html5.util;
 
 import java.util.ArrayList;
 
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.event.shared.HandlerRegistration;
+import org.gwtproject.core.client.JavaScriptObject;
+import org.gwtproject.event.shared.HandlerRegistration;
 
 import elemental2.dom.EventListener;
 import elemental2.dom.EventTarget;

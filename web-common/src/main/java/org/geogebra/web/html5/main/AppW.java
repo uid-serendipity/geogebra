@@ -148,20 +148,19 @@ import org.geogebra.web.html5.util.ViewW;
 import org.geogebra.web.html5.util.debug.AnalyticsW;
 import org.geogebra.web.html5.util.debug.LoggerW;
 import org.geogebra.web.html5.util.keyboard.KeyboardManagerInterface;
+import org.gwtproject.core.client.GWT;
+import org.gwtproject.core.client.Scheduler;
+import org.gwtproject.dom.client.Element;
+import org.gwtproject.dom.client.Style;
+import org.gwtproject.dom.client.Style.Unit;
 import org.gwtproject.timer.client.Timer;
+import org.gwtproject.user.client.ui.Panel;
+import org.gwtproject.user.client.ui.RequiresResize;
+import org.gwtproject.user.client.ui.RootPanel;
+import org.gwtproject.user.client.ui.Widget;
+import org.gwtproject.user.window.client.Window;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.Style;
-import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.Window.Location;
-import com.google.gwt.user.client.ui.Panel;
-import com.google.gwt.user.client.ui.RequiresResize;
-import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.Widget;
 
 import elemental2.core.ArrayBuffer;
 import elemental2.core.Uint8Array;
@@ -2864,7 +2863,7 @@ public abstract class AppW extends App implements SetLabels, HasLanguage {
 				|| getAppletParameters().getDataParamTubeID().length() > 0
 				|| this.getAppletParameters().getDataParamJSON().length() > 0
 				|| (getAppletParameters().getDataParamApp()
-						&& Location.getParameter("state") != null);
+						&& Window.Location.getParameter("state") != null);
 	}
 
 	@Override

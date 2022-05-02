@@ -26,8 +26,8 @@ import org.mockito.Matchers;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Label;
+import org.gwtproject.user.client.ui.Button;
+import org.gwtproject.user.client.ui.Label;
 import com.google.gwtmockito.WithClassesToStub;
 import com.himamis.retex.renderer.web.graphics.JLMContext2d;
 
