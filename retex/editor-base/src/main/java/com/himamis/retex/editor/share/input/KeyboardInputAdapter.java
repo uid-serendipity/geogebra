@@ -166,10 +166,8 @@ public class KeyboardInputAdapter {
 	}
 
 	/**
-	 * @param mathFieldInternal
-	 *            editor
-	 * @param input
-	 *            input
+	 * @param mathFieldInternal editor
+	 * @param input input
 	 */
 	public static void onKeyboardInput(MathFieldInternal mathFieldInternal, String input) {
 		if (input == null) {
@@ -189,10 +187,8 @@ public class KeyboardInputAdapter {
 	}
 
 	/**
-	 * @param mathFieldInternal
-	 *            editor
-	 * @param commandName
-	 *            command name
+	 * @param mathFieldInternal editor
+	 * @param commandName command name
 	 */
 	public static void onCommandInput(MathFieldInternal mathFieldInternal, String commandName) {
 		commandAdapter.commit(mathFieldInternal, commandName);
