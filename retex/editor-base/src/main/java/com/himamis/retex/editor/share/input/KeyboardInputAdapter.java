@@ -136,7 +136,8 @@ public class KeyboardInputAdapter {
 				mfi.getInputController().newBraces(editorState, '(');
 				mfi.notifyAndUpdate("(");
 				PlaceholderController.insertPlaceholders(editorState,
-						splitCommand.subList(1, splitCommand.size()));
+						splitCommand.subList(1, splitCommand.size()),
+						splitCommand.get(0));
 			}
 
 			@Override
