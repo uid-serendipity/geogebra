@@ -1849,7 +1849,7 @@ public class GuiManagerW extends GuiManager
 			ComponentDialog dialog = new ComponentDialog((AppW) app, data, false, true);
 			ComponentInputField inputTextField = new ComponentInputField((AppW) app,
 					"", "", "", getApp().getExportTitle() + extension, -1, 1,
-					false, "");
+					"");
 			dialog.addDialogContent(inputTextField);
 			dialog.setOnPositiveAction(() -> {
 				String filename = inputTextField.getText();
@@ -2231,6 +2231,8 @@ public class GuiManagerW extends GuiManager
 	@Override
 	public void showTableValuesView(GeoElement geo) {
 		if (getTableValuesView().isEmpty()) {
+			// hide keyboard to ensure to reopen above the dimmed area.
+			getApp().getAppletFrame().showKeyBoard(false, null, true);
 			app.getDialogManager().openTableViewDialog(geo);
 		} else {
 			addGeoToTableValuesView(geo);
