@@ -243,11 +243,10 @@ public class ChiSquarePanelW extends ChiSquarePanel
 	}
 
 	private ComponentCheckbox createCheckbox(String ggbtrans) {
-		ComponentCheckbox checkbox = new ComponentCheckbox(loc, false, ggbtrans, () -> {
+		return new ComponentCheckbox(loc, false, ggbtrans, ignore -> {
 			updateShowFlags();
 			updateVisibility();
 		});
-		return checkbox;
 	}
 
 	@Override

@@ -51,14 +51,20 @@ public class InputKeyboardButtonW implements InputKeyboardButton, IsWidget {
 	@Override
 	public void hide() {
 		Dom.toggleClass(textField, "kbdInput", false);
+		button.removeFromParent();
 	}
 
 	@Override
-	public void setTextField(AutoCompleteTextField autoCompleteTextField) {
-		this.textField = (AutoCompleteTextFieldW) autoCompleteTextField;
-		textField.addFocusHandler(event -> show());
-		textField.addBlurHandler(event -> hide());
-		textField.addContent(this);
+	public void attach(AutoCompleteTextField textField) {
+		if (button.getParent() != textField) {
+			this.textField = (AutoCompleteTextFieldW) textField;
+			this.textField.addFocusHandler(event -> show());
+			this.textField.addBlurHandler(event -> hide());
+			this.textField.addContent(button);
+			button.getElement().setTabIndex(-1);
+		}
+
+		show();
 	}
 
 	@Override

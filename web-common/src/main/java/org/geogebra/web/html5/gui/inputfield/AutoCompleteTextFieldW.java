@@ -128,29 +128,18 @@ public class AutoCompleteTextFieldW extends FlowPanel
 
 	private DummyCursor dummyCursor;
 
-    private boolean rightAltDown;
+	private boolean rightAltDown;
 	private boolean leftAltDown;
 	private final AutocompleteProviderClassic inputSuggestions;
 	private FlowPanel main = new FlowPanel();
 
-	/**
-	 * Attaches the keyboard button to the current text field.
-	 * @param keyboardButton to attach.
-	 */
-	public void attachKeyboardButton(InputKeyboardButton keyboardButton) {
-		if (keyboardButton == null) {
-			return;
-		}
-
-		this.keyboardButton = keyboardButton;
-		this.keyboardButton.setTextField(this);
-	}
-
 	public interface InsertHandler {
+
 		void onInsert(String text);
 	}
 
 	public interface OnBackSpaceHandler {
+
 		void onBackspace();
 	}
 
@@ -776,6 +765,7 @@ public class AutoCompleteTextFieldW extends FlowPanel
 			e.preventDefault();
 
 		}
+
 		if (keyCode == GWTKeycodes.KEY_TAB && moveToNextArgument(true, false)) {
 			e.preventDefault();
 		}
@@ -1259,7 +1249,6 @@ public class AutoCompleteTextFieldW extends FlowPanel
 	@Override
 	public void requestFocus() {
 		textField.setFocus(true);
-		keyboardButton.show();
 		if (geoUsedForInputBox != null) {
 			Dom.toggleClass(this, "errorStyle", geoUsedForInputBox.hasError());
 		}
@@ -1267,6 +1256,13 @@ public class AutoCompleteTextFieldW extends FlowPanel
 		if (geoUsedForInputBox != null && !geoUsedForInputBox.isSelected()) {
 			app.getSelectionManager().clearSelectedGeos(false);
 			app.getSelectionManager().addSelectedGeo(geoUsedForInputBox);
+		}
+	}
+
+	private void attachKeyboardButton() {
+		keyboardButton = app.getGuiManager().getInputKeyboardButton();
+		if (keyboardButton != null) {
+			keyboardButton.attach(this);
 		}
 	}
 
@@ -1339,7 +1335,20 @@ public class AutoCompleteTextFieldW extends FlowPanel
 	 */
 	public void enableGGBKeyboard() {
 		dummyCursor.enableGGBKeyboard();
-		attachKeyboardButton(app.getGuiManager().getInputKeyboardButton());
+	}
+
+	/**
+	 * Enables using GGB keyboard with open button at the end of the textfield.
+	 */
+	public void enableGGBKeyboardWithOpenButton() {
+		enableGGBKeyboard();
+		enableKeyboardButton();
+	}
+
+	private void enableKeyboardButton() {
+		Dom.addEventListener(textField.getValueBox().getElement(), "focus", (event) -> {
+			attachKeyboardButton();
+		});
 	}
 
 	/**
