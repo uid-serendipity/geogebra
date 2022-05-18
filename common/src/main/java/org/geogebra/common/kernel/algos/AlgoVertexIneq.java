@@ -72,9 +72,7 @@ public class AlgoVertexIneq extends AlgoElement {
 	@Override
 	protected void setInputOutput() {
 		input = new GeoElement[] { p };
-
 		setDependencies();
-
 	}
 
 	@Override
