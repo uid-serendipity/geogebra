@@ -8,7 +8,6 @@ import java.util.TreeSet;
 
 import org.geogebra.common.cas.GeoGebraCAS;
 import org.geogebra.common.cas.giac.CASgiac.CustomFunctions;
-import org.geogebra.common.cas.singularws.SingularWebService;
 import org.geogebra.common.factories.UtilFactory;
 import org.geogebra.common.kernel.Construction;
 import org.geogebra.common.kernel.Kernel;
@@ -21,6 +20,7 @@ import org.geogebra.common.kernel.geos.GeoElement;
 import org.geogebra.common.kernel.geos.GeoPoint;
 import org.geogebra.common.kernel.implicit.GeoImplicit;
 import org.geogebra.common.kernel.prover.ProverBotanasMethod.AlgebraicStatement;
+import org.geogebra.common.main.SingularWebService;
 import org.geogebra.common.util.debug.Log;
 
 /**

@@ -1,13 +1,13 @@
-package org.geogebra.common.cas.singularws;
+package org.geogebra.desktop.cas.singularws;
 
 import java.util.Date;
 
 import org.geogebra.common.cas.error.ComputationException;
 import org.geogebra.common.factories.UtilFactory;
 import org.geogebra.common.main.SingularWSSettings;
-import org.geogebra.common.util.HttpRequest;
 import org.geogebra.common.util.URLEncoder;
 import org.geogebra.common.util.debug.Log;
+import org.geogebra.desktop.util.HttpRequestD;
 
 /**
  * Maintains a Singular WebService. For the SingularWS API please see the
@@ -17,7 +17,7 @@ import org.geogebra.common.util.debug.Log;
  * 
  * @author Zoltan Kovacs <zoltan@geogebra.org>
  */
-public class SingularWebService {
+public class SingularWebServiceD implements org.geogebra.common.main.SingularWebService {
 
 	private final static int GET_REQUEST_MAX_SIZE = 2000;
 
@@ -53,16 +53,16 @@ public class SingularWebService {
 			URLEncoder urle = UtilFactory.getPrototype().newURLEncoder();
 			encodedParameters = urle.encode(parameters);
 		}
-		HttpRequest httpr = UtilFactory.getPrototype().newHttpRequest();
+		HttpRequestD httpr = new HttpRequestD();
 		httpr.setTimeout(timeout);
 		// Varnish currently cannot do caching for POST requests,
 		// so we prefer GET for the shorter Singular programs:
 		if (encodedParameters.length() + url1.length() + command.length()
 				+ 6 <= GET_REQUEST_MAX_SIZE) {
-			httpr.sendRequestPost("GET",
+			httpr.sendRequestPostSync("GET",
 					url1 + "?c=" + command + "&p=" + encodedParameters + caching, null, null);
 		} else {
-			httpr.sendRequestPost("POST", url1,
+			httpr.sendRequestPostSync("POST", url1,
 					"c=" + command + "&p=" + encodedParameters + caching,
 					null);
 		}
@@ -70,8 +70,7 @@ public class SingularWebService {
 		// >= 3 (2014-01-03).
 		String response = httpr.getResponse(); // will not work in web, TODO:
 												// callback!
-		if (response == null)
-		 {
+		if (response == null) {
 			return null; // avoiding NPE in web
 		}
 		// Trimming:

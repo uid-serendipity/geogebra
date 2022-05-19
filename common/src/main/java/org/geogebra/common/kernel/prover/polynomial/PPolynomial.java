@@ -12,9 +12,9 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 import org.geogebra.common.cas.GeoGebraCAS;
-import org.geogebra.common.cas.singularws.SingularWebService;
 import org.geogebra.common.kernel.Kernel;
 import org.geogebra.common.main.SingularWSSettings;
+import org.geogebra.common.main.SingularWebService;
 import org.geogebra.common.util.ExtendedBoolean;
 import org.geogebra.common.util.debug.Log;
 

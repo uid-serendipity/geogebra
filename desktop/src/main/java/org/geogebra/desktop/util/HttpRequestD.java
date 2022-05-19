@@ -26,6 +26,14 @@ import org.geogebra.common.util.debug.Log;
  */
 public class HttpRequestD extends HttpRequest {
 	private String answer;
+	/**
+	 * stores if the HTTP request is already processed
+	 */
+	public boolean processed = false;
+	/**
+	 * current timeout for HTTP requests
+	 */
+	private int timeout = -1;
 
 	@Override
 	public void sendRequestPost(final String method, final String url,
@@ -56,7 +64,7 @@ public class HttpRequestD extends HttpRequest {
 	 * @param callback
 	 *            callback
 	 */
-	private void sendRequestPostSync(String method, String url, String post,
+	public void sendRequestPostSync(String method, String url, String post,
 			AjaxCallback callback) {
 		HttpURLConnection huc = null;
 		try {
@@ -66,6 +74,9 @@ public class HttpRequestD extends HttpRequest {
 			// Borrowed from
 			// http://bytes.com/topic/java/answers/720825-how-build-http-post-request-java:
 			huc.setRequestMethod(method);
+			if (timeout > 0) {
+				huc.setConnectTimeout(timeout * 1000);
+			}
 			if (getAuth() != null) {
 				huc.setRequestProperty("Authorization", "Basic " + getAuth());
 			}
@@ -89,7 +100,6 @@ public class HttpRequestD extends HttpRequest {
 			}
 
 
-			setResponseText(answer);
 			processed = true;
 			if (callback != null) {
 				callback.onSuccess(getResponse());
@@ -113,6 +123,16 @@ public class HttpRequestD extends HttpRequest {
 			ex.printStackTrace();
 			Log.error(ex.getMessage());
 		}
+	}
+
+	/**
+	 * Gets a response from a remote HTTP server
+	 *
+	 * @return the full textual content of the result after the request
+	 *         processed (the output page itself)
+	 */
+	public String getResponse() {
+		return answer;
 	}
 
 	public static String readOutput(InputStream inputStream)
@@ -196,5 +216,16 @@ public class HttpRequestD extends HttpRequest {
 			// and ignore exceptions
 		}
 
+	}
+
+
+	/**
+	 * @param timeout_secs
+	 *            HTTP request timeout in seconds Modify the default timeout for
+	 *            HTTP requests Warning: the desktop version currently ignores
+	 *            this setting
+	 */
+	public void setTimeout(Integer timeout_secs) {
+		timeout = timeout_secs;
 	}
 }

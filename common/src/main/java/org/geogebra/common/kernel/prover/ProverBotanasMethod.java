@@ -12,7 +12,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.geogebra.common.cas.GeoGebraCAS;
-import org.geogebra.common.cas.singularws.SingularWebService;
 import org.geogebra.common.factories.UtilFactory;
 import org.geogebra.common.kernel.CASGenericInterface;
 import org.geogebra.common.kernel.Kernel;
@@ -47,6 +46,7 @@ import org.geogebra.common.kernel.prover.adapters.DependentNumberAdapter;
 import org.geogebra.common.kernel.prover.polynomial.PPolynomial;
 import org.geogebra.common.kernel.prover.polynomial.PVariable;
 import org.geogebra.common.main.ProverSettings;
+import org.geogebra.common.main.SingularWebService;
 import org.geogebra.common.plugin.Operation;
 import org.geogebra.common.util.DoubleUtil;
 import org.geogebra.common.util.ExtendedBoolean;

@@ -148,6 +148,7 @@ import org.geogebra.common.main.DialogManager;
 import org.geogebra.common.main.MyError.Errors;
 import org.geogebra.common.main.ProverSettings;
 import org.geogebra.common.main.SingularWSSettings;
+import org.geogebra.common.main.SingularWebService;
 import org.geogebra.common.main.SpreadsheetTableModel;
 import org.geogebra.common.main.error.ErrorHandler;
 import org.geogebra.common.main.settings.AbstractSettings;
@@ -175,6 +176,7 @@ import org.geogebra.desktop.GeoGebra;
 import org.geogebra.desktop.awt.GBufferedImageD;
 import org.geogebra.desktop.awt.GDimensionD;
 import org.geogebra.desktop.awt.GFontD;
+import org.geogebra.desktop.cas.singularws.SingularWebServiceD;
 import org.geogebra.desktop.euclidian.DrawEquationD;
 import org.geogebra.desktop.euclidian.EuclidianControllerD;
 import org.geogebra.desktop.euclidian.EuclidianViewD;
@@ -366,6 +368,9 @@ public class AppD extends App implements KeyEventDispatcher, AppDI {
 	private int centerX;
 	private int centerY;
 	private String regressionFileName = null;
+
+	/** Singular web service (CAS) */
+	protected SingularWebServiceD singularWS;
 
 	/*************************************************************
 	 * Construct application within JFrame
@@ -4528,6 +4533,27 @@ public class AppD extends App implements KeyEventDispatcher, AppDI {
 			Log.debug(Thread.currentThread() + " running");
 			initializeSingularWS();
 		}
+	}
+
+	/**
+	 * Initializes SingularWS
+	 */
+	public void initializeSingularWS() {
+		singularWS = new SingularWebServiceD();
+		singularWS.enable();
+		if (singularWS.isAvailable()) {
+			Log.info("SingularWS is available at "
+					+ singularWS.getConnectionSite());
+			// debug(singularWS.directCommand("ring r=0,(x,y),dp;ideal
+			// I=x^2,x;groebner(I);"));
+		} else {
+			Log.info("No SingularWS is available at "
+					+ singularWS.getConnectionSite() + " (yet)");
+		}
+	}
+
+	public SingularWebService getSingularWS() {
+		return singularWS;
 	}
 
 	private void initializeSingularWSD() {

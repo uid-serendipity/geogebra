@@ -20,7 +20,6 @@ import org.geogebra.common.awt.GColor;
 import org.geogebra.common.awt.GDimension;
 import org.geogebra.common.awt.GFont;
 import org.geogebra.common.awt.MyImage;
-import org.geogebra.common.cas.singularws.SingularWebService;
 import org.geogebra.common.euclidian.Drawable;
 import org.geogebra.common.euclidian.EmbedManager;
 import org.geogebra.common.euclidian.EuclidianConstants;
@@ -238,9 +237,6 @@ public abstract class App implements UpdateSelection, AppInterface, EuclidianHos
 			"1 decimals", "2 decimals", "3 decimals", "4 decimals",
 			"5 decimals", "10 decimals", "13 decimals", "15 decimals", "",
 			"3 figures", "5 figures", "10 figures", "15 figures" };
-
-	/** Singular web service (CAS) */
-	private SingularWebService singularWS;
 
 	private static String CASVersionString = "";
 	private static boolean CASViewEnabled = true;
@@ -522,25 +518,8 @@ public abstract class App implements UpdateSelection, AppInterface, EuclidianHos
 
 	}
 
-	/**
-	 * Initializes SingularWS
-	 */
-	public void initializeSingularWS() {
-		singularWS = new SingularWebService();
-		singularWS.enable();
-		if (singularWS.isAvailable()) {
-			Log.info("SingularWS is available at "
-					+ singularWS.getConnectionSite());
-			// debug(singularWS.directCommand("ring r=0,(x,y),dp;ideal
-			// I=x^2,x;groebner(I);"));
-		} else {
-			Log.info("No SingularWS is available at "
-					+ singularWS.getConnectionSite() + " (yet)");
-		}
-	}
-
 	public SingularWebService getSingularWS() {
-		return singularWS;
+		return null;
 	}
 
 	/* selection handling */
@@ -4479,7 +4458,7 @@ public abstract class App implements UpdateSelection, AppInterface, EuclidianHos
 	 * @return whether Singular web service was initialized properly
 	 */
 	public boolean singularWSisAvailable() {
-		return singularWS != null && singularWS.isAvailable();
+		return getSingularWS() != null && getSingularWS().isAvailable();
 	}
 
 	/**
@@ -4488,10 +4467,10 @@ public abstract class App implements UpdateSelection, AppInterface, EuclidianHos
 	 * @return command translated to Singular
 	 */
 	public String singularWSgetTranslatedCASCommand(String s) {
-		if (singularWS == null) {
+		if (getSingularWS() == null) {
 			return null;
 		}
-		return singularWS.getTranslatedCASCommand(s);
+		return getSingularWS().getTranslatedCASCommand(s);
 	}
 
 	/**
@@ -4502,10 +4481,10 @@ public abstract class App implements UpdateSelection, AppInterface, EuclidianHos
 	 *             when command invalid or problem with Singular occurs
 	 */
 	public String singularWSdirectCommand(String s) throws Throwable {
-		if (singularWS == null) {
+		if (getSingularWS() == null) {
 			return null;
 		}
-		return singularWS.directCommand(s);
+		return getSingularWS().directCommand(s);
 	}
 
 	/**

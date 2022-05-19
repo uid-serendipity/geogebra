@@ -30,8 +30,8 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 
 import org.geogebra.common.GeoGebraConstants;
-import org.geogebra.common.cas.singularws.SingularWebService;
 import org.geogebra.common.main.App;
+import org.geogebra.common.main.SingularWebService;
 import org.geogebra.common.move.events.BaseEvent;
 import org.geogebra.common.move.ggtapi.TubeAvailabilityCheckEvent;
 import org.geogebra.common.move.views.EventRenderable;
