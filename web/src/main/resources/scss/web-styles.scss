@@ -1861,9 +1861,7 @@
 		margin: 0;
 		padding: 0;
 	}
-	.probCalcViewTab {
-		margin-left: 10px;
-	}
+
 	.gwt-TabLayoutPanel .gwt-TabLayoutPanelContent.ProbCalcPanel {
 		// no scrollbar for main panel, only for value table
 		overflow: hidden;
@@ -1924,25 +1922,21 @@
 		float: right;
 	}
 
-	.controlPanel {
-		float: left;
-		overflow: auto;
+	.distrPanel {
+		display: grid;
 	}
 
-	.controlPanel .groupEnd {
-		margin-right: 30px;
-	}
-
-	.cbPanel, .intervalPanel {
-		padding: 5px 0;
-		float: left;
-		white-space: nowrap;
+	.comboParamPanel, .resultPanel {
 		display: flex;
 		flex-wrap: wrap;
+	}
+
+	.comboParamPanel, .intervalPanel {
+		padding: 8px 0;
+		float: left;
+		white-space: nowrap;
+		flex-wrap: wrap;
 		align-items: center;
-		& > * {
-			margin-top: 8px;
-		}
 	}
 
 	.parameterPanel, .resultPanel {
@@ -1950,18 +1944,9 @@
 		align-items: center;
 	}
 
-	.controlPanel > div.clear {
-		padding: 0;
-		margin: 0;
-	}
-
-	.cbPanel .gwt-ToggleButton, .cbPanel .gwt-ListBox {
+	.comboParamPanel .MyToggleButton, .comboParamPanel .gwt-ListBox {
 		display: inline-block;
 		margin-right: 10px;
-	}
-
-	.cbPanel .gwt-ToggleButton {
-		float: left;
 	}
 
 	.parameterPanel > *, .resultPanel > * {
