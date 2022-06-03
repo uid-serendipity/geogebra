@@ -2450,8 +2450,6 @@ public class AppWFull extends AppW implements HasKeyboard, MenuViewListener {
 					.getPanel(VIEW_ALGEBRA);
 			if (avPanel instanceof ToolbarDockPanelW) {
 				hideKeyboard();
-				((ToolbarDockPanelW) avPanel).getToolbar().close(true, 0);
-				((ToolbarDockPanelW) avPanel).getToolbar().setAVIconNonSelect(isExam());
 			}
 		}
 	}
