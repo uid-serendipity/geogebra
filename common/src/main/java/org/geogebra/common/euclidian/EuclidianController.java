@@ -6570,7 +6570,7 @@ public abstract class EuclidianController implements SpecialPointsListener {
 					if (geo != null && !geo.isGeoButton()) {
 						if (isSpecialPreviewPointFound(hits)) {
 							previewPointHits = getPreviewSpecialPointHits(hits);
-						} else {
+						} else if (!geo.isSelected() || selection.getSelectedGeos().size() != 1) {
 							selection.clearSelectedGeos(false);
 							selection.addSelectedGeoWithGroup(geo);
 						}
