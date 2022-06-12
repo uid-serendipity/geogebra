@@ -7232,4 +7232,13 @@ public abstract class GeoElement extends ConstructionElement implements GeoEleme
 	public void removeZoomerAnimationListenerIfNeeded() {
 		// implemented in GeoFunction
 	}
+
+	/**
+	 * @return this in GeoList
+	 * and twinGeo in GeoSymbolic, if the twinGeo is a GeoList instance.
+	 * @throws ClassCastException if there isn't an existing GeoList instance to return.
+	 */
+	public GeoList toGeoList() {
+		throw new ClassCastException("GeoElement is not a GeoList");
+	}
 }

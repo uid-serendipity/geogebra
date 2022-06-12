@@ -3379,4 +3379,9 @@ public class GeoList extends GeoElement
 		}
 		return list;
 	}
+
+	@Override
+	public GeoList toGeoList() {
+		return this;
+	}
 }

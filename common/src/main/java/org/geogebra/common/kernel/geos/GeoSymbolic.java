@@ -1077,4 +1077,12 @@ public class GeoSymbolic extends GeoElement
 		return unwrapped instanceof GeoSymbolic
 				&& ((GeoSymbolic) unwrapped).getTwinGeo().isGeoList();
 	}
+
+	@Override
+	public GeoList toGeoList() {
+		if (twinGeo instanceof GeoList) {
+			return (GeoList) twinGeo;
+		}
+		throw new ClassCastException("GeoSymbolic's twin is not a GeoList");
+	}
 }
