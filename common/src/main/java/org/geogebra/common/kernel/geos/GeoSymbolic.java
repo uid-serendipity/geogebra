@@ -1078,6 +1078,11 @@ public class GeoSymbolic extends GeoElement
 				&& ((GeoSymbolic) unwrapped).getTwinGeo().isGeoList();
 	}
 
+	/**
+	 * Note: the returned twinGeo doesn't have a label.
+	 *
+	 * @return if the twinGeo is a GeoList then returns it, otherwise throws a ClassCastException
+	 */
 	@Override
 	public GeoList toGeoList() {
 		if (twinGeo instanceof GeoList) {
