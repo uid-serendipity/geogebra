@@ -6,6 +6,7 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style;
+import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.UIObject;
 
 import elemental2.dom.CSSStyleDeclaration;
@@ -183,5 +184,15 @@ public final class Dom {
 		HTMLElement div = Js.uncheckedCast(DomGlobal.document.createElement("div"));
 		div.className = cls;
 		return div;
+	}
+
+	/**
+	 * @return create button with default type (not submitting)
+	 */
+	public static Element createDefaultButton() {
+		Element btn = DOM.createElement("button");
+		// avoid default "submit" behavior when GeoGebra is in a form
+		btn.setAttribute("type", "button");
+		return btn;
 	}
 }
