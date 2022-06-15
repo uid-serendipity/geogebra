@@ -52,6 +52,7 @@ import org.geogebra.common.kernel.kernelND.GeoAxisND;
 import org.geogebra.common.kernel.kernelND.GeoConicND;
 import org.geogebra.common.kernel.kernelND.GeoElementND;
 import org.geogebra.common.kernel.matrix.Coords;
+import org.geogebra.common.kernel.parser.ParseException;
 import org.geogebra.common.kernel.scripting.CmdSetCoords;
 import org.geogebra.common.kernel.scripting.CmdSetValue;
 import org.geogebra.common.main.App;
@@ -163,15 +164,14 @@ public abstract class GgbAPI implements JavaScriptAPI {
 		if (!app.getSettings().getCasSettings().isEnabled()) {
 			return "?";
 		}
-		GeoCasCell assignment = algebraprocessor.checkCasEval(cmdString,
-				"(:=?)|" + Unicode.ASSIGN_STRING);
-		if (assignment != null) {
-			return getCasCellValue(assignment, rounding);
-		}
 		// default (undefined)
 		String ret = "?";
-
 		try {
+			GeoCasCell assignment = algebraprocessor.checkCasEval(cmdString,
+					"(:=?)|" + Unicode.ASSIGN_STRING);
+			if (assignment != null) {
+				return getCasCellValue(assignment, rounding);
+			}
 			GeoCasCell f = new GeoCasCell(kernel.getConstruction());
 			f.setInput(cmdString);
 			f.computeOutput();

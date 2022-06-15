@@ -37,11 +37,7 @@ public class InputHelper {
 						.getReverseCommand(curWord.toString()) == null) {
 			return false;
 		}
-		try {
-			return kernel.lookupLabel(curWord.toString()) == null;
-		} catch (Exception e) {
-			return false;
-		}
+		return kernel.lookupLabel(curWord.toString()) == null;
 	}
 
 	private static boolean needsThreeLetters(Kernel kernel) {

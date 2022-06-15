@@ -2309,7 +2309,8 @@ public class Construction {
 				// geo found for name that includes $ signs
 				return checkConstructionStep(geo);
 			}
-			if (labelString.charAt(0) >= '0' && labelString.charAt(0) <= '9') {
+			if (!labelString.isEmpty()
+					&& labelString.charAt(0) >= '0' && labelString.charAt(0) <= '9') {
 				int cell = 0;
 				try {
 					cell = Integer.parseInt(labelWithoutDollar.toString());
@@ -2348,7 +2349,7 @@ public class Construction {
 		// try upper case version for spreadsheet label like a1
 		if (allowAutoCreate) {
 			// starts with letter & ends with digit
-			if (Character.isLetter(label1.charAt(0))
+			if (!label1.isEmpty() && Character.isLetter(label1.charAt(0))
 					&& StringUtil.isDigit(label1.charAt(label1.length() - 1))) {
 				String upperCaseLabel = label1.toUpperCase();
 				geo = geoTableVarLookup(upperCaseLabel);

@@ -1168,8 +1168,11 @@ public class AlgebraProcessor {
 	 *            whole command including label
 	 * @return cell
 	 */
-	public GeoCasCell checkCasEval(String input, String allowedAssignmentRegex) {
+	public GeoCasCell checkCasEval(String input, String allowedAssignmentRegex) throws ParseException {
 		if (input != null && input.startsWith("$")) {
+			if (isOnlyDollars(input)) {
+				throw new ParseException();
+			}
 			String[] result = input.split(allowedAssignmentRegex, 2);
 
 			if (result.length != 2 || result[1].startsWith("=")) {
@@ -1204,6 +1207,16 @@ public class AlgebraProcessor {
 			// eg $A$1 label, do nothing
 		}
 		return -1;
+	}
+
+	private boolean isOnlyDollars(String input) {
+		int count = 0;
+		for (int i = 0; i < input.length(); i++) {
+			if (input.charAt(i)=='$') {
+				count++;
+			}
+		}
+		return count == input.length();
 	}
 
 	/**
