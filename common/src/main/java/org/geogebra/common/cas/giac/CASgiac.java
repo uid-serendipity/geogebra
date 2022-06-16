@@ -695,9 +695,11 @@ public abstract class CASgiac implements CASGenericInterface {
 	}
 
 	private boolean hasWrongArgumentNumber(Command command, LowerCaseDictionary commandDict) {
-		String commandNameWithArgNr = command.getName() + "." + command.getArgumentNumber();
-		return casParser.getTranslatedCASCommand(commandNameWithArgNr) == null
-				&& commandDict.lookup(command.getName()) != null;
+		String nameDotNumber = command.getName() + "." + command.getArgumentNumber();
+		String nameDotN = command.getName() + ".N";
+		return commandDict.lookup(command.getName()) != null
+				&& casParser.getTranslatedCASCommand(nameDotNumber) == null
+				&& casParser.getTranslatedCASCommand(nameDotN) == null;
 	}
 
 	private static ExpressionValue subst(ExpressionValue substArg,
