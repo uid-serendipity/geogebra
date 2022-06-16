@@ -39,9 +39,11 @@ import org.geogebra.common.kernel.geos.GeoDummyVariable;
 import org.geogebra.common.kernel.geos.GeoElement;
 import org.geogebra.common.kernel.prover.polynomial.PPolynomial;
 import org.geogebra.common.kernel.prover.polynomial.PVariable;
+import org.geogebra.common.main.MyError;
 import org.geogebra.common.main.settings.AbstractSettings;
 import org.geogebra.common.main.settings.CASSettings;
 import org.geogebra.common.plugin.Operation;
+import org.geogebra.common.util.LowerCaseDictionary;
 import org.geogebra.common.util.MaxSizeHashMap;
 import org.geogebra.common.util.debug.Log;
 import org.geogebra.regexp.shared.MatchResult;
@@ -617,6 +619,15 @@ public abstract class CASgiac implements CASGenericInterface {
 
 		ValidExpression casInput = inputExpression;
 		Command cmd = casInput.getTopLevelCommand();
+
+		if (cmd != null
+				&& hasWrongArgumentNumber(cmd, kernel.getApplication().getCommandDictionary())) {
+			CASException exception = new CASException("Wrong number of command arguments.");
+			exception.setKey(MyError.Errors.IllegalArgumentNumber.getKey());
+			exception.setCommand(cmd);
+			throw exception;
+		}
+
 		boolean keepInput = (cell != null && cell.isKeepInputUsed())
 				|| (cmd != null && "KeepInput".equals(cmd.getName()));
 		String plainResult = getPlainResult(casInput, kernel);
@@ -681,6 +692,12 @@ public abstract class CASgiac implements CASGenericInterface {
 		}
 		return toGeoGebraString(result, arbconst, tpl, kernel);
 
+	}
+
+	private boolean hasWrongArgumentNumber(Command command, LowerCaseDictionary commandDict) {
+		String commandNameWithArgNr = command.getName() + "." + command.getArgumentNumber();
+		return casParser.getTranslatedCASCommand(commandNameWithArgNr) == null
+				&& commandDict.lookup(command.getName()) != null;
 	}
 
 	private static ExpressionValue subst(ExpressionValue substArg,

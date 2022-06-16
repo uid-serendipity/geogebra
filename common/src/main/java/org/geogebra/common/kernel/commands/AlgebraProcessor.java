@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.TreeSet;
 
 import org.geogebra.common.io.MathMLParser;
+import org.geogebra.common.kernel.CASException;
 import org.geogebra.common.kernel.CircularDefinitionException;
 import org.geogebra.common.kernel.Construction;
 import org.geogebra.common.kernel.Kernel;
@@ -1313,6 +1314,13 @@ public class AlgebraProcessor {
 					ve == null ? null
 							: ve.toString(StringTemplate.defaultTemplate),
 					loc, handler);
+		} catch (CASException e) {
+			String input = ve == null ? null : ve.toString(StringTemplate.defaultTemplate);
+			String commandName = e.getCommand() != null
+					? e.getCommand().getName()
+					: input != null ? input : "";
+			MyError error = MyError.forCommand(loc, e.getKey(), commandName, e);
+			ErrorHelper.handleError(error, input, loc, handler);
 		} catch (Exception ex) {
 			Log.debug("Exception" + ex.getLocalizedMessage());
 			ErrorHelper.handleException(ex, app, handler);

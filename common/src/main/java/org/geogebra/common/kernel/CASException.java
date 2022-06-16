@@ -1,6 +1,9 @@
 package org.geogebra.common.kernel;
 
+import javax.annotation.Nullable;
+
 import org.geogebra.common.cas.GeoGebraCAS;
+import org.geogebra.common.kernel.arithmetic.Command;
 import org.geogebra.common.main.MyError.Errors;
 
 /**
@@ -16,6 +19,7 @@ public class CASException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 	private String key;
+	private Command command;
 
 	/**
 	 * Creates new CAS exception
@@ -56,5 +60,14 @@ public class CASException extends RuntimeException {
 	 */
 	public void setKey(String key) {
 		this.key = key;
+	}
+
+	@Nullable
+	public Command getCommand() {
+		return command;
+	}
+
+	public void setCommand(Command command) {
+		this.command = command;
 	}
 }
