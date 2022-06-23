@@ -200,10 +200,11 @@ import org.geogebra.common.util.debug.Log;
 	}
 
 	static boolean hasMoreVariables(ExpressionNode node) {
-		if (node == null) {
-			return false;
-		}
-		return node.inspect(new MultipleVariableChecker());
+		return false;
+		//		if (node == null) {
+//			return false;
+//		}
+//		return node.inspect(new MultipleVariableChecker());
 	}
 
 	public GeoFunction getFunction() {
