@@ -22,6 +22,7 @@ public class FunctionSampler implements IntervalFunctionSampler {
 	private EuclidianViewBounds bounds;
 	private int numberOfSamples;
 	private final DiscreteSpace space;
+	private boolean asymtoteProcessing = true;
 
 	/**
 	 * @param geoFunction function to get sampled
@@ -72,9 +73,15 @@ public class FunctionSampler implements IntervalFunctionSampler {
 	public IntervalTupleList evaluate(DiscreteSpace space) {
 		IntervalTupleList samples = new IntervalTupleList();
 		evaluateOnEach(space, samples);
-		IntervalAsymptotes asymptotes = new IntervalAsymptotes(samples);
-		asymptotes.process();
+		if (asymtoteProcessing) {
+			IntervalAsymptotes asymptotes = new IntervalAsymptotes(samples);
+			asymptotes.process();
+		}
 		return samples;
+	}
+
+	public void disableAsymtoteProcessing() {
+		asymtoteProcessing = false;
 	}
 
 	private void evaluateOnEach(DiscreteSpace space, IntervalTupleList samples) {

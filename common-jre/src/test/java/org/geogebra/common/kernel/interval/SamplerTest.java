@@ -18,4 +18,13 @@ public class SamplerTest extends BaseUnitTest {
 		return sampler.result();
 	}
 
+	protected IntervalTupleList hiResFunctionValues(String functionDescription) {
+		GeoFunction function = add(functionDescription);
+		IntervalTuple range = PlotterUtils.newRange(-10, 10, -10, 10);
+		FunctionSampler sampler = PlotterUtils.newSampler(function, range,
+				1920);
+		return sampler.result();
+	}
+
+
 }
