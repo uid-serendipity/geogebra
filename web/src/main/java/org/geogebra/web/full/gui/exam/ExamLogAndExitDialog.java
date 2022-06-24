@@ -98,7 +98,8 @@ public class ExamLogAndExitDialog extends GPopupPanel {
 		if (app.isExam()) {
 			calcStr = app.getExam().getExamRegion().getDisplayName(app.getLocalization());
 		} else {
-			calcStr = app.getLocalization().getMenu(app.isUnbundled() ? app.getConfig().getAppTransKey()
+			calcStr = app.getLocalization().getMenu(app.isUnbundled()
+					? app.getConfig().getAppTransKey()
 					: "CreateYourOwn");
 		}
 		Label calcType = new Label(calcStr);
