@@ -13,8 +13,10 @@ public class AsymptoteDetector {
 
 	private final FunctionSampler sampler;
 	private List<IntervalTuple> asymptotes;
+	private EuclidianViewBounds bounds;
 
 	public AsymptoteDetector(GeoFunction function, EuclidianViewBounds bounds) {
+		this.bounds = bounds;
 		IntervalTuple range = new IntervalTuple(bounds.domain(), bounds.range());
 		sampler = new FunctionSampler(function, range, bounds);
 		sampler.disableAsymtoteProcessing();
@@ -22,6 +24,8 @@ public class AsymptoteDetector {
 	}
 
 	public void update() {
+		IntervalTuple range = new IntervalTuple(bounds.domain(), bounds.range());
+		sampler.update(range);
 		asymptotes = filterAsymptotes(sampler.result());
 	}
 

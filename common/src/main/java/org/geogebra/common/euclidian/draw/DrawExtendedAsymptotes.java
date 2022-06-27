@@ -7,10 +7,10 @@ import org.geogebra.common.awt.GGraphics2D;
 import org.geogebra.common.euclidian.EuclidianView;
 import org.geogebra.common.euclidian.GeneralPathClipped;
 import org.geogebra.common.kernel.geos.GeoFunction;
+import org.geogebra.common.kernel.interval.Interval;
 import org.geogebra.common.kernel.interval.asymptotes.AsymptoteDetector;
 import org.geogebra.common.kernel.interval.function.IntervalTuple;
 import org.geogebra.common.util.DoubleUtil;
-import org.geogebra.common.util.debug.Log;
 
 public class DrawExtendedAsymptotes {
 	private final GeoFunction geo;
@@ -33,8 +33,13 @@ public class DrawExtendedAsymptotes {
 	public void draw(GGraphics2D g2) {
 		List<IntervalTuple> asymptotes = detector.getAsymptotes();
 		for (IntervalTuple tuple: asymptotes) {
-			if (!tuple.y().isWhole()) {
-				extendAsyptote(tuple);
+			Interval y = tuple.y();
+			if (!y.isWhole()) {
+				if (y.isInverted()) {
+					extendInvertedAsyptote(tuple);
+				} else {
+					extendAsyptote(tuple);
+				}
 			}
 		}
 		g2.setPaint(GColor.RED);
@@ -42,8 +47,32 @@ public class DrawExtendedAsymptotes {
 		g2.setPaint(geo.getObjectColor());
 	}
 
+	private void extendInvertedAsyptote(IntervalTuple tuple) {
+		Interval lowInterval = tuple.y().extractLow();
+		Interval highInterval = tuple.y().extractHigh();
+		if (!lowInterval.isInfiniteSingleton()) {
+			drawBottom(tuple.x(), lowInterval);
+		}
+		if (!highInterval.isInfiniteSingleton()) {
+			drawTop(tuple.x(), highInterval);
+		}
+	}
+
+	private void drawBottom(Interval x, Interval y) {
+		double sx = view.toScreenCoordXd(x.getLow());
+		double sy = view.toScreenCoordYd(y.getHigh());
+		gp.moveTo(sx, sy);
+		gp.lineTo(sx, view.getMaxYScreen());
+	}
+
+	private void drawTop(Interval x, Interval y) {
+		double sx = view.toScreenCoordXd(x.getLow());
+		double sy = view.toScreenCoordYd(y.getHigh());
+		gp.moveTo(sx, sy);
+		gp.lineTo(sx, 0);
+	}
+
 	private void extendAsyptote(IntervalTuple tuple) {
-		Log.debug("ExtendAsymptote: " + tuple);
 		double sx = view.toScreenCoordXd(tuple.x().getLow());
 		if (DoubleUtil.isEqual(tuple.y().getLow(), Double.NEGATIVE_INFINITY)) {
 			double sy = view.toScreenCoordYd(tuple.y().getHigh());
