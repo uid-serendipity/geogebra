@@ -1,5 +1,8 @@
 package org.geogebra.common.euclidian.plot;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.apache.commons.math3.util.Cloner;
 import org.geogebra.common.awt.GPoint;
 import org.geogebra.common.euclidian.EuclidianView;
@@ -51,6 +54,7 @@ public class CurveSegmentPlotter {
 	private CurvePlotterStack stack;
 	private boolean onScreen;
 	private double[] divisors;
+	private Set<Double[]> singularites = new HashSet<>();
 
 	/**
 	 * Draws a parametric curve (x(t), y(t)) for t in [tMin, tMax].
@@ -93,6 +97,7 @@ public class CurveSegmentPlotter {
 		nextLineToNeedsMoveToFirst = false;
 		eval = curve.newDoubleArray();
 		labelPositionCalculator = new LabelPositionCalculator(new EuclidianViewBoundsImp(view));
+		singularites.clear();
 		if (start()) {
 			plot();
 		}
@@ -220,8 +225,13 @@ public class CurveSegmentPlotter {
 	private boolean hasNoSingularity(double t, double interval) {
 		// check if c(t-eps) and c(t+eps) are both defined
 
-		return !isContinuousAround(curve, t,
+		boolean continuousAround = isContinuousAround(curve, t,
 				interval, view, eval);
+		if (!continuousAround) {
+			Double[] singularity = new Double[]{t, eval[0]};
+			singularites.add(singularity);
+		}
+		return !continuousAround;
 	}
 
 	private boolean isCurveUndefinedAt(double x) {
@@ -515,5 +525,9 @@ public class CurveSegmentPlotter {
 
 	public GPoint getLabelPoint() {
 		return labelPoint;
+	}
+
+	public Set<Double[]> getSingularities() {
+		return singularites;
 	}
 }

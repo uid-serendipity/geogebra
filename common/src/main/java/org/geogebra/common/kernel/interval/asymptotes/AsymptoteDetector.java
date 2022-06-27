@@ -18,19 +18,23 @@ public class AsymptoteDetector {
 		IntervalTuple range = new IntervalTuple(bounds.domain(), bounds.range());
 		sampler = new FunctionSampler(function, range, bounds);
 		sampler.disableAsymtoteProcessing();
-		process();
+		update();
 	}
 
-	public void process() {
-		asymptotes = getAsymptotes(sampler.result());
+	public void update() {
+		asymptotes = filterAsymptotes(sampler.result());
 	}
 
 	public int size() {
 		return asymptotes.size();
 	}
 
-	private List<IntervalTuple> getAsymptotes(IntervalTupleList tuples) {
+	private List<IntervalTuple> filterAsymptotes(IntervalTupleList tuples) {
 		return tuples.stream().filter(t -> t.y().hasInfinity()).collect(Collectors.toList());
+	}
+
+	public List<IntervalTuple> getAsymptotes() {
+		return asymptotes;
 	}
 
 	@Override

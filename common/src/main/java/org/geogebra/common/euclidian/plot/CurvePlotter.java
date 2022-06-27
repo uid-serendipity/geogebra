@@ -1,8 +1,11 @@
 package org.geogebra.common.euclidian.plot;
 
+import java.util.Set;
+
 import org.geogebra.common.awt.GPoint;
 import org.geogebra.common.euclidian.EuclidianView;
 import org.geogebra.common.kernel.kernelND.CurveEvaluable;
+import org.geogebra.common.util.debug.Log;
 
 /**
  * Class to plot x->f(x) functions and 2D/3D parametric curves
@@ -39,6 +42,11 @@ public class CurvePlotter {
 		curveSegmentPlotter = new CurveSegmentPlotter(curve, tMin, tMax, 0,
 				maxParamStep, view, gp, calcLabelPos, moveToAllowed);
 
+		Set<Double[]> singularities = curveSegmentPlotter.getSingularities();
+		if (!singularities.isEmpty()) {
+			singularities.forEach(eval -> {
+				Log.debug("singularity: " + eval);});
+		}
 		if (moveToAllowed == Gap.CORNER) {
 			gp.corner();
 		}
