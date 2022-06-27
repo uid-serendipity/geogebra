@@ -13,9 +13,7 @@ the Free Software Foundation.
 package org.geogebra.common.euclidian.draw;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import org.geogebra.common.awt.GColor;
 import org.geogebra.common.awt.GGraphics2D;
 import org.geogebra.common.awt.GLine2D;
 import org.geogebra.common.awt.GPoint;
@@ -26,7 +24,6 @@ import org.geogebra.common.awt.GShape;
 import org.geogebra.common.euclidian.Drawable;
 import org.geogebra.common.euclidian.EuclidianView;
 import org.geogebra.common.euclidian.EuclidianViewBoundsImp;
-import org.geogebra.common.euclidian.GeneralPathClipped;
 import org.geogebra.common.euclidian.RemoveNeeded;
 import org.geogebra.common.euclidian.plot.CurvePlotter;
 import org.geogebra.common.euclidian.plot.Gap;
@@ -48,7 +45,6 @@ import org.geogebra.common.kernel.arithmetic.MyNumberPair;
 import org.geogebra.common.kernel.geos.GeoFunction;
 import org.geogebra.common.kernel.interval.asymptotes.AsymptoteDetector;
 import org.geogebra.common.kernel.interval.function.IntervalFunction;
-import org.geogebra.common.kernel.interval.function.IntervalTuple;
 import org.geogebra.common.kernel.kernelND.CurveEvaluable;
 import org.geogebra.common.kernel.kernelND.GeoElementND;
 import org.geogebra.common.plugin.EuclidianStyleConstants;
@@ -80,6 +76,8 @@ public class DrawParametricCurve extends Drawable implements RemoveNeeded {
 	private FunctionVariable invFV;
 	private ExpressionNode invert;
 
+	private DrawExtendedAsymptotes drawAsymptotes;
+
 	private static final Inspecting containsLog = new Inspecting() {
 		@Override
 		public boolean check(ExpressionValue v) {
@@ -93,7 +91,6 @@ public class DrawParametricCurve extends Drawable implements RemoveNeeded {
 			return false;
 		}
 	};
-	private AsymptoteDetector asymptoteDetector;
 
 	/**
 	 * Creates graphical representation of the curve
@@ -277,10 +274,18 @@ public class DrawParametricCurve extends Drawable implements RemoveNeeded {
 		}
 		// draw trace
 		updateTrace(curve.getTrace());
-		if (asymptoteDetector == null) {
-			asymptoteDetector = new AsymptoteDetector((GeoFunction) geo, new EuclidianViewBoundsImp(view));
+
+		if (drawAsymptotes == null) {
+			createDrawAsymptotes();
 		}
-		asymptoteDetector.update();
+
+		drawAsymptotes.update();
+	}
+
+	private void createDrawAsymptotes() {
+		GeoFunction geoFunction = (GeoFunction) geo;
+		AsymptoteDetector detector = new AsymptoteDetector(geoFunction, new EuclidianViewBoundsImp(view));
+		drawAsymptotes = new DrawExtendedAsymptotes(geoFunction, view, detector);
 	}
 
 	private void updateTrace(boolean showTrace) {
@@ -461,7 +466,7 @@ public class DrawParametricCurve extends Drawable implements RemoveNeeded {
 			drawIntervalPlot(g2);
 		} else {
 			drawParametric(g2);
-			drawAsyptotesForParametricCurve(g2);
+			drawAsymptotes.draw(g2);
 		}
 		if (labelVisible && isVisible) {
 			g2.setFont(view.getFontConic());
@@ -470,25 +475,6 @@ public class DrawParametricCurve extends Drawable implements RemoveNeeded {
 		}
 	}
 
-	private void drawAsyptotesForParametricCurve(GGraphics2D g2) {
-		GeneralPathClipped gp2 = new GeneralPathClipped(view);
-		List<IntervalTuple> asymptotes = asymptoteDetector.getAsymptotes();
-		for (IntervalTuple tuple: asymptotes) {
-			double sx = view.toScreenCoordXd(tuple.x().getLow());
-			if (DoubleUtil.isEqual(tuple.y().getLow(), Double.NEGATIVE_INFINITY)) {
-				double sy = view.toScreenCoordYd(tuple.y().getHigh());
-				gp2.moveTo(sx, sy);
-				gp2.lineTo(sx, view.getMaxYScreen() - 5);
-			} else {
-				double sy = view.toScreenCoordYd(tuple.y().getLow());
-				gp2.moveTo(sx, sy);
-				gp2.lineTo(sx, 5);
-			}
-		}
-		g2.setPaint(GColor.RED);
-		g2.draw(gp2);
-		g2.setPaint(geo.getObjectColor());
-	}
 
 	private void drawIntervalPlot(GGraphics2D g2) {
 		if (!isVisible) {
