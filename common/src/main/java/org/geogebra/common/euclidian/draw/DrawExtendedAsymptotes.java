@@ -10,6 +10,7 @@ import org.geogebra.common.kernel.geos.GeoFunction;
 import org.geogebra.common.kernel.interval.asymptotes.AsymptoteDetector;
 import org.geogebra.common.kernel.interval.function.IntervalTuple;
 import org.geogebra.common.util.DoubleUtil;
+import org.geogebra.common.util.debug.Log;
 
 public class DrawExtendedAsymptotes {
 	private final GeoFunction geo;
@@ -32,19 +33,26 @@ public class DrawExtendedAsymptotes {
 	public void draw(GGraphics2D g2) {
 		List<IntervalTuple> asymptotes = detector.getAsymptotes();
 		for (IntervalTuple tuple: asymptotes) {
-			double sx = view.toScreenCoordXd(tuple.x().getLow());
-			if (DoubleUtil.isEqual(tuple.y().getLow(), Double.NEGATIVE_INFINITY)) {
-				double sy = view.toScreenCoordYd(tuple.y().getHigh());
-				gp.moveTo(sx, sy);
-				gp.lineTo(sx, view.getMaxYScreen());
-			} else {
-				double sy = view.toScreenCoordYd(tuple.y().getLow());
-				gp.moveTo(sx, sy);
-				gp.lineTo(sx, 0);
+			if (!tuple.y().isWhole()) {
+				extendAsyptote(tuple);
 			}
 		}
 		g2.setPaint(GColor.RED);
 		g2.draw(gp);
 		g2.setPaint(geo.getObjectColor());
+	}
+
+	private void extendAsyptote(IntervalTuple tuple) {
+		Log.debug("ExtendAsymptote: " + tuple);
+		double sx = view.toScreenCoordXd(tuple.x().getLow());
+		if (DoubleUtil.isEqual(tuple.y().getLow(), Double.NEGATIVE_INFINITY)) {
+			double sy = view.toScreenCoordYd(tuple.y().getHigh());
+			gp.moveTo(sx, sy);
+			gp.lineTo(sx, view.getMaxYScreen());
+		} else {
+			double sy = view.toScreenCoordYd(tuple.y().getLow());
+			gp.moveTo(sx, sy);
+			gp.lineTo(sx, 0);
+		}
 	}
 }

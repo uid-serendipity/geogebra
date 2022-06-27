@@ -464,7 +464,7 @@ public class DrawParametricCurve extends Drawable implements RemoveNeeded {
 	final public void draw(GGraphics2D g2) {
 		if (intervalPlotter.isEnabled()) {
 			drawIntervalPlot(g2);
-		} else {
+		} else if (isVisible) {
 			drawParametric(g2);
 			drawAsymptotes.draw(g2);
 		}
@@ -493,38 +493,37 @@ public class DrawParametricCurve extends Drawable implements RemoveNeeded {
 	}
 
 	private void drawParametric(GGraphics2D g2) {
-		if (isVisible) {
-			if (dataExpression != null) {
-				g2.setPaint(getObjectColor());
-				if (isHighlighted()) {
-					g2.setPaint(geo.getSelColor());
-					g2.setStroke(selStroke);
-					drawPoints(g2);
-				}
-				g2.setStroke(objStroke);
-				drawPoints(g2);
-				return;
-			}
+		if (dataExpression != null) {
+			g2.setPaint(getObjectColor());
 			if (isHighlighted()) {
 				g2.setPaint(geo.getSelColor());
 				g2.setStroke(selStroke);
-				g2.draw(gp);
+				drawPoints(g2);
 			}
-
-			g2.setPaint(getObjectColor());
 			g2.setStroke(objStroke);
+			drawPoints(g2);
+			return;
+		}
+		if (isHighlighted()) {
+			g2.setPaint(geo.getSelColor());
+			g2.setStroke(selStroke);
 			g2.draw(gp);
+		}
 
-			if (fillCurve) {
-				try {
-					// fill using default/hatching/image as appropriate
-					fill(g2, geo.isInverseFill() ? getShape() : gp);
+		g2.setPaint(getObjectColor());
+		g2.setStroke(objStroke);
+		g2.draw(gp);
 
-				} catch (Exception e) {
-					Log.error(e.getMessage());
-				}
+		if (fillCurve) {
+			try {
+				// fill using default/hatching/image as appropriate
+				fill(g2, geo.isInverseFill() ? getShape() : gp);
+
+			} catch (Exception e) {
+				Log.error(e.getMessage());
 			}
 		}
+
 	}
 
 	private void drawPoints(GGraphics2D g2) {

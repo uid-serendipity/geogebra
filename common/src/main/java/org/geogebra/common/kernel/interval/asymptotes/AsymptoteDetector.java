@@ -30,7 +30,9 @@ public class AsymptoteDetector {
 	}
 
 	private List<IntervalTuple> filterAsymptotes(IntervalTupleList tuples) {
-		return tuples.stream().filter(t -> t.y().hasInfinity()).collect(Collectors.toList());
+		return tuples.stream().filter(t -> t.y().hasInfinity() && !t.y().isInfiniteSingleton()
+				|| t.y().isInverted())
+				.collect(Collectors.toList());
 	}
 
 	public List<IntervalTuple> getAsymptotes() {
