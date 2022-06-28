@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.geogebra.common.euclidian.plot.interval.EuclidianViewBounds;
 import org.geogebra.common.kernel.geos.GeoFunction;
+import org.geogebra.common.kernel.interval.Interval;
 import org.geogebra.common.kernel.interval.function.IntervalTuple;
 import org.geogebra.common.kernel.interval.function.IntervalTupleList;
 import org.geogebra.common.kernel.interval.samplers.FunctionSampler;
@@ -34,9 +35,15 @@ public class AsymptoteDetector {
 	}
 
 	private List<IntervalTuple> filterAsymptotes(IntervalTupleList tuples) {
-		return tuples.stream().filter(t -> t.y().hasInfinity() && !t.y().isInfiniteSingleton()
-				|| t.y().isInverted())
+		return tuples.stream()
+				.filter(tuple -> possibleAsymtote(tuple.y()))
 				.collect(Collectors.toList());
+	}
+
+	private boolean possibleAsymtote(Interval y) {
+		return y.hasInfinity() && !y.isInfiniteSingleton()
+				&& !(y.isHalfPositiveInfinity() || y.isHalfNegativeInfinity())
+				|| y.isInverted();
 	}
 
 	public List<IntervalTuple> getAsymptotes() {
