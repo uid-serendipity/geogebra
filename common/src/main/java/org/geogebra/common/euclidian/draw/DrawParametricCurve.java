@@ -276,13 +276,16 @@ public class DrawParametricCurve extends Drawable implements RemoveNeeded {
 		updateTrace(curve.getTrace());
 
 		if (drawAsymptotes == null) {
-			createDrawAsymptotes();
+			if (geo instanceof GeoFunction) {
+				createDrawAsymptotes();
+			}
+		} else {
+			drawAsymptotes.update();
 		}
-
-		drawAsymptotes.update();
 	}
 
 	private void createDrawAsymptotes() {
+
 		GeoFunction geoFunction = (GeoFunction) geo;
 		AsymptoteDetector detector = new AsymptoteDetector(geoFunction, new EuclidianViewBoundsImp(view));
 		drawAsymptotes = new DrawExtendedAsymptotes(geoFunction, view, detector);
@@ -466,8 +469,11 @@ public class DrawParametricCurve extends Drawable implements RemoveNeeded {
 			drawIntervalPlot(g2);
 		} else if (isVisible) {
 			drawParametric(g2);
-			drawAsymptotes.draw(g2);
+			if (drawAsymptotes != null) {
+				drawAsymptotes.draw(g2);
+			}
 		}
+
 		if (labelVisible && isVisible) {
 			g2.setFont(view.getFontConic());
 			g2.setPaint(geo.getLabelColor());

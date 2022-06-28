@@ -9,7 +9,6 @@ import org.geogebra.common.kernel.interval.Interval;
 import org.geogebra.common.kernel.interval.function.IntervalTuple;
 import org.geogebra.common.kernel.interval.function.IntervalTupleList;
 import org.geogebra.common.kernel.interval.samplers.FunctionSampler;
-import org.geogebra.common.kernel.interval.samplers.IntervalAsymptotes;
 
 public class AsymptoteDetector {
 
@@ -37,8 +36,7 @@ public class AsymptoteDetector {
 
 	private List<IntervalTuple> filterAsymptotes(IntervalTupleList tuples) {
 		return tuples.stream()
-				.filter(tuple -> possibleAsymtote(tuple.y())
-						&& IntervalAsymptotes.isPeak(tuples, tuples.indexOf(tuple)))
+				.filter(tuple -> possibleAsymtote(tuple.y()))
 				.collect(Collectors.toList());
 	}
 
