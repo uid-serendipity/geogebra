@@ -58,6 +58,10 @@ public class IntervalAsymptotes {
 		}
 	}
 
+	private boolean isPeak(int index) {
+		return isPeak(samples, index);
+	}
+
 	boolean isConstant() {
 		long count = uniqueElements().count();
 		return count == 1
@@ -72,10 +76,10 @@ public class IntervalAsymptotes {
 		return samples.stream().map(t -> t.y()).distinct();
 	}
 
-	private boolean isPeak(int index) {
-		Interval left = value(index - 1);
-		Interval value = value(index);
-		Interval right = value(index + 1);
+	public static boolean isPeak(IntervalTupleList list, int index) {
+		Interval left = value(list, index - 1);
+		Interval value = value(list, index);
+		Interval right = value(list, index + 1);
 		if (left.isUndefined() || right.isUndefined()) {
 			return false;
 		}
@@ -86,17 +90,17 @@ public class IntervalAsymptotes {
 				|| isPositiveInfinityAndPeak(left, value, right);
 	}
 
-	private boolean isPositiveInfinityAndPeak(Interval left, Interval value, Interval right) {
+	private static boolean isPositiveInfinityAndPeak(Interval left, Interval value, Interval right) {
 		return left.isPositiveInfinity() && right.isPositiveInfinity()
 				&& !value.isPositiveInfinity();
 	}
 
-	private boolean isNegativeInfinityAndPeak(Interval left, Interval value, Interval right) {
+	private static boolean isNegativeInfinityAndPeak(Interval left, Interval value, Interval right) {
 		return left.isNegativeInfinity() && right.isNegativeInfinity()
 				&& !value.isNegativeInfinity();
 	}
 
-	private boolean areFinitelyEqual(Interval left, Interval right) {
+	private static boolean areFinitelyEqual(Interval left, Interval right) {
 		return left.isFinite() && right.isFinite() && left.almostEqual(right);
 	}
 
@@ -107,7 +111,11 @@ public class IntervalAsymptotes {
 	}
 
 	private Interval value(int index) {
-		IntervalTuple tuple = samples.get(index);
+		return value(samples, index);
+	}
+
+	private static Interval value(IntervalTupleList list, int index) {
+		IntervalTuple tuple = list.get(index);
 		return tuple != null ? tuple.y() : IntervalConstants.undefined();
 	}
 

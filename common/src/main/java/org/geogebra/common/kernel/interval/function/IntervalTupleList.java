@@ -246,4 +246,8 @@ public class IntervalTupleList implements Iterable<IntervalTuple> {
 			tuple.setPiece(piece);
 		}
 	}
+
+	public int indexOf(IntervalTuple tuple) {
+		return list.indexOf(tuple);
+	}
 }

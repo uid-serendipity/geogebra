@@ -43,6 +43,7 @@ public class DrawExtendedAsymptotes {
 				}
 			}
 		}
+
 		g2.setPaint(GColor.RED);
 		g2.draw(gp);
 		g2.setPaint(geo.getObjectColor());
