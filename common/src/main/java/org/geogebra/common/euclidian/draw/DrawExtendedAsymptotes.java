@@ -27,6 +27,7 @@ public class DrawExtendedAsymptotes {
 	}
 
 	public void update() {
+		gp.reset();
 		detector.update();
 	}
 
