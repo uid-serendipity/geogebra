@@ -2,6 +2,7 @@ package org.geogebra.common.gui.view.probcalculator;
 
 import java.util.HashMap;
 import java.util.Map.Entry;
+import java.util.stream.Stream;
 
 import org.geogebra.common.kernel.Construction;
 import org.geogebra.common.kernel.geos.GeoBoolean;
@@ -43,6 +44,7 @@ import org.geogebra.common.main.Localization;
 import org.geogebra.common.main.settings.ProbabilityCalculatorSettings;
 import org.geogebra.common.main.settings.ProbabilityCalculatorSettings.Dist;
 import org.geogebra.common.util.MyMath2;
+import org.geogebra.common.util.StringUtil;
 import org.geogebra.common.util.debug.Log;
 
 import com.himamis.retex.editor.share.util.Unicode;
@@ -63,6 +65,9 @@ public class ProbabilityManager {
 	private HashMap<Dist, String> distributionMap;
 	private HashMap<String, Dist> reverseDistributionMap;
 	private HashMap<Dist, String[]> distributionParameterTransKeys;
+	private String[] customValues = {
+			"Median", "Scale", "Shape", "Population", "population", "Sample", "sample"
+	};
 
 	/**
 	 * @param app
@@ -213,6 +218,15 @@ public class ProbabilityManager {
 	}
 
 	/**
+	 * Checks if transKey contains any of the predefined custom values
+	 * @param transKey - the transKey
+	 * @return true if transKey contains any of the custom values
+	 */
+	private boolean isCustom(String transKey) {
+		return Stream.of(customValues).anyMatch(transKey::contains);
+	}
+
+	/**
 	 * Returns a 2D array of strings used to label the parameter fields for each
 	 * type of distribution
 	 *
@@ -223,9 +237,11 @@ public class ProbabilityManager {
 	public String[][] getParameterLabelArray(Localization loc) {
 		String[][] parameterLabels = new String[ProbabilityCalculatorSettings.distCount][4];
 
-		getDistributionParameterTransKeys().forEach((dist, keys) -> {
-			for (int i = 0; i < keys.length; i++) {
-				parameterLabels[dist.ordinal()][i] = loc.getMenu(keys[i]);
+		getDistributionParameterTransKeys().forEach((dist, transKeys) -> {
+			for (int i = 0; i < transKeys.length; i++) {
+				parameterLabels[dist.ordinal()][i] = isCustom(transKeys[i])
+					? StringUtil.capitalize(loc.getMenu(transKeys[i]))
+					: loc.getMenu(transKeys[i]);
 			}
 		});
 
@@ -241,9 +257,11 @@ public class ProbabilityManager {
 	public String[][] getParameterLabelArrayPrefixed(Localization loc) {
 		String[][] parameterLabels = new String[ProbabilityCalculatorSettings.distCount][3];
 
-		getDistributionParameterTransKeys().forEach((dist, keys) -> {
-			for (int i = 0; i < keys.length; i++) {
-				parameterLabels[dist.ordinal()][i] = parameterPrefixed(loc, loc.getMenu(keys[i]));
+		getDistributionParameterTransKeys().forEach((dist, transKeys) -> {
+			for (int i = 0; i < transKeys.length; i++) {
+				parameterLabels[dist.ordinal()][i] = isCustom(transKeys[i])
+						? StringUtil.capitalize(loc.getMenu(transKeys[i]))
+						: ProbabilityManager.parameterPrefixed(loc, loc.getMenu(transKeys[i]));
 			}
 		});
 
