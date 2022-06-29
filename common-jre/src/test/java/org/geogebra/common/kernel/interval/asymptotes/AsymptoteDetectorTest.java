@@ -16,8 +16,17 @@ public class AsymptoteDetectorTest extends BaseUnitTest {
 
 	@Test
 	public void oneAsymptote() {
-		createDetectorFor("(1/x)-(1/x)");
-		assertEquals(1, detector.size());
+		shouldBeAsymptote("(1/x)-(1/x)", 1);
+	}
+
+	@Test
+	public void shouldBeNoPeak() {
+		shouldBeAsymptote("1/x * 1/(|csc(x)|)", 0);
+	}
+
+	private void shouldBeAsymptote(String desctription, int expected) {
+		createDetectorFor(desctription);
+		assertEquals(expected, detector.size());
 	}
 
 	private void createDetectorFor(String desctription) {
@@ -32,7 +41,6 @@ public class AsymptoteDetectorTest extends BaseUnitTest {
 
 	@Test
 	public void multipleAsymptotes() {
-		createDetectorFor("x ln abs(cos(x))");
-		assertEquals(6, detector.size());
+		shouldBeAsymptote("x ln abs(cos(x))", 6);
 	}
 }

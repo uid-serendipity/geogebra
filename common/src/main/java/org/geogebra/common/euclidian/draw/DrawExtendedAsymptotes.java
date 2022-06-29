@@ -69,7 +69,7 @@ public class DrawExtendedAsymptotes {
 
 	private void drawTop(Interval x, Interval y) {
 		double sx = view.toScreenCoordXd(x.getLow());
-		double sy = view.toScreenCoordYd(y.getHigh());
+		double sy = view.toScreenCoordYd(y.getLow());
 		gp.moveTo(sx, sy);
 		gp.lineTo(sx, 0);
 	}

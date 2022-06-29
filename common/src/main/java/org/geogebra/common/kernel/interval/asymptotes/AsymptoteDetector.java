@@ -9,9 +9,11 @@ import org.geogebra.common.kernel.interval.Interval;
 import org.geogebra.common.kernel.interval.function.IntervalTuple;
 import org.geogebra.common.kernel.interval.function.IntervalTupleList;
 import org.geogebra.common.kernel.interval.samplers.FunctionSampler;
+import org.geogebra.common.util.debug.Log;
 
 public class AsymptoteDetector {
 
+	public static final double MAX_INVERTED_LENGHT = 1E7;
 	private final FunctionSampler sampler;
 	private List<IntervalTuple> asymptotes;
 	private EuclidianViewBounds bounds;
@@ -28,6 +30,7 @@ public class AsymptoteDetector {
 		IntervalTuple range = new IntervalTuple(bounds.domain(), bounds.range());
 		sampler.update(range);
 		asymptotes = filterAsymptotes(sampler.result());
+		Log.debug(this.toString());
 	}
 
 	public int size() {
@@ -43,7 +46,7 @@ public class AsymptoteDetector {
 	private boolean possibleAsymtote(Interval y) {
 		return y.hasInfinity() && !y.isInfiniteSingleton()
 				&& !(y.isHalfPositiveInfinity() || y.isHalfNegativeInfinity())
-				|| y.isInverted();
+				|| (y.isInverted() && y.getLength() < bounds.getYmax() - bounds.getYmin());
 	}
 
 	public List<IntervalTuple> getAsymptotes() {
