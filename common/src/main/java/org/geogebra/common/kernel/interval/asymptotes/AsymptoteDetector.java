@@ -55,7 +55,7 @@ public class AsymptoteDetector {
 		Interval y = tuples.get(index).y();
 		return y.hasInfinity() && !y.isInfiniteSingleton()
 				&& !(y.isHalfPositiveInfinity() || y.isHalfNegativeInfinity())
-				|| (y.isInverted() && !isDependencyAtAsymptote(index));
+				|| (y.isInverted()); //&& !isDependencyAtAsymptote(index));
 	}
 
 	boolean isDependencyAtAsymptote(int index) {
@@ -79,6 +79,10 @@ public class AsymptoteDetector {
 
 	private boolean hasDP(int i) {
 		IntervalTuple tuple = result.get(i);
+		if (tuple.isInverted() || tuple.isUndefined()) {
+			return false;
+
+		}
 		double diffLow = Math.abs(function.value(tuple.x().getLow()) - tuple.y().getLow());
 		double diffHigh = Math.abs(function.value(tuple.x().getHigh()) - tuple.y().getHigh());
 		double dOd = Math.abs(diffHigh - diffLow);
