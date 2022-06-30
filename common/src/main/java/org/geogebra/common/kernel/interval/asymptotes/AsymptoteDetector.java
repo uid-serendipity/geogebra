@@ -1,7 +1,7 @@
 package org.geogebra.common.kernel.interval.asymptotes;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.geogebra.common.euclidian.plot.interval.EuclidianViewBounds;
 import org.geogebra.common.kernel.geos.GeoFunction;
@@ -16,9 +16,12 @@ public class AsymptoteDetector {
 	public static final double MAX_INVERTED_LENGHT = 1E7;
 	private final FunctionSampler sampler;
 	private List<IntervalTuple> asymptotes;
+	private GeoFunction function;
 	private EuclidianViewBounds bounds;
+	private IntervalTupleList result;
 
 	public AsymptoteDetector(GeoFunction function, EuclidianViewBounds bounds) {
+		this.function = function;
 		this.bounds = bounds;
 		IntervalTuple range = new IntervalTuple(bounds.domain(), bounds.range());
 		sampler = new FunctionSampler(function, range, bounds);
@@ -29,7 +32,8 @@ public class AsymptoteDetector {
 	public void update() {
 		IntervalTuple range = new IntervalTuple(bounds.domain(), bounds.range());
 		sampler.update(range);
-		asymptotes = filterAsymptotes(sampler.result());
+		result = sampler.result();
+		asymptotes = filterAsymptotes(result);
 		Log.debug(this.toString());
 	}
 
@@ -38,15 +42,50 @@ public class AsymptoteDetector {
 	}
 
 	private List<IntervalTuple> filterAsymptotes(IntervalTupleList tuples) {
-		return tuples.stream()
-				.filter(tuple -> possibleAsymtote(tuple.y()))
-				.collect(Collectors.toList());
+		ArrayList<IntervalTuple> list = new ArrayList<>();
+		for (int i = 0; i < tuples.count(); i++) {
+			if (possibleAsymtote(i, tuples)) {
+				list.add(tuples.get(i));
+			}
+		}
+		return list;
 	}
 
-	private boolean possibleAsymtote(Interval y) {
+	private boolean possibleAsymtote(int index, IntervalTupleList tuples) {
+		Interval y = tuples.get(index).y();
 		return y.hasInfinity() && !y.isInfiniteSingleton()
 				&& !(y.isHalfPositiveInfinity() || y.isHalfNegativeInfinity())
-				|| (y.isInverted() && y.getLength() < bounds.getYmax() - bounds.getYmin());
+				|| (y.isInverted() && !isDependencyAtAsymptote(index));
+	}
+
+	boolean isDependencyAtAsymptote(int index) {
+		IntervalTuple origin = result.get(index);
+		if (!origin.y().isInverted()) {
+			return false;
+		}
+
+		for (int i = index - 1; i > Math.max(0, index - 10) ; i--) {
+			if (hasDP(i)) {
+				return true;
+			}
+		}
+		for (int i = index + 1; i < Math.min(index + 10, result.count()) ; i++) {
+			if (hasDP(i)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean hasDP(int i) {
+		IntervalTuple tuple = result.get(i);
+		double diffLow = Math.abs(function.value(tuple.x().getLow()) - tuple.y().getLow());
+		double diffHigh = Math.abs(function.value(tuple.x().getHigh()) - tuple.y().getHigh());
+		double dOd = Math.abs(diffHigh - diffLow);
+		if (dOd > 1E-4 && dOd != Double.POSITIVE_INFINITY) {
+			return true;
+		}
+		return false;
 	}
 
 	public List<IntervalTuple> getAsymptotes() {
