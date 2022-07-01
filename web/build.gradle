@@ -56,7 +56,7 @@ dependencies {
         project(':web-common'),
         project(':editor-web'),
         project(':keyboard-web'),
-        'org.webjars.npm:pdfjs-dist:2.5.207',
+        'org.webjars.npm:pdfjs-dist:2.14.305',
         files(project(':carota-web').sourceSets.main.allSource.srcDirs),
         files(project(':renderer-web').sourceSets.main.allSource.srcDirs),
         files(project(':gwtutil').sourceSets.main.allSource.srcDirs),
