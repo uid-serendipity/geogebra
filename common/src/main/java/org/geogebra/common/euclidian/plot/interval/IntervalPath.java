@@ -3,7 +3,9 @@ package org.geogebra.common.euclidian.plot.interval;
 import org.geogebra.common.awt.GPoint;
 import org.geogebra.common.euclidian.plot.LabelPositionCalculator;
 import org.geogebra.common.kernel.interval.Interval;
+import org.geogebra.common.kernel.interval.IntervalConstants;
 import org.geogebra.common.kernel.interval.function.IntervalTuple;
+import org.geogebra.common.util.DoubleUtil;
 
 public class IntervalPath {
 	public static final double CLAMPED_INFINITY = Double.MAX_VALUE;
@@ -18,6 +20,7 @@ public class IntervalPath {
 	private GPoint labelPoint = null;
 
 	private int lastPiece = 0;
+	private double continuityEps;
 
 	/**
 	 * Constructor.
@@ -41,18 +44,26 @@ public class IntervalPath {
 	 */
 	public synchronized void update() {
 		reset();
+		continuityEps = bounds.toScreenCoordYd(
+				IntervalConstants.PRECISION);
 		model.forEach(index -> drawAt(index));
 	}
 
 	private void drawAt(int index) {
 		IntervalTuple tuple = model.at(index);
-		if (tuple.isUndefined() || isPieceChanged(tuple)) {
+		if ((tuple.isUndefined() || isPieceChanged(tuple))
+				&& !isClose(tuple)) {
 			noJoinForNextTuple();
 		} else {
 			drawTupleAt(index);
 		}
 		drawInterval.setJoinToPrevious(!tuple.isUndefined()
-				&& !isPieceChanged(tuple));
+				&& !(isPieceChanged(tuple) || isClose(tuple)));
+	}
+
+	private boolean isClose(IntervalTuple tuple) {
+		Interval y = bounds.toScreenIntervalY(tuple.y());
+		return DoubleUtil.isEqual(lastY.getHigh(), y.getLow(), continuityEps);
 	}
 
 	private void noJoinForNextTuple() {

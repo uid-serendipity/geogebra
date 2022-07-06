@@ -192,6 +192,10 @@ import org.geogebra.common.util.debug.Log;
 			return false;
 		}
 
+		if (ConditionalSupport.isSupportedIf(node)) {
+			return true;
+		}
+
 		return !hasMoreVariables(node) && !node.inspect(operatorChecker);
 	}
 

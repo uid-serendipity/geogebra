@@ -143,4 +143,18 @@ public class ConditionalFunctionSamplerTest extends BaseUnitTest {
 		IntervalTupleList diff = sampler.extendDomain(-2.0, 10.0);
 		assertNotEquals(IntervalTupleList.emptyList(), diff);
 	}
+
+	@Test
+	public void continousPieceTest() {
+		GeoFunction function = add("a=If(x < 0, 0, 0)");
+		IntervalTuple range = PlotterUtils.newRange(-9.0, 9.0, -15.0, 15.0);
+		EuclidianViewBoundsMock evBounds = new EuclidianViewBoundsMock(range,
+				200, 1280);
+		IntervalFunctionSampler sampler = new ConditionalFunctionSampler(function,
+				range,
+				evBounds);
+		sampler.update(range);
+		IntervalTupleList tuples = sampler.result();
+		assertNotEquals(IntervalTupleList.emptyList(), tuples);
+	}
 }

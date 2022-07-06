@@ -53,23 +53,8 @@ public class ConditionalSampler implements IntervalEvaluatable {
 	@Override
 	public IntervalTupleList evaluate(DiscreteSpace space) {
 		IntervalTupleList list = new IntervalTupleList();
-		space.values().filter(x -> conditionalExpression.isTrue(x)
-				|| conditionalExpression.isTrueBetween(x)
-		).forEach(x2 -> {
-			if (conditionalExpression.isTrueBetween(x2))  {
-				double split = conditionalExpression.getSplitValue();
-				Interval splitX1 = new Interval(x2.getLow(), split);
-				if (!splitX1.isUndefined() && conditionalExpression.isTrue(splitX1)) {
-					list.add(evaluatedTuple(splitX1));
-				}
-				Interval splitX2 = new Interval(split, x2.getHigh());
-				if (!splitX2.isUndefined() && conditionalExpression.isTrue(splitX2)) {
-					list.add(evaluatedTuple(splitX2));
-				}
-			} else {
-				list.add(evaluatedTuple(x2));
-			}
-		});
+		space.values().filter(x -> conditionalExpression.isTrue(x))
+				.forEach(x -> list.add(evaluatedTuple(x)));
 		return list;
 	}
 
