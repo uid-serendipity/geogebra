@@ -52,18 +52,24 @@ public class IntervalPath {
 	private void drawAt(int index) {
 		IntervalTuple tuple = model.at(index);
 		if ((tuple.isUndefined() || isPieceChanged(tuple))
-				&& !isClose(tuple)) {
+				&& !isClose(index)) {
 			noJoinForNextTuple();
 		} else {
 			drawTupleAt(index);
 		}
 		drawInterval.setJoinToPrevious(!tuple.isUndefined()
-				&& !(isPieceChanged(tuple) || isClose(tuple)));
+				&& !(isPieceChanged(tuple) || isClose(index)));
 	}
 
-	private boolean isClose(IntervalTuple tuple) {
-		Interval y = bounds.toScreenIntervalY(tuple.y());
-		return DoubleUtil.isEqual(lastY.getHigh(), y.getLow(), continuityEps);
+	private boolean isClose(int index) {
+		IntervalTuple prev = model.at(index - 1);
+		IntervalTuple current = model.at(index);
+		if (prev == null) {
+			return false;
+		}
+		return DoubleUtil.isEqual(prev.x().getHigh(), current.x().getLow(), continuityEps)
+				&& DoubleUtil.isEqual(prev.y().getHigh(), current.y().getLow(),
+					continuityEps);
 	}
 
 	private void noJoinForNextTuple() {
