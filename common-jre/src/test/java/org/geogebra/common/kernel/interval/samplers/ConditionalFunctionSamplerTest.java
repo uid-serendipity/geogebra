@@ -54,7 +54,7 @@ public class ConditionalFunctionSamplerTest extends BaseUnitTest {
 				range,
 				new EuclidianViewBoundsMock(-15, 15, -10, 10));
 		IntervalTupleList tuples = sampler.result();
-		pieceCountShouldBe(tuples, Arrays.asList(15, 14), Arrays.asList(-1, 1));
+		pieceCountShouldBe(tuples, Arrays.asList(16, 15), Arrays.asList(-1, 1));
 	}
 
 	private void pieceCountShouldBe(IntervalTupleList tuples, List<Integer> expectedCounts,
@@ -142,19 +142,5 @@ public class ConditionalFunctionSamplerTest extends BaseUnitTest {
 		assertEquals(1920, countPieceByValue(tuples, new Interval(4), 1));
 		IntervalTupleList diff = sampler.extendDomain(-2.0, 10.0);
 		assertNotEquals(IntervalTupleList.emptyList(), diff);
-	}
-
-	@Test
-	public void continousPieceTest() {
-		GeoFunction function = add("a=If(x < 0, 0, 0)");
-		IntervalTuple range = PlotterUtils.newRange(-9.0, 9.0, -15.0, 15.0);
-		EuclidianViewBoundsMock evBounds = new EuclidianViewBoundsMock(range,
-				200, 1280);
-		IntervalFunctionSampler sampler = new ConditionalFunctionSampler(function,
-				range,
-				evBounds);
-		sampler.update(range);
-		IntervalTupleList tuples = sampler.result();
-		assertNotEquals(IntervalTupleList.emptyList(), tuples);
 	}
 }
