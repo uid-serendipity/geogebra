@@ -5,7 +5,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.geogebra.common.BaseUnitTest;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class IntervalFunctionSupportTest extends BaseUnitTest {
@@ -84,7 +83,6 @@ public class IntervalFunctionSupportTest extends BaseUnitTest {
 	}
 
 	@Test
-	@Ignore("APPS-4170")
 	public void supportIf() {
 		shouldBeSupported("If[x < 1, 0]");
 		shouldBeSupported("If[x < 1, 2x]");
@@ -94,7 +92,6 @@ public class IntervalFunctionSupportTest extends BaseUnitTest {
 	}
 
 	@Test
-	@Ignore("APPS-4170")
 	public void supportIfWithAndInterval() {
 		shouldBeSupported("If[0 < x < 1, x + 1]");
 		shouldBeSupported("If[0 < x < sin(1), x + 1]");
@@ -108,7 +105,6 @@ public class IntervalFunctionSupportTest extends BaseUnitTest {
 	}
 
 	@Test
-	@Ignore("APPS-4170")
 	public void supportIfWithConstantFromExpression() {
 		shouldBeSupported("If[sin(2) < x, x^2]");
 		shouldBeSupported("If[x < sin(2), x^2]");
@@ -123,7 +119,6 @@ public class IntervalFunctionSupportTest extends BaseUnitTest {
 	}
 
 	@Test
-	@Ignore("APPS-4170")
 	public void supportIfElse() {
 		shouldBeSupported("If[x < 1, x, x + 1]");
 		shouldBeSupported("If[x != 1, x, x + 1]");
@@ -141,7 +136,6 @@ public class IntervalFunctionSupportTest extends BaseUnitTest {
 	}
 
 	@Test
-	@Ignore("APPS-4170")
 	public void supportIfList() {
 		shouldBeSupported("if(x < -2, -2, x > 0, 4)");
 		shouldBeSupported("if(x < -2, -2, x > 0, 4, 2)");
