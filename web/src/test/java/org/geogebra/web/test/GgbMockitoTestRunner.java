@@ -23,6 +23,7 @@ import com.google.gwt.safehtml.shared.SafeUri;
 import com.google.gwt.user.client.ui.ComplexPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Panel;
+import com.google.gwt.user.client.ui.ResizeComposite;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwtmockito.GwtMockitoTestRunner;
 import com.google.gwtmockito.impl.StubGenerator;
@@ -99,6 +100,10 @@ public class GgbMockitoTestRunner extends GwtMockitoTestRunner {
         StubGenerator.replaceMethodWithMock(Dom.class, "querySelectorForElement", Void.class);
         StubGenerator.replaceMethodWithMock(CSSEvents.class, "runOnAnimation", Void.class);
         StubGenerator.replaceMethodWithMock(SelectElement.class, "as", SelectElement.class);
+        StubGenerator.replaceMethodWithMock(CopyPasteW.class, "writeToExternalClipboard",
+                Object.class);
+        StubGenerator.replaceMethodWithMock(ResizeComposite.class, "onResize",
+                Void.class);
     }
 
     @Override
