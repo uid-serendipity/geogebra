@@ -84,6 +84,11 @@ public class AppConfigProbability extends AppConfigGraphing {
 	}
 
 	@Override
+	public boolean isCASEnabled() {
+		return getSubAppCode() != null;
+	}
+
+	@Override
 	public boolean hasDistributionView() {
 		return true;
 	}
