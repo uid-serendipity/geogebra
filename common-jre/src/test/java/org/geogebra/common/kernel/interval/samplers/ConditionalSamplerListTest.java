@@ -70,7 +70,8 @@ public class ConditionalSamplerListTest extends BaseUnitTest {
 	public void testIfElseWithAndInterval() {
 		withSampler("if(-1 < x < 1, 1, 3)")
 				.checkThat(
-						onInterval(-1 + Kernel.MAX_PRECISION, 1 - Kernel.MAX_PRECISION).shouldEqual(one()),
+						onInterval(-1 + Kernel.MAX_PRECISION, 1 - Kernel.MAX_PRECISION)
+								.shouldEqual(one()),
 						onInterval(-100, - 1 - Kernel.MAX_PRECISION)
 								.shouldEqual(IntervalTest.interval(3)),
 						onInterval(1 + Kernel.MAX_PRECISION, 100)
