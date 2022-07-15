@@ -5,7 +5,9 @@ import static org.junit.Assert.assertNotEquals;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.geogebra.common.BaseUnitTest;
 import org.geogebra.common.euclidian.plot.interval.EuclidianViewBoundsMock;
@@ -143,4 +145,43 @@ public class ConditionalFunctionSamplerTest extends BaseUnitTest {
 		IntervalTupleList diff = sampler.extendDomain(-2.0, 10.0);
 		assertNotEquals(IntervalTupleList.emptyList(), diff);
 	}
+
+	private class IntervalTupleComparator implements Comparator<IntervalTuple> {
+
+		@Override
+		public int compare(IntervalTuple tuple1, IntervalTuple tuple2) {
+			if (tuple1.x().almostEqual(tuple2.x())) {
+				return 0;
+			}
+			if (tuple1.x().isGreaterThan(tuple2.x())) {
+				return 1;
+			} else {
+				return -1;
+			}
+		}
+	}
+
+	@Test
+	public void testTupleOrder1() {
+		assertTuplesOrderedByX("a=If(x < 1, 1, 1)");
+	}
+
+	@Test
+	public void testTupleOrder() {
+		assertTuplesOrderedByX("a=If(-1  < x < 1, 1, 1)");
+	}
+
+	private void assertTuplesOrderedByX(String definition) {
+		GeoFunction function = add(definition);
+		IntervalTuple range = PlotterUtils.newRange(-20, 20, -5, 5);
+		IntervalFunctionSampler sampler = new ConditionalFunctionSampler(function,
+				range,
+				new EuclidianViewBoundsMock(range, 1920, 1280));
+		IntervalTupleList tuples = sampler.result();
+		List<IntervalTuple> list1 = tuples.stream().collect(Collectors.toList());
+		List<IntervalTuple> list2 = new ArrayList<>(list1);
+		list2.sort(new IntervalTupleComparator());
+		assertEquals(list1, list2);
+	}
+
 }

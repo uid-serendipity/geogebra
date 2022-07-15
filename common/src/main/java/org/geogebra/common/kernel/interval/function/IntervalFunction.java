@@ -184,7 +184,11 @@ import org.geogebra.common.util.debug.Log;
 			return false;
 		}
 
-		return isOperationSupported(((GeoFunction) geo).getFunctionExpression());
+		ExpressionNode node = ((GeoFunction) geo).getFunctionExpression();
+		if (ConditionalSupport.isSupportedIf(node)) {
+			return true;
+		}
+		return isOperationSupported(node);
 	}
 
 	static boolean isOperationSupported(ExpressionNode node) {
