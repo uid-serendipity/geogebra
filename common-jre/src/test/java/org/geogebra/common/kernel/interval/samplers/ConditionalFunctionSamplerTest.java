@@ -5,7 +5,6 @@ import static org.junit.Assert.assertNotEquals;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,7 +55,7 @@ public class ConditionalFunctionSamplerTest extends BaseUnitTest {
 				range,
 				new EuclidianViewBoundsMock(-15, 15, -10, 10));
 		IntervalTupleList tuples = sampler.result();
-		pieceCountShouldBe(tuples, Arrays.asList(16, 15), Arrays.asList(-1, 1));
+		pieceCountShouldBe(tuples, Arrays.asList(15, 14), Arrays.asList(-1, 1));
 	}
 
 	private void pieceCountShouldBe(IntervalTupleList tuples, List<Integer> expectedCounts,
@@ -146,28 +145,13 @@ public class ConditionalFunctionSamplerTest extends BaseUnitTest {
 		assertNotEquals(IntervalTupleList.emptyList(), diff);
 	}
 
-	private class IntervalTupleComparator implements Comparator<IntervalTuple> {
-
-		@Override
-		public int compare(IntervalTuple tuple1, IntervalTuple tuple2) {
-			if (tuple1.x().almostEqual(tuple2.x())) {
-				return 0;
-			}
-			if (tuple1.x().isGreaterThan(tuple2.x())) {
-				return 1;
-			} else {
-				return -1;
-			}
-		}
-	}
-
 	@Test
-	public void testTupleOrder1() {
+	public void testTupleOrderLessThan() {
 		assertTuplesOrderedByX("a=If(x < 1, 1, 1)");
 	}
 
 	@Test
-	public void testTupleOrder() {
+	public void testTupleOrderAndInterval() {
 		assertTuplesOrderedByX("a=If(-1  < x < 1, 1, 1)");
 	}
 
@@ -180,7 +164,17 @@ public class ConditionalFunctionSamplerTest extends BaseUnitTest {
 		IntervalTupleList tuples = sampler.result();
 		List<IntervalTuple> list1 = tuples.stream().collect(Collectors.toList());
 		List<IntervalTuple> list2 = new ArrayList<>(list1);
-		list2.sort(new IntervalTupleComparator());
+
+		list2.sort((tuple1, tuple2) -> {
+			if (tuple1.x().almostEqual(tuple2.x())) {
+				return 0;
+			}
+			if (tuple1.x().isGreaterThan(tuple2.x())) {
+				return 1;
+			} else {
+				return -1;
+			}
+		});
 		assertEquals(list1, list2);
 	}
 

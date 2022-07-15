@@ -6,6 +6,7 @@ import static org.geogebra.common.kernel.interval.IntervalConstants.zero;
 import static org.junit.Assert.assertEquals;
 
 import org.geogebra.common.BaseUnitTest;
+import org.geogebra.common.kernel.Kernel;
 import org.geogebra.common.kernel.interval.Interval;
 import org.geogebra.common.kernel.interval.IntervalTest;
 import org.geogebra.common.kernel.interval.function.IntervalTupleList;
@@ -47,7 +48,7 @@ public class ConditionalSamplerListTest extends BaseUnitTest {
 	public void testIf() {
 		withSampler("if(x < 2, 1)")
 				.checkThat(
-					onInterval(-10, 1.9).shouldEqual(IntervalTest.interval(1)),
+					onInterval(-10, 2 - Kernel.MAX_PRECISION).shouldEqual(IntervalTest.interval(1)),
 					onInterval(3, 9000).shouldEqual(undefined()));
 	}
 
@@ -60,7 +61,7 @@ public class ConditionalSamplerListTest extends BaseUnitTest {
 		withSampler("if(x < 2, 1, 3)")
 				.checkThat(
 						onInterval(-10, 1.9).shouldEqual(one()),
-						onInterval(2, 3).shouldEqual(IntervalTest.interval(3)));
+						onInterval(2 + Kernel.MAX_PRECISION, 3).shouldEqual(IntervalTest.interval(3)));
 	}
 
 	private SampledData withSampler(String command) {

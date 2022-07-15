@@ -1,7 +1,6 @@
 package org.geogebra.common.kernel.interval.samplers;
 
 import java.util.List;
-import java.util.function.Consumer;
 
 import org.geogebra.common.kernel.interval.Interval;
 import org.geogebra.common.kernel.interval.evaluators.DiscreteSpace;
@@ -46,9 +45,5 @@ public class MultiSampler implements IntervalEvaluatable {
 
 	public void updateSpace(DiscreteSpace space) {
 		samplers.forEach(sampler -> sampler.setSpace(space));
-	}
-
-	public void forEach(Consumer<? super ConditionalSampler> action) {
-		samplers.forEach(action);
 	}
 }

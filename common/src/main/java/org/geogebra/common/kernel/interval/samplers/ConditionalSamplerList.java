@@ -2,7 +2,6 @@ package org.geogebra.common.kernel.interval.samplers;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Consumer;
 
 import org.geogebra.common.kernel.arithmetic.ExpressionNode;
 import org.geogebra.common.kernel.geos.GeoFunction;
@@ -13,7 +12,7 @@ import org.geogebra.common.kernel.interval.evaluators.IntervalEvaluatable;
 import org.geogebra.common.kernel.interval.function.IntervalTupleList;
 
 public class ConditionalSamplerList implements IntervalEvaluatable {
-	private MultiSampler samplers;
+	private MultiSampler multiSampler;
 	private GeoFunction function;
 	private List<ExpressionSampler> expressionSamplers = Arrays.asList(new IfSampler(),
 			new IfElseSampler(),
@@ -41,7 +40,7 @@ public class ConditionalSamplerList implements IntervalEvaluatable {
 	 */
 	public void update(Interval x, int width) {
 		DiscreteSpaceImp aSpace = new DiscreteSpaceImp(x, width);
-		samplers = createSamplers(function.getFunctionExpression());
+		multiSampler = createSamplers(function.getFunctionExpression());
 		updateSpace(aSpace);
 	}
 
@@ -55,25 +54,21 @@ public class ConditionalSamplerList implements IntervalEvaluatable {
 	}
 
 	private void updateSpace(DiscreteSpace space) {
-		samplers.updateSpace(space);
-	}
-
-	public void forEach(Consumer<? super ConditionalSampler> action) {
-		samplers.forEach(action);
+		multiSampler.updateSpace(space);
 	}
 
 	@Override
 	public IntervalTupleList evaluate(double low, double high) {
-		return samplers.evaluate(new Interval(low, high));
+		return multiSampler.evaluate(new Interval(low, high));
 	}
 
 	@Override
 	public IntervalTupleList evaluate(Interval x) {
-		return samplers.evaluate(x);
+		return multiSampler.evaluate(x);
 	}
 
 	@Override
 	public IntervalTupleList evaluate(DiscreteSpace space) {
-		return samplers.evaluate(space);
+		return multiSampler.evaluate(space);
 	}
 }
