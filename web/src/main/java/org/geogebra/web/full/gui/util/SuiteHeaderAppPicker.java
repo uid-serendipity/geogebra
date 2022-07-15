@@ -52,6 +52,7 @@ public class SuiteHeaderAppPicker extends StandardButton {
 		setStyleName("suiteAppPickerButton");
 		suitePopup = new AppSwitcherPopup((AppWFull) app, this);
 		addFastClickHandler(event -> suitePopup.showPopup());
+		appW.registerRestrictable(suitePopup);
 	}
 
 	/**
@@ -78,5 +79,4 @@ public class SuiteHeaderAppPicker extends StandardButton {
 
 		Roles.getButtonRole().removeAriaPressedState(getElement());
 	}
-
 }
