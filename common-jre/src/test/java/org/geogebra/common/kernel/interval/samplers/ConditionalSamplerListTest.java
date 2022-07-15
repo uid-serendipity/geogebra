@@ -48,7 +48,8 @@ public class ConditionalSamplerListTest extends BaseUnitTest {
 	public void testIf() {
 		withSampler("if(x < 2, 1)")
 				.checkThat(
-					onInterval(-10, 2 - Kernel.MAX_PRECISION).shouldEqual(IntervalTest.interval(1)),
+					onInterval(-10, 2 - Kernel.MAX_PRECISION)
+							.shouldEqual(IntervalTest.interval(1)),
 					onInterval(3, 9000).shouldEqual(undefined()));
 	}
 
@@ -61,7 +62,19 @@ public class ConditionalSamplerListTest extends BaseUnitTest {
 		withSampler("if(x < 2, 1, 3)")
 				.checkThat(
 						onInterval(-10, 1.9).shouldEqual(one()),
-						onInterval(2 + Kernel.MAX_PRECISION, 3).shouldEqual(IntervalTest.interval(3)));
+						onInterval(2 + Kernel.MAX_PRECISION, 3)
+								.shouldEqual(IntervalTest.interval(3)));
+	}
+
+	@Test
+	public void testIfElseWithAndInterval() {
+		withSampler("if(-1 < x < 1, 1, 3)")
+				.checkThat(
+						onInterval(-1 + Kernel.MAX_PRECISION, 1 - Kernel.MAX_PRECISION).shouldEqual(one()),
+						onInterval(-100, - 1 - Kernel.MAX_PRECISION)
+								.shouldEqual(IntervalTest.interval(3)),
+						onInterval(1 + Kernel.MAX_PRECISION, 100)
+								.shouldEqual(IntervalTest.interval(3)));
 	}
 
 	private SampledData withSampler(String command) {
