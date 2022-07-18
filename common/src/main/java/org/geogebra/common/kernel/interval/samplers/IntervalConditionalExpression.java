@@ -42,17 +42,25 @@ public class IntervalConditionalExpression {
 
 	private boolean isExpressionTrue(Interval x, ExpressionValue left, Operation operation,
 			ExpressionValue right) {
-		if (operation.equals(Operation.AND_INTERVAL)) {
-			ExpressionNode nodeLeft = left.wrap();
-			ExpressionNode nodeRight = right.wrap();
-			return isExpressionTrue(x, nodeLeft.getLeft(),
-					nodeLeft.getOperation(), nodeLeft.getRight())
-					&& isExpressionTrue(x, nodeRight.getLeft(),
-					nodeRight.getOperation(), nodeRight.getRight());
+		if (operation.equals(Operation.AND_INTERVAL) || operation.equals(Operation.OR)) {
+			return isLogicalFormulaTrue(x, operation, left, right);
 		}
 
 		return evaluateBoolean(IntervalFunction.evaluate(x, left), operation,
 				IntervalFunction.evaluate(x, right));
+	}
+
+	private boolean isLogicalFormulaTrue(Interval x, Operation operation,
+			ExpressionValue left, ExpressionValue right) {
+		ExpressionNode nodeLeft = left.wrap();
+		ExpressionNode nodeRight = right.wrap();
+		boolean leftValue = isExpressionTrue(x, nodeLeft.getLeft(),
+				nodeLeft.getOperation(), nodeLeft.getRight());
+		boolean rightValue = isExpressionTrue(x, nodeRight.getLeft(),
+				nodeRight.getOperation(), nodeRight.getRight());
+		return Operation.AND_INTERVAL.equals(operation)
+				? leftValue && rightValue
+				: leftValue || rightValue;
 	}
 
 	private boolean evaluateBoolean(Interval y1, Operation operation, Interval y2) {
