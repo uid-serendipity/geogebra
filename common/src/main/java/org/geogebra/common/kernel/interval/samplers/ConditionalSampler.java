@@ -9,7 +9,7 @@ import org.geogebra.common.kernel.interval.function.IntervalTuple;
 import org.geogebra.common.kernel.interval.function.IntervalTupleList;
 
 public class ConditionalSampler implements IntervalEvaluatable {
-	private IntervalConditionalExpression conditionalExpression;
+	private final IntervalConditionalExpression conditionalExpression;
 	private DiscreteSpace space;
 	private int index = 0;
 
@@ -55,12 +55,8 @@ public class ConditionalSampler implements IntervalEvaluatable {
 		IntervalTupleList list = new IntervalTupleList();
 		space.values().filter(x -> conditionalExpression.isTrue(x)
 				|| conditionalExpression.isTrueBetween(x))
-				.forEach(x -> list.add(evaluatedTuple(x)));
+				.forEach(x -> list.add(evaluateTuple(x)));
 		return list;
-	}
-
-	private IntervalTuple evaluatedTuple(Interval x) {
-		return new IntervalTuple(x, evaluatedValue(x), index);
 	}
 
 	private Interval evaluatedValue(Interval x) {
@@ -85,6 +81,6 @@ public class ConditionalSampler implements IntervalEvaluatable {
 	}
 
 	public IntervalTuple evaluateTuple(Interval x) {
-		return new IntervalTuple(x, evaluatedValue(x));
+		return new IntervalTuple(x, evaluatedValue(x), index);
 	}
 }
