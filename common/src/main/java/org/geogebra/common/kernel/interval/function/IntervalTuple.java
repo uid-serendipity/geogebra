@@ -1,5 +1,7 @@
 package org.geogebra.common.kernel.interval.function;
 
+import static org.geogebra.common.kernel.interval.IntervalConstants.undefined;
+
 import org.geogebra.common.kernel.interval.Interval;
 import org.geogebra.common.util.DoubleUtil;
 
@@ -12,6 +14,8 @@ public class IntervalTuple {
 	private final Interval x;
 	private final Interval y;
 	private int piece = 0;
+
+	public static final IntervalTuple NULL_TUPLE = new IntervalTuple(undefined(), undefined());
 
 	/**
 	 *
@@ -103,11 +107,11 @@ public class IntervalTuple {
 		return "{x: " + x().toShortString() + ": " + y().toShortString() + "}";
 	}
 
-	public void setPiece(int piece) {
-		this.piece = piece;
-	}
-
 	public int piece() {
 		return piece;
+	}
+
+	public boolean isNotNull() {
+		return !equals(NULL_TUPLE);
 	}
 }

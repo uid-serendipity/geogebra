@@ -53,7 +53,9 @@ public class IntervalTupleList implements Iterable<IntervalTuple> {
 	 * @param tuple to add
 	 */
 	public void add(IntervalTuple tuple) {
-		list.add(tuple);
+		if (tuple.isNotNull()) {
+			list.add(tuple);
+		}
 	}
 
 	/**
@@ -228,22 +230,5 @@ public class IntervalTupleList implements Iterable<IntervalTuple> {
 	 */
 	public boolean removeAll(IntervalTupleList other) {
 		return list.removeAll(other.list);
-	}
-
-	/**
-	 * Sets the piece index of all tupes in the list to the given value
-	 *
-	 * If the tuple is created during an if-else, or if-list evaluation,
-	 * each cases have a different piece index.
-	 * For example If(x < 0, x, 2x) this will be 0 for x < 0 and 1 otherwise.
-	 *
-	 * When no conditional evaluation, there is one list only and piece is 0 for all tuples.
-	 *
-	 * @param piece the index that the tuple belongs to.
-	 */
-	public void setPiece(int piece) {
-		for (IntervalTuple tuple: list) {
-			tuple.setPiece(piece);
-		}
 	}
 }

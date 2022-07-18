@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotEquals;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.geogebra.common.BaseUnitTest;
 import org.geogebra.common.euclidian.plot.interval.EuclidianViewBoundsMock;
@@ -54,7 +55,7 @@ public class ConditionalFunctionSamplerTest extends BaseUnitTest {
 				range,
 				new EuclidianViewBoundsMock(-15, 15, -10, 10));
 		IntervalTupleList tuples = sampler.result();
-		pieceCountShouldBe(tuples, Arrays.asList(16, 15), Arrays.asList(-1, 1));
+		pieceCountShouldBe(tuples, Arrays.asList(15, 14), Arrays.asList(-1, 1));
 	}
 
 	private void pieceCountShouldBe(IntervalTupleList tuples, List<Integer> expectedCounts,
@@ -143,4 +144,38 @@ public class ConditionalFunctionSamplerTest extends BaseUnitTest {
 		IntervalTupleList diff = sampler.extendDomain(-2.0, 10.0);
 		assertNotEquals(IntervalTupleList.emptyList(), diff);
 	}
+
+	@Test
+	public void testTupleOrderLessThan() {
+		assertTuplesOrderedByX("a=If(x < 1, 1, 1)");
+	}
+
+	@Test
+	public void testTupleOrderAndInterval() {
+		assertTuplesOrderedByX("a=If(-1  < x < 1, 1, 1)");
+	}
+
+	private void assertTuplesOrderedByX(String definition) {
+		GeoFunction function = add(definition);
+		IntervalTuple range = PlotterUtils.newRange(-20, 20, -5, 5);
+		IntervalFunctionSampler sampler = new ConditionalFunctionSampler(function,
+				range,
+				new EuclidianViewBoundsMock(range, 1920, 1280));
+		IntervalTupleList tuples = sampler.result();
+		List<IntervalTuple> list1 = tuples.stream().collect(Collectors.toList());
+		List<IntervalTuple> list2 = new ArrayList<>(list1);
+
+		list2.sort((tuple1, tuple2) -> {
+			if (tuple1.x().almostEqual(tuple2.x())) {
+				return 0;
+			}
+			if (tuple1.x().isGreaterThan(tuple2.x())) {
+				return 1;
+			} else {
+				return -1;
+			}
+		});
+		assertEquals(list1, list2);
+	}
+
 }
