@@ -53,7 +53,9 @@ public class IntervalTupleList implements Iterable<IntervalTuple> {
 	 * @param tuple to add
 	 */
 	public void add(IntervalTuple tuple) {
-		list.add(tuple);
+		if (tuple.isNotNull()) {
+			list.add(tuple);
+		}
 	}
 
 	/**
