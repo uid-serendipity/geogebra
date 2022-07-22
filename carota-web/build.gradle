@@ -2,7 +2,7 @@ plugins {
     id 'java-library'
     id 'checkstyle'
     id 'pmd'
-    id 'org.wisepersist.gwt' version '1.1.18'
+    id 'org.wisepersist.gwt' version '1.1.19'
 }
 
 sourceCompatibility = 1.8
