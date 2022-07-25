@@ -20,7 +20,7 @@ public class ConditionalPiecesTest extends BaseUnitTest {
 
 	@Test
 	public void conditionalsWithCommonEndPointsShouldBeOnePiece() {
-//		pieceShouldBe(1, "a=If(x < 0, x, x)");
+		pieceShouldBe(1, "a=If(x < 0, x, x)");
 		pieceShouldBe(1, "a=If(x < 1, x, x^2)");
 	}
 

@@ -85,6 +85,6 @@ public class ConditionalSampler implements IntervalEvaluatable {
 	}
 
 	public IntervalTuple evaluateTuple(Interval x) {
-		return new IntervalTuple(x, evaluatedValue(x));
+		return new IntervalTuple(x, evaluatedValue(x), index);
 	}
 }

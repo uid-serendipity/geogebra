@@ -157,7 +157,7 @@ public class ConditionalFunctionSamplerTest extends BaseUnitTest {
 
 	private void assertTuplesOrderedByX(String definition) {
 		GeoFunction function = add(definition);
-		IntervalTuple range = PlotterUtils.newRange(-20, 20, -5, 5);
+		IntervalTuple range = newRange(-20, 20, -5, 5);
 		IntervalFunctionSampler sampler = new ConditionalFunctionSampler(function,
 				range,
 				new EuclidianViewBoundsMock(range, 1920, 1280));

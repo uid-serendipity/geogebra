@@ -50,7 +50,8 @@ public class DefaultConditionalEvaluator implements IntervalEvaluatable {
 			int piece = tuple.piece();
 			int startIndex = tupleIndex + 1;
 			IntervalTuple startTuple = result.get(startIndex);
-			startTuple.y().setLow(evaluateWithSampler(new Interval(startTuple.x().getLow()), piece).getLow());
+			startTuple.y().set(evaluateWithSampler(startTuple.x(), piece));
+			tuple.y().setHigh(startTuple.y().getLow());
 			int endIndex = i + 1 < borders.size() ? borders.get(i + 1) : result.count();
 
 			for (int j = startIndex; j < endIndex; j++) {
@@ -96,7 +97,7 @@ public class DefaultConditionalEvaluator implements IntervalEvaluatable {
 		}
 		Interval y = new Interval(current.y());
 		Interval subtract = y.subtract(prev.y());
-		return subtract.getLow() < 1E-7;
+		return Math.abs(subtract.getLow()) < 1E-1;
 	}
 }
 
