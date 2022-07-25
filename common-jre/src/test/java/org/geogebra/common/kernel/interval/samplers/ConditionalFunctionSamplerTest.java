@@ -1,5 +1,6 @@
 package org.geogebra.common.kernel.interval.samplers;
 
+import static org.geogebra.common.euclidian.plot.interval.PlotterUtils.newRange;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
@@ -10,7 +11,6 @@ import java.util.stream.Collectors;
 
 import org.geogebra.common.BaseUnitTest;
 import org.geogebra.common.euclidian.plot.interval.EuclidianViewBoundsMock;
-import org.geogebra.common.euclidian.plot.interval.PlotterUtils;
 import org.geogebra.common.kernel.geos.GeoFunction;
 import org.geogebra.common.kernel.interval.Interval;
 import org.geogebra.common.kernel.interval.IntervalTest;
@@ -22,7 +22,7 @@ public class ConditionalFunctionSamplerTest extends BaseUnitTest {
 	@Test
 	public void testSingleIf() {
 		GeoFunction function = add("a=If(x < 0, 1)");
-		IntervalTuple range = PlotterUtils.newRange(-20, 20, -5, 5);
+		IntervalTuple range = newRange(-20, 20, -5, 5);
 		IntervalFunctionSampler sampler = new ConditionalFunctionSampler(function,
 				range,
 				new EuclidianViewBoundsMock(-15, 15, -10, 10));
@@ -34,7 +34,7 @@ public class ConditionalFunctionSamplerTest extends BaseUnitTest {
 	@Test
 	public void testSingleIfWithCompoundCondition() {
 		GeoFunction function = add("a=If(-2 < x < 0, -1)");
-		IntervalTuple range = PlotterUtils.newRange(-20, 20, -5, 5);
+		IntervalTuple range = newRange(-20, 20, -5, 5);
 		IntervalFunctionSampler sampler = new ConditionalFunctionSampler(function,
 				range,
 				new EuclidianViewBoundsMock(-15, 15, -10, 10));
@@ -50,7 +50,7 @@ public class ConditionalFunctionSamplerTest extends BaseUnitTest {
 	@Test
 	public void testIfElse() {
 		GeoFunction function = add("a=If(x < 0, -1, 1)");
-		IntervalTuple range = PlotterUtils.newRange(-20, 20, -5, 5);
+		IntervalTuple range = newRange(-20, 20, -5, 5);
 		IntervalFunctionSampler sampler = new ConditionalFunctionSampler(function,
 				range,
 				new EuclidianViewBoundsMock(-15, 15, -10, 10));
@@ -71,7 +71,7 @@ public class ConditionalFunctionSamplerTest extends BaseUnitTest {
 	public void testIfList() {
 		GeoFunction function = add("a=If(x < -2, 1, -2 < x < 0, 2, x > 0, 3)");
 		IntervalFunctionSampler sampler = new ConditionalFunctionSampler(function,
-				PlotterUtils.newRange(-20, 20, -5, 5),
+				newRange(-20, 20, -5, 5),
 				new EuclidianViewBoundsMock(-15, 15, -10, 10));
 		IntervalTupleList tuples = sampler.result();
 		pieceCountShouldBe(tuples, Arrays.asList(13, 1, 15), Arrays.asList(1, 2, 3));
@@ -81,7 +81,7 @@ public class ConditionalFunctionSamplerTest extends BaseUnitTest {
 	public void testIfListEquals() {
 		GeoFunction function = add("a=If(x <= -2, 1, x == 0, 2, x >= 1, 3)");
 		IntervalFunctionSampler sampler = new ConditionalFunctionSampler(function,
-				PlotterUtils.newRange(-20, 20, -5, 5),
+				newRange(-20, 20, -5, 5),
 				new EuclidianViewBoundsMock(-150, 150, -10, 10));
 		IntervalTupleList tuples = sampler.result();
 		pieceCountShouldBe(tuples, Arrays.asList(135, 1, 142), Arrays.asList(1, 2, 3));
@@ -90,7 +90,7 @@ public class ConditionalFunctionSamplerTest extends BaseUnitTest {
 	@Test
 	public void testIfListOverLapped() {
 		GeoFunction function = add("a=If(x < -3, 1, x < -4, 2, x > 0, 3)");
-		IntervalTuple range = PlotterUtils.newRange(-20, 20, -5, 5);
+		IntervalTuple range = newRange(-20, 20, -5, 5);
 		IntervalFunctionSampler sampler = new ConditionalFunctionSampler(function,
 				range,
 				new EuclidianViewBoundsMock(range, 100, 100));
@@ -101,7 +101,7 @@ public class ConditionalFunctionSamplerTest extends BaseUnitTest {
 	@Test
 	public void evaluateIfElseExtending() {
 		GeoFunction function = add("a=If(x < 0, -1, 1)");
-		IntervalTuple range = PlotterUtils.newRange(-12.4, 12.4, -15.0, 15.0);
+		IntervalTuple range = newRange(-12.4, 12.4, -15.0, 15.0);
 		EuclidianViewBoundsMock evBounds = new EuclidianViewBoundsMock(range,
 				1920, 1280);
 		IntervalFunctionSampler sampler = new ConditionalFunctionSampler(function,
@@ -117,7 +117,7 @@ public class ConditionalFunctionSamplerTest extends BaseUnitTest {
 	@Test
 	public void evaluateIfExtendingFromOffscreen() {
 		GeoFunction function = add("a=If(x > 0, 1)");
-		IntervalTuple range = PlotterUtils.newRange(-9.0, -1.0, -15.0, 15.0);
+		IntervalTuple range = newRange(-9.0, -1.0, -15.0, 15.0);
 		EuclidianViewBoundsMock evBounds = new EuclidianViewBoundsMock(range,
 				1920, 1280);
 		IntervalFunctionSampler sampler = new ConditionalFunctionSampler(function,
@@ -132,7 +132,7 @@ public class ConditionalFunctionSamplerTest extends BaseUnitTest {
 	@Test
 	public void evaluateIfListExtendingFromOffscreen() {
 		GeoFunction function = add("a=If(x < 0, 1, x > 3, 4)");
-		IntervalTuple range = PlotterUtils.newRange(5.0, 10.0, -15.0, 15.0);
+		IntervalTuple range = newRange(5.0, 10.0, -15.0, 15.0);
 		EuclidianViewBoundsMock evBounds = new EuclidianViewBoundsMock(range,
 				1920, 1280);
 		IntervalFunctionSampler sampler = new ConditionalFunctionSampler(function,
@@ -157,7 +157,7 @@ public class ConditionalFunctionSamplerTest extends BaseUnitTest {
 
 	private void assertTuplesOrderedByX(String definition) {
 		GeoFunction function = add(definition);
-		IntervalTuple range = PlotterUtils.newRange(-20, 20, -5, 5);
+		IntervalTuple range = newRange(-20, 20, -5, 5);
 		IntervalFunctionSampler sampler = new ConditionalFunctionSampler(function,
 				range,
 				new EuclidianViewBoundsMock(range, 1920, 1280));

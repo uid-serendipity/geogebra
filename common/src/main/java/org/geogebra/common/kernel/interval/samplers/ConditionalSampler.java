@@ -63,7 +63,7 @@ public class ConditionalSampler implements IntervalEvaluatable {
 		return new IntervalTuple(x, evaluatedValue(x), index);
 	}
 
-	private Interval evaluatedValue(Interval x) {
+	public Interval evaluatedValue(Interval x) {
 		return IntervalFunction.evaluate(x,
 				conditionalExpression.getBody());
 	}

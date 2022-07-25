@@ -39,4 +39,13 @@ public class PlotterUtils {
 			int numberOfSamples) {
 		return new FunctionSampler(function, range, numberOfSamples);
 	}
+
+	/**
+	 *
+	 * @param range of the view in real world coordinates.
+	 * @return the appropriate bounds mock with HD size.
+	 */
+	public static EuclidianViewBoundsMock hdBounds(IntervalTuple range) {
+		return new EuclidianViewBoundsMock(range, 1920, 1980);
+	}
 }

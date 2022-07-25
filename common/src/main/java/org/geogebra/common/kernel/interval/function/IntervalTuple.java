@@ -114,4 +114,11 @@ public class IntervalTuple {
 	public boolean isNotNull() {
 		return !equals(NULL_TUPLE);
 	}
+
+	/**
+	 * @param piece to set.
+	 */
+	public void setPiece(int piece) {
+		this.piece = piece;
+	}
 }
