@@ -4079,6 +4079,10 @@ public abstract class App implements UpdateSelection, AppInterface, EuclidianHos
 		restrictions.disable();
 	}
 
+	public StringTemplate getScreenReaderTemplate() {
+		return StringTemplate.screenReaderAscii;
+	}
+
 	/**
 	 * possible positions for the inputBar (respective inputBox)
 	 */
