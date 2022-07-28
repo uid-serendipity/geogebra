@@ -142,11 +142,7 @@ public class DistributionPanel extends FlowPanel implements ChangeHandler, Inser
 	}
 
 	private String getParamLabel(int index) {
-		String paramName = view.getParameterLabels()[view.getSelectedDist()
-				.ordinal()][index];
-		return view.getApp().getConfig().hasDistributionView()
-				? view.getApp().getLocalization().getPlainDefault("Parameter%0",
-				"Parameter %0", paramName) : paramName;
+		return view.getParameterLabels()[view.getSelectedDist().ordinal()][index];
 	}
 
 	/**
@@ -303,7 +299,7 @@ public class DistributionPanel extends FlowPanel implements ChangeHandler, Inser
 							if (intervalCheck) {
 								view.updateAll(true);
 							} else {
-								view.updateOutput();
+								view.updateOutput(false);
 								view.updateLowHighResult();
 							}
 						}

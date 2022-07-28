@@ -14,6 +14,8 @@ package org.geogebra.common.kernel.arithmetic;
 
 import java.math.BigDecimal;
 
+import javax.annotation.CheckForNull;
+
 import org.geogebra.common.kernel.Kernel;
 import org.geogebra.common.kernel.StringTemplate;
 import org.geogebra.common.kernel.arithmetic.ExpressionNodeConstants.StringType;
@@ -38,6 +40,22 @@ public class MySpecialDouble extends MyDouble {
 	private final boolean isLetterConstant; // for Pi, Euler, or Degree constant
 	private final boolean scientificNotation;
 	private boolean setFromOutside;
+	BigDecimal bd;
+
+	/**
+	 * @param kernel
+	 *            kernel
+	 * @param val
+	 *            value
+	 */
+	public MySpecialDouble(Kernel kernel, double val) {
+		super(kernel, val);
+		setFromOutside = true;
+		keepOriginalString = false;
+		isLetterConstant = false;
+		scientificNotation = false;
+		originalString = "";
+	}
 
 	/**
 	 * @param kernel
@@ -111,6 +129,11 @@ public class MySpecialDouble extends MyDouble {
 		MySpecialDouble ret = new MySpecialDouble(this);
 		ret.kernel = kernel1;
 		return ret;
+	}
+
+	@Override
+	public MyDouble getNumber() {
+		return new MySpecialDouble(this);
 	}
 
 	/**
@@ -219,6 +242,18 @@ public class MySpecialDouble extends MyDouble {
 	public void set(double val) {
 		super.set(val);
 		setFromOutside = true;
+		bd = null;
+	}
+
+	/**
+	 * Set precise value
+	 * @param val value as BigDecimal
+	 */
+	public void set(BigDecimal val) {
+		super.set(val.doubleValue());
+		setFromOutside = true;
+		strToString = val.toPlainString();
+		bd = val;
 	}
 
 	@Override
@@ -255,5 +290,27 @@ public class MySpecialDouble extends MyDouble {
 
 	public boolean isAngleUnit() {
 		return isAngle() || Unicode.PI_STRING.equals(strToString);
+	}
+
+	public void setString(String toString) {
+		this.strToString = toString;
+	}
+
+	@Override
+	public @CheckForNull BigDecimal toDecimal() {
+		if (!Double.isFinite(getDouble())) {
+			return null;
+		}
+		if (bd == null) {
+			if (isLetterConstant || setFromOutside) {
+				bd = BigDecimal.valueOf(getDouble());
+			} else if (isPercentage()) {
+				bd = new BigDecimal(strToString.substring(0, strToString.length() - 1))
+						.multiply(BigDecimal.valueOf(0.01));
+			} else {
+				bd = new BigDecimal(strToString);
+			}
+		}
+		return bd;
 	}
 }

@@ -177,16 +177,6 @@ public final class Dom {
 	}
 
 	/**
-	 * @param cls CSS class name
-	 * @return div with given class
-	 */
-	public static HTMLElement createDiv(String cls) {
-		HTMLElement div = Js.uncheckedCast(DomGlobal.document.createElement("div"));
-		div.className = cls;
-		return div;
-	}
-
-	/**
 	 * @return create button with default type (not submitting)
 	 */
 	public static Element createDefaultButton() {
@@ -194,5 +184,15 @@ public final class Dom {
 		// avoid default "submit" behavior when GeoGebra is in a form
 		btn.setAttribute("type", "button");
 		return btn;
+	}
+
+	/**
+	 * @param cls CSS class name
+	 * @return div with given class
+	 */
+	public static HTMLElement createDiv(String cls) {
+		HTMLElement div = Js.uncheckedCast(DomGlobal.document.createElement("div"));
+		div.className = cls;
+		return div;
 	}
 }
