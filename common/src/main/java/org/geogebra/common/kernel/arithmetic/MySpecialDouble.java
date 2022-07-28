@@ -183,56 +183,17 @@ public class MySpecialDouble extends MyDouble {
 		}
 
 		// letter constants for pi, e, or degree character
-		StringType printForm = tpl.getStringType();
-		char ch;
-		switch (printForm) {
-		case SCREEN_READER_ASCII:
-			ch = strToString.charAt(0);
-			switch (ch) {
-			case Unicode.pi:
-				return tpl.getPi();
-			case Unicode.DEGREE_CHAR:
-				return tpl.getDegree();
-			case Unicode.EULER_CHAR:
-				if (strToString.equals(Unicode.EULER_GAMMA_STRING)) {
-					return tpl.getEulerGamma();
-				}
-				return tpl.getEulerNumber();
+		char ch = strToString.charAt(0);
+		switch (ch) {
+		case Unicode.pi:
+			return tpl.getPi();
+		case Unicode.DEGREE_CHAR:
+			return tpl.getDegree();
+		case Unicode.EULER_CHAR:
+			if (strToString.equals(Unicode.EULER_GAMMA_STRING)) {
+				return tpl.getEulerGamma();
 			}
-			break;
-		case GIAC:
-			ch = strToString.charAt(0);
-			switch (ch) {
-			case Unicode.pi:
-				return "pi";
-			case Unicode.DEGREE_CHAR:
-				return "pi/180";
-			case Unicode.EULER_CHAR:
-				if (strToString.equals(Unicode.EULER_GAMMA_STRING)) {
-					return "euler\\_gamma";
-				}
-				return "e";
-			}
-			break;
-
-		case LATEX:
-			ch = strToString.charAt(0);
-			switch (ch) {
-			case Unicode.pi:
-				return "\\pi ";
-			case Unicode.DEGREE_CHAR:
-				return "^{\\circ}";
-			case Unicode.EULER_CHAR:
-				if (strToString.equals(Unicode.EULER_GAMMA_STRING)) {
-					// approx value
-					return "\\mathit{e_{\\gamma}}";
-				}
-				return "\\textit{e}";
-			// return Unicode.EULER_STRING;
-			}
-			break;
-		default:
-			break;
+			return tpl.getEulerNumber();
 		}
 
 		return strToString;
