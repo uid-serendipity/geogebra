@@ -18,7 +18,6 @@ import javax.annotation.CheckForNull;
 
 import org.geogebra.common.kernel.Kernel;
 import org.geogebra.common.kernel.StringTemplate;
-import org.geogebra.common.kernel.arithmetic.ExpressionNodeConstants.StringType;
 import org.geogebra.common.plugin.Operation;
 import org.geogebra.common.util.StringUtil;
 
