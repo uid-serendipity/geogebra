@@ -555,6 +555,5 @@ public class ParserTest {
 
 		AlgebraTestHelper.shouldPass("$a1=2", app);
 		AlgebraTestHelper.shouldPass("$$a1=2", app);
-
 	}
 }
