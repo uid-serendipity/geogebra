@@ -36,7 +36,6 @@ public class CreateObjectDialogW extends ComponentDialog implements ICreateObjec
 	private Label lblObject;
 	private Label lblName;
 
-	/** transpose checkbox */
 	private ComponentCheckbox ckTranspose;
 	private RadioButtonPanel<Boolean> objValRadioButtonPanel;
 
@@ -232,8 +231,8 @@ public class CreateObjectDialogW extends ComponentDialog implements ICreateObjec
 			return;
 		}
 
-		objValRadioButtonPanel.setLabels();
 		ckTranspose.setLabels();
+		objValRadioButtonPanel.setLabels();
 
 		lblName.setText(loc.getMenu("Name") + ": ");
 
