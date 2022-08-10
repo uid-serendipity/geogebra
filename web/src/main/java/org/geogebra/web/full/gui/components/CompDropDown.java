@@ -64,7 +64,7 @@ public class CompDropDown extends FlowPanel {
 	}
 
 	private void createDropDownMenu(final AppW app) {
-		dropDown = new ComponentDropDownPopup(app, 24, selectedOption);
+		dropDown = new ComponentDropDownPopup(app, 32, selectedOption);
 		dropDown.addAutoHidePartner(getElement());
 
 		ClickStartHandler.init(this, new ClickStartHandler(true, true) {
@@ -90,8 +90,17 @@ public class CompDropDown extends FlowPanel {
 	}
 
 	private void setSelectedOption(int idx) {
+		highlightSelectedElement(dropDown.getSelectedIndex(), idx);
 		dropDown.setSelectedIndex(idx);
 		selectedOption.setText(dropDownElementsList.get(idx).getElement().getInnerText());
+	}
+
+	private void highlightSelectedElement(int previousSelectedIndex,
+			int currentSelectedIndex) {
+		dropDownElementsList.get(previousSelectedIndex)
+				.removeStyleName("selectedDropDownElement");
+		dropDownElementsList.get(currentSelectedIndex)
+				.addStyleName("selectedDropDownElement");
 	}
 
 	/**
@@ -107,9 +116,7 @@ public class CompDropDown extends FlowPanel {
 			final int currentIndex = i;
 			AriaMenuItem item = new AriaMenuItem(
 					MainMenu.getMenuBarHtmlEmptyIcon(dropDownList.get(i)), true,
-					() -> {
-						setSelectedOption(currentIndex);
-					});
+					() -> setSelectedOption(currentIndex));
 
 			item.setStyleName("dropDownElement");
 			dropDownElementsList.add(item);
