@@ -2019,6 +2019,9 @@ public abstract class GeoElement extends ConstructionElement implements GeoEleme
 				}
 			}
 			break;
+		case CURVE_CARTESIAN:
+		case CURVE_CARTESIAN3D:
+			return algoParent.getStationaryInputCount() == 0;
 		default:
 			break;
 		}
@@ -2051,8 +2054,9 @@ public abstract class GeoElement extends ConstructionElement implements GeoEleme
 			return true;
 		}
 
-		return view.getFreeInputPoints(algoParent)
-				.size() == algoParent.input.length;
+		//return view.getFreeInputPoints(algoParent)
+		//		.size() == algoParent.input.length;
+		return true;
 	}
 
 	private static boolean containsOnlyMoveableGeos(

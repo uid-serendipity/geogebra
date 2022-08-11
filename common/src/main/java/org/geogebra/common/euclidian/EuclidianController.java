@@ -139,6 +139,7 @@ import org.geogebra.common.kernel.kernelND.GeoAxisND;
 import org.geogebra.common.kernel.kernelND.GeoConicND;
 import org.geogebra.common.kernel.kernelND.GeoConicNDConstants;
 import org.geogebra.common.kernel.kernelND.GeoConicPartND;
+import org.geogebra.common.kernel.kernelND.GeoCurveCartesianND;
 import org.geogebra.common.kernel.kernelND.GeoDirectionND;
 import org.geogebra.common.kernel.kernelND.GeoElementND;
 import org.geogebra.common.kernel.kernelND.GeoImplicitSurfaceND;
@@ -6837,6 +6838,7 @@ public abstract class EuclidianController implements SpecialPointsListener {
 				&& movedGeoElement.hasMoveableInputPoints(view)) {
 			// allow only moving of the following object types
 			if (movedGeoElement.isGeoLine() || movedGeoElement.isGeoPolygon()
+					|| movedGeoElement.isGeoCurveCartesian()
 					|| (movedGeoElement instanceof GeoPolyLine)
 					|| (movedGeoElement instanceof GeoPieChart)
 					|| movedGeoElement.isGeoConic()
