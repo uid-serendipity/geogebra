@@ -18,6 +18,7 @@ public class ComponentDropDownPopup {
 
 	// for checking item position. It is 0 in normal case.
 	private static final int OFFSET_X = 0;
+	private static final int POPUP_PADDING = 8;
 	private GPopupMenuW menu;
 	private int selectedIndex;
 	private Widget anchor;
@@ -146,8 +147,8 @@ public class ComponentDropDownPopup {
 	}
 
 	private int getTop() {
-		return anchor.getAbsoluteTop() - anchor.getOffsetHeight() / 2
-				- (int) app.getAbsTop();
+		// (32 - 20)/2 = 6 handle height difference between label and menu item
+		return anchor.getAbsoluteTop() - POPUP_PADDING - 6;
 	}
 
 	private int getMaxHeight() {
