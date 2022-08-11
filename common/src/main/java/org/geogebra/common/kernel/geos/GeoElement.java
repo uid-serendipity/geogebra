@@ -1993,6 +1993,8 @@ public abstract class GeoElement extends ConstructionElement implements GeoEleme
 		case SEGMENT:
 		case SEGMENT3D:
 		case TEXT:
+		case CURVE_CARTESIAN:
+		case CURVE_CARTESIAN3D:
 			return hasOnlyFreeInputPoints(view)
 					&& containsOnlyMoveableGeos(getFreeInputPoints(view));
 
@@ -2019,9 +2021,6 @@ public abstract class GeoElement extends ConstructionElement implements GeoEleme
 				}
 			}
 			break;
-		case CURVE_CARTESIAN:
-		case CURVE_CARTESIAN3D:
-			return algoParent.getStationaryInputCount() == 0;
 		default:
 			break;
 		}
@@ -2054,9 +2053,7 @@ public abstract class GeoElement extends ConstructionElement implements GeoEleme
 			return true;
 		}
 
-		//return view.getFreeInputPoints(algoParent)
-		//		.size() == algoParent.input.length;
-		return true;
+		return algoParent.getStationaryInputCount() == 0;
 	}
 
 	private static boolean containsOnlyMoveableGeos(

@@ -16,12 +16,10 @@ import org.geogebra.common.kernel.geos.GeoFunctionNVar;
 import org.geogebra.common.kernel.geos.GeoList;
 import org.geogebra.common.kernel.geos.GeoNumberValue;
 import org.geogebra.common.kernel.geos.GeoNumeric;
-import org.geogebra.common.kernel.geos.GeoPoint;
 import org.geogebra.common.kernel.kernelND.GeoCurveCartesianND;
 import org.geogebra.common.kernel.kernelND.GeoPointND;
 import org.geogebra.common.plugin.Operation;
 import org.geogebra.common.util.DoubleUtil;
-import org.geogebra.common.util.debug.Log;
 
 /**
  * Algorithm for spline.
@@ -137,6 +135,39 @@ public class AlgoSpline extends AlgoElement {
 			}
 		}
 		parametersValues[length - 1] = 1;
+	}
+
+	/**
+	 * @return amount of poitns that are stationary (not free)
+	 */
+	@Override
+	public int getStationaryInputCount() {
+		return inputList.size() - getFreeInputPoints().size();
+	}
+
+	/**
+	 * @return list of all free input points
+	 */
+	@Override
+	public ArrayList<GeoPointND> getFreeInputPoints() {
+		ArrayList<GeoPointND> freeInputPoints = new ArrayList<>(inputList.size());
+		boolean allIndependent = true;
+		for (int i = 0; i < inputList.size(); i++) {
+			if (inputList.get(i).isGeoPoint()
+					&& (inputList.get(i).isMoveable()
+					|| inputList.get(i).isIndependent())) {
+				freeInputPoints.add((GeoPointND) inputList.get(i));
+				allIndependent &= inputList.get(i).isIndependent();
+			}
+		}
+		if(!allIndependent && freeInputPoints.size() > 1) {
+			for (int i = freeInputPoints.size() - 1; i >= 0; i--) {
+				if (!freeInputPoints.get(i).isIndependent()) {
+					freeInputPoints.remove(i);
+				}
+			}
+		}
+		return freeInputPoints;
 	}
 
 	private static double calculate(double x, double[] m) {
@@ -461,38 +492,5 @@ public class AlgoSpline extends AlgoElement {
 					.pow(currentValueFromZeroToOne, j);
 		}
 		return value;
-	}
-
-	/**
-	 * @return amount of poitns that are stationary / cannot be moved
-	 */
-	@Override
-	public int getStationaryInputCount() {
-		return inputList.size() - getFreeInputPoints().size();
-	}
-
-	/**
-	 * @return list of all free input points
-	 */
-	@Override
-	public ArrayList<GeoPointND> getFreeInputPoints() {
-		ArrayList<GeoPointND> freeInputPoints = new ArrayList<>(inputList.size());
-		boolean allIndependent = true;
-		for (int i = 0; i < inputList.size(); i++) {
-			if (inputList.get(i).isGeoPoint()
-					&& (inputList.get(i).isMoveable()
-					|| inputList.get(i).isIndependent())) {
-				freeInputPoints.add((GeoPointND) inputList.get(i));
-				allIndependent &= inputList.get(i).isIndependent();
-			}
-		}
-		if(!allIndependent && freeInputPoints.size() > 1) {
-			for (int i = freeInputPoints.size() - 1; i >= 0; i--) {
-				if (!freeInputPoints.get(i).isIndependent()) {
-					freeInputPoints.remove(i);
-				}
-			}
-		}
-		return freeInputPoints;
 	}
 }

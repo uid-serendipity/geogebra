@@ -40,7 +40,6 @@ import org.geogebra.common.kernel.commands.Commands;
 import org.geogebra.common.kernel.geos.CasEvaluableFunction;
 import org.geogebra.common.kernel.geos.GeoElement;
 import org.geogebra.common.kernel.geos.GeoList;
-import org.geogebra.common.kernel.geos.GeoPoint;
 import org.geogebra.common.kernel.geos.GeoScriptAction;
 import org.geogebra.common.kernel.geos.GeoText;
 import org.geogebra.common.kernel.geos.LabelManager;
@@ -1171,6 +1170,13 @@ public abstract class AlgoElement extends ConstructionElement
 		}
 	}
 
+	/**
+	 * @return amount of points that are stationary / not free
+	 */
+	public int getStationaryInputCount(){
+		return input.length - getFreeInputPoints().size();
+	}
+
 	@Override
 	final public boolean isIndependent() {
 		return false;
@@ -1922,12 +1928,5 @@ public abstract class AlgoElement extends ConstructionElement
 				&& this.getClassName() instanceof Commands
 				&& this.getInputLength() == newParent.getInputLength();
 
-	}
-
-	/**
-	 * @return amount of points that are stationary / not free
-	 */
-	public int getStationaryInputCount(){
-		return input.length - getFreeInputPoints().size();
 	}
 }
