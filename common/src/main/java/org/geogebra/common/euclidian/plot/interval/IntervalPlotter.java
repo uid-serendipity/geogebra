@@ -5,7 +5,6 @@ import org.geogebra.common.awt.GPoint;
 import org.geogebra.common.euclidian.EuclidianController;
 import org.geogebra.common.kernel.geos.GeoFunction;
 import org.geogebra.common.kernel.interval.function.IntervalTuple;
-import org.geogebra.common.kernel.interval.samplers.ConditionalFunctionSampler;
 import org.geogebra.common.kernel.interval.samplers.FunctionSampler;
 import org.geogebra.common.kernel.interval.samplers.IntervalFunctionSampler;
 
@@ -67,9 +66,7 @@ public class IntervalPlotter {
 	}
 
 	private IntervalFunctionSampler createSampler(GeoFunction function, IntervalTuple range) {
-		return function.isGeoFunctionConditional()
-				? new ConditionalFunctionSampler(function, range, evBounds)
-				: new FunctionSampler(function, range, evBounds);
+		return new FunctionSampler(function, range, evBounds);
 	}
 
 	/**

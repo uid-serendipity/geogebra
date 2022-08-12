@@ -185,19 +185,12 @@ import org.geogebra.common.util.debug.Log;
 		}
 
 		ExpressionNode node = ((GeoFunction) geo).getFunctionExpression();
-		if (ConditionalSupport.isSupportedIf(node)) {
-			return true;
-		}
 		return isOperationSupported(node);
 	}
 
 	static boolean isOperationSupported(ExpressionNode node) {
 		if (node == null) {
 			return false;
-		}
-
-		if (ConditionalSupport.isSupportedIf(node)) {
-			return true;
 		}
 
 		return !hasMoreVariables(node) && !node.inspect(operatorChecker);
